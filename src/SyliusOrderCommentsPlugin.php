@@ -5,7 +5,7 @@ namespace Acme\ExamplePlugin;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class AcmeExamplePlugin extends Bundle
+final class SyliusOrderCommentsPlugin extends Bundle
 {
     use SyliusPluginTrait;
 }
