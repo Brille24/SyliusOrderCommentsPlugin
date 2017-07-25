@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\ExamplePlugin\Controller;
+namespace Sylius\OrderCommentsPlugin\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
