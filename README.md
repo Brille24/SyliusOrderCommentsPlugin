@@ -1,5 +1,7 @@
 # Sylius Order Comments Plugin
 
+[![Build Status](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin.svg?token=8ZLRHEY2aPJvQgqmQCxh&branch=master)](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin)
+
 ## Testing & Development
 
 In order to run tests, execute following commands:
