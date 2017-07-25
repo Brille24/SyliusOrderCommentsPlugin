@@ -18,6 +18,8 @@ final class AppKernel extends Kernel
             new \Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle(),
 
             new \Acme\ExamplePlugin\SyliusOrderCommentsPlugin(),
+            new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
+            new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
         ]);
     }
 

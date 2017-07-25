@@ -3,3 +3,4 @@
 
 /etc/build/*
 !/etc/build/.gitkeep
+/composer.lock
