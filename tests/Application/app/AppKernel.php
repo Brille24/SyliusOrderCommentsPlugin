@@ -17,7 +17,7 @@ final class AppKernel extends Kernel
             new \FOS\OAuthServerBundle\FOSOAuthServerBundle(), // Required by SyliusApiBundle
             new \Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle(),
 
-            new \Acme\ExamplePlugin\SyliusOrderCommentsPlugin(),
+            new \Sylius\OrderCommentsPlugin\SyliusOrderCommentsPlugin(),
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\ExamplePlugin\DependencyInjection;
+namespace Sylius\OrderCommentsPlugin\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
