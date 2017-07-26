@@ -17,8 +17,18 @@ Feature: Commenting an order by a customer
 
     @domain
     Scenario: Customer commented an order
-        When a customer comments an order "#00000022" with "Hello"
+        When I comment an order "#00000022" with "Hello"
         Then this order should have comment with "Hello" from this customer
+
+    @domain
+    Scenario: Customer cannot comment an order with empty message
+        When I try to comment an order "#00000022" with empty message
+        Then this order should not have empty comment from this customer
+
+    @domain
+    Scenario: Customer with invalid email cannot comment an order
+        When a customer with email "notEmail" try to comment an order "#00000022"
+        Then this order should not have empty comment from this customer
 
     @todo
     Scenario: Sending the email notification to the administrator about unread customer's comments

@@ -11,36 +11,31 @@ final class Comment
     /** @var OrderInterface */
     private $order;
 
-    /** @var Author */
-    private $author;
+    /** @var Email */
+    private $authorEmail;
 
     /** @var string */
     private $message;
 
-    private function __construct(Author $author, OrderInterface $order, string $message)
+    private function __construct(Email $authorEmail, OrderInterface $order, string $message)
     {
-        $this->author = $author;
+        $this->authorEmail = $authorEmail;
         $this->order = $order;
         $this->message = $message;
     }
 
-    public static function create(Author $author, OrderInterface $order, string $message): self
+    public static function create(string $authorEmail, OrderInterface $order, string $message): self
     {
         if (null == $message) {
             throw new \DomainException('Comment cannot be created with empty message');
         }
 
-        return new self($author, $order, $message);
+        return new self(Email::fromString($authorEmail), $order, $message);
     }
 
     public function order(): OrderInterface
     {
         return $this->order;
-    }
-
-    public function author(): Author
-    {
-        return $this->author;
     }
 
     public function message(): string
