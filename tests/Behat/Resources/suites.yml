@@ -2,13 +2,6 @@
 
 default:
     suites:
-        greeting_customer:
-            contexts_services:
-                - acme_example.context.ui.shop.welcome
-
-            filters:
-                tags: "@greeting_customer"
-
         domain_order_comments:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
