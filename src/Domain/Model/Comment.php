@@ -6,11 +6,16 @@ namespace Sylius\OrderCommentsPlugin\Domain\Model;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use SimpleBus\Message\Recorder\ContainsRecordedMessages;
+use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
 
-final class Comment implements ResourceInterface
+final class Comment implements ResourceInterface, ContainsRecordedMessages
 {
+    use PrivateMessageRecorderCapabilities;
+
     /** @var UuidInterface */
     private $id;
 
@@ -23,21 +28,27 @@ final class Comment implements ResourceInterface
     /** @var string */
     private $message;
 
-    private function __construct(Email $authorEmail, OrderInterface $order, string $message)
+    private function __construct(UuidInterface $id, Email $authorEmail, OrderInterface $order, string $message)
     {
-        $this->id = Uuid::uuid4();
+        $this->id = $id;
         $this->authorEmail = $authorEmail;
         $this->order = $order;
         $this->message = $message;
     }
 
-    public static function create(string $authorEmail, OrderInterface $order, string $message): self
+    public static function orderByCustomer(OrderInterface $order, string $customerEmail, string $message): self
     {
         if (null == $message) {
             throw new \DomainException('Comment cannot be created with empty message');
         }
 
-        return new self(Email::fromString($authorEmail), $order, $message);
+        $id = Uuid::uuid4();
+        $customerEmail = Email::fromString($customerEmail);
+        $comment = new self($id, $customerEmail, $order, $message);
+
+        $comment->record(OrderCommentedByCustomer::occur($id, $order, $customerEmail, $message));
+
+        return $comment;
     }
 
     public function getId(): UuidInterface

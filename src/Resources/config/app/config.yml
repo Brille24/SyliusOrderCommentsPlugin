@@ -16,3 +16,7 @@ sylius_resource:
             classes:
                 model: Sylius\OrderCommentsPlugin\Domain\Model\Comment
                 repository: Sylius\OrderCommentsPlugin\Infrastructure\Repository\SyliusOrderCommentRepository
+
+doctrine_orm_bridge:
+    entity_manager: default
+    connection: default

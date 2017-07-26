@@ -24,8 +24,11 @@ final class OrderCommentsContext implements Context
     /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    public function __construct(MessageBus $commandBus, OrderCommentRepository $orderCommentRepository, SharedStorageInterface $sharedStorage)
-    {
+    public function __construct(
+        MessageBus $commandBus,
+        OrderCommentRepository $orderCommentRepository,
+        SharedStorageInterface $sharedStorage
+    ) {
         $this->commandBus = $commandBus;
         $this->orderCommentRepository = $orderCommentRepository;
         $this->sharedStorage = $sharedStorage;
@@ -96,7 +99,8 @@ final class OrderCommentsContext implements Context
         if (
             $comment->message() !== $message &&
             $comment->order() !== $order &&
-            $comment->authorEmail() != $user->getEmail()
+            $comment->authorEmail() != $user->getEmail() &&
+            empty($comment->recordedMessages())
         ) {
             throw new \RuntimeException(
                 sprintf(

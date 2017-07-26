@@ -18,7 +18,7 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
     {
         $order = new Order();
 
-        $comment = Comment::create('test@test.com', $order, 'Hello');
+        $comment = Comment::orderByCustomer($order, 'test@test.com', 'Hello');
 
         $this->assertEquals($order, $comment->order());
         $this->assertEquals('test@test.com', $comment->authorEmail());
@@ -34,7 +34,7 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
     {
         $order = new Order();
 
-        Comment::create('test@test.com', $order, '');
+        Comment::orderByCustomer($order, 'test@test.com', '');
     }
 
     /**
@@ -45,6 +45,7 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
     public function it_cannot_be_created_with_invalid_author_email(): void
     {
         $order = new Order();
-        Comment::create('abcd.com', $order, 'Hello');
+
+        Comment::orderByCustomer($order, 'abcd.com', 'Hello');
     }
 }

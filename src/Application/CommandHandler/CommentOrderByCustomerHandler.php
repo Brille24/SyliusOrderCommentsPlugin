@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Application\CommandHandler;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
-use Sylius\OrderCommentsPlugin\Application\Repository\OrderCommentRepository;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 
 final class CommentOrderByCustomerHandler
@@ -15,13 +15,17 @@ final class CommentOrderByCustomerHandler
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
-    /** @var OrderCommentRepository */
-    private $orderCommentRepository;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-    public function __construct(OrderRepositoryInterface $orderRepository, OrderCommentRepository $orderCommentRepository)
+    /**
+     * @param OrderRepositoryInterface $orderRepository
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(OrderRepositoryInterface $orderRepository, EntityManagerInterface $entityManager)
     {
         $this->orderRepository = $orderRepository;
-        $this->orderCommentRepository = $orderCommentRepository;
+        $this->entityManager = $entityManager;
     }
 
     public function __invoke(CommentOrderByCustomer $command): void
@@ -33,8 +37,8 @@ final class CommentOrderByCustomerHandler
             throw new \DomainException(sprintf('Cannot comment an order "%s" because it does not exist', $command->orderNumber()));
         }
 
-        $comment = Comment::create($command->customerEmail(), $order, $command->message());
+        $comment = Comment::orderByCustomer($order, $command->customerEmail(), $command->message());
 
-        $this->orderCommentRepository->add($comment);
+        $this->entityManager->persist($comment);
     }
 }

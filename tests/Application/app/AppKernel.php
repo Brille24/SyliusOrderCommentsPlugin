@@ -20,6 +20,7 @@ final class AppKernel extends Kernel
             new \Sylius\OrderCommentsPlugin\SyliusOrderCommentsPlugin(),
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
+            new \SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
         ]);
     }
 
