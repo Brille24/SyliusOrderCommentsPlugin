@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Domain\Model;
+namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
 
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 

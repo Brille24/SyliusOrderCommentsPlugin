@@ -1,4 +1,18 @@
 doctrine:
+    orm:
+        mappings:
+            SyliusOrderCommentsPlugin:
+                type: xml
+                dir: Resources/config/doctrine/model
+                prefix: 'Sylius\OrderCommentsPlugin\Domain\Model'
     dbal:
         types:
             uuid: Ramsey\Uuid\Doctrine\UuidType
+
+sylius_resource:
+    resources:
+        sylius.order_comment:
+            driver: doctrine/orm
+            classes:
+                model: Sylius\OrderCommentsPlugin\Domain\Model\Comment
+                repository: Sylius\OrderCommentsPlugin\Infrastructure\Repository\SyliusOrderCommentRepository

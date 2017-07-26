@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Domain\Model;
+namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
 
 use Sylius\Component\Core\Model\Order;
 use Sylius\OrderCommentsPlugin\Domain\Model\Author;
@@ -21,6 +21,7 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
         $comment = Comment::create('test@test.com', $order, 'Hello');
 
         $this->assertEquals($order, $comment->order());
+        $this->assertEquals('test@test.com', $comment->authorEmail());
         $this->assertEquals('Hello', $comment->message());
     }
 

@@ -6,5 +6,11 @@
             <argument type="service" id="sylius.behat.shared_storage" />
             <tag name="fob.context_service" />
         </service>
+        <service id="sylius.behat.application.order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application\OrderCommentsContext">
+            <argument type="service" id="__symfony__.command_bus" />
+            <argument type="service" id="__symfony__.sylius.repository.order_comment" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
     </services>
 </container>

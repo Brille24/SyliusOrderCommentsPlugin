@@ -2,25 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain;
+namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application;
 
 use Behat\Behat\Context\Context;
+use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
-use Sylius\OrderCommentsPlugin\Domain\Model\Author;
+use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
+use Sylius\OrderCommentsPlugin\Application\Repository\OrderCommentRepository;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 
 final class OrderCommentsContext implements Context
 {
+    /** @var MessageBus */
+    private $commandBus;
+
+    /** @var OrderCommentRepository */
+    private $orderCommentRepository;
+
     /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     */
-    public function __construct(SharedStorageInterface $sharedStorage)
+    public function __construct(MessageBus $commandBus, OrderCommentRepository $orderCommentRepository, SharedStorageInterface $sharedStorage)
     {
+        $this->commandBus = $commandBus;
+        $this->orderCommentRepository = $orderCommentRepository;
         $this->sharedStorage = $sharedStorage;
     }
 
@@ -31,7 +38,8 @@ final class OrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $this->sharedStorage->set('comment', Comment::create($user->getEmail(), $order, $message));
+
+        $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $user->getEmail(), $message));
     }
 
     /**
@@ -42,7 +50,7 @@ final class OrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            Comment::create($user->getEmail(), $order, '');
+            $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $user->getEmail(), ''));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -54,7 +62,21 @@ final class OrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            Comment::create($email, $order, 'Hello');
+            $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $email, 'Hello'));
+        } catch (\DomainException $exception) {
+            $this->sharedStorage->set('exception', $exception);
+        }
+    }
+
+    /**
+     * @When I try to comment an not existing order with :message
+     */
+    public function iTryToCommentAnNotExistingOrderWith(string $message): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        try {
+            $this->commandBus->handle(CommentOrderByCustomer::create('#0003', $user->getEmail(), $message));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -65,9 +87,11 @@ final class OrderCommentsContext implements Context
      */
     public function thisOrderShouldHaveCommentWithFromThisCustomer(OrderInterface $order, string $message): void
     {
+        /** @var Comment $comment */
+        $comment = $this->orderCommentRepository->findAll()[0];
+
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $comment = $this->sharedStorage->get('comment');
 
         if (
             $comment->message() !== $message &&
