@@ -1,4 +1,4 @@
-@order_comments
+@customer_order_comments
 Feature: Commenting an order by a customer
     In order to provide ability to comment an order
     As a Customer
