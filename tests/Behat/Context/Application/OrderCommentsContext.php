@@ -9,8 +9,8 @@ use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
-use Sylius\OrderCommentsPlugin\Application\Repository\OrderCommentRepository;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 
 final class OrderCommentsContext implements Context
@@ -18,7 +18,7 @@ final class OrderCommentsContext implements Context
     /** @var MessageBus */
     private $commandBus;
 
-    /** @var OrderCommentRepository */
+    /** @var RepositoryInterface */
     private $orderCommentRepository;
 
     /** @var SharedStorageInterface */
@@ -26,7 +26,7 @@ final class OrderCommentsContext implements Context
 
     public function __construct(
         MessageBus $commandBus,
-        OrderCommentRepository $orderCommentRepository,
+        RepositoryInterface $orderCommentRepository,
         SharedStorageInterface $sharedStorage
     ) {
         $this->commandBus = $commandBus;

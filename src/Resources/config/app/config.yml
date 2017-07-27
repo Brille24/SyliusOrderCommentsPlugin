@@ -15,7 +15,6 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model: Sylius\OrderCommentsPlugin\Domain\Model\Comment
-                repository: Sylius\OrderCommentsPlugin\Infrastructure\Repository\SyliusOrderCommentRepository
 
 doctrine_orm_bridge:
     entity_manager: default
