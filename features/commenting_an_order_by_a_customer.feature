@@ -18,11 +18,11 @@ Feature: Commenting an order by a customer
     @domain @application
     Scenario: Customer commented an order
         When I comment an order "#00000022" with "Hello"
-        Then this order should have comment with "Hello" from this customer
+        Then this order should have a comment with "Hello" from this customer
 
     @domain @application
-    Scenario: Customer cannot comment an order with empty message
-        When I try to comment an order "#00000022" with empty message
+    Scenario: Customer cannot comment an order with an empty message
+        When I try to comment an order "#00000022" with an empty message
         Then this order should not have empty comment from this customer
 
     @domain @application
@@ -32,7 +32,7 @@ Feature: Commenting an order by a customer
 
     @application
     Scenario: Customer cannot comment an order which does not exist
-        When I try to comment an not existing order with "Hello"
+        When I try to comment a not existing order with "Hello"
         Then this order should not have empty comment from this customer
 
     @todo

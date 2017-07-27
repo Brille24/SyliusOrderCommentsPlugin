@@ -12,6 +12,7 @@ use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Webmozart\Assert\Assert;
 
 final class OrderCommentsContext implements Context
 {
@@ -46,7 +47,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @When I try to comment an order :order with empty message
+     * @When I try to comment an order :order with an empty message
      */
     public function aCustomerTryToCommentsAnOrderWithEmptyMessage(OrderInterface $order): void
     {
@@ -72,7 +73,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @When I try to comment an not existing order with :message
+     * @When I try to comment a not existing order with :message
      */
     public function iTryToCommentAnNotExistingOrderWith(string $message): void
     {
@@ -86,7 +87,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @Then /^(this order) should have comment with "([^"]+)" from this customer$/
+     * @Then /^(this order) should have a comment with "([^"]+)" from this customer$/
      */
     public function thisOrderShouldHaveCommentWithFromThisCustomer(OrderInterface $order, string $message): void
     {
@@ -97,10 +98,10 @@ final class OrderCommentsContext implements Context
         $user = $this->sharedStorage->get('user');
 
         if (
-            $comment->message() !== $message &&
-            $comment->order() !== $order &&
-            $comment->authorEmail() != $user->getEmail() &&
-            empty($comment->recordedMessages())
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !empty($comment->recordedMessages())
         ) {
             throw new \RuntimeException(
                 sprintf(
@@ -116,12 +117,8 @@ final class OrderCommentsContext implements Context
     /**
      * @Then this order should not have empty comment from this customer
      */
-    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer()
+    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
-        try {
-            throw $this->sharedStorage->get('exception');
-        } catch (\DomainException $exception) {
-            return;
-        }
+        Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
     }
 }

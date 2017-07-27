@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-       <service id="sylius.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderByCustomerHandler">
+       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderByCustomerHandler">
            <argument type="service" id="sylius.repository.order" />
            <argument type="service" id="doctrine.orm.default_entity_manager" />
            <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer" />

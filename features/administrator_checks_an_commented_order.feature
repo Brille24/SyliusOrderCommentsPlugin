@@ -1,6 +1,6 @@
 @order_comments
 Feature: Reading comments from a customer
-    In order to check unread customer's comments
+    In order to let customers communicate with the administrators and solve problems in their orders
     As an Administrator
     I want to be able to communicate with my customers via order comments
 

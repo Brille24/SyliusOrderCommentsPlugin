@@ -13,6 +13,7 @@ use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
 use Sylius\OrderCommentsPlugin\Domain\Model\Author;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
+use Webmozart\Assert\Assert;
 
 final class OrderCommentsContext implements Context
 {
@@ -38,7 +39,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @When I try to comment an order :order with empty message
+     * @When I try to comment an order :order with an empty message
      */
     public function aCustomerTryToCommentsAnOrderWithEmptyMessage(OrderInterface $order): void
     {
@@ -64,7 +65,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @Then /^(this order) should have comment with "([^"]+)" from this customer$/
+     * @Then /^(this order) should have a comment with "([^"]+)" from this customer$/
      */
     public function thisOrderShouldHaveCommentWithFromThisCustomer(OrderInterface $order, string $message): void
     {
@@ -74,10 +75,10 @@ final class OrderCommentsContext implements Context
         $comment = $this->sharedStorage->get('comment');
 
         if (
-            $comment->message() !== $message &&
-            $comment->order() !== $order &&
-            $comment->authorEmail() != $user->getEmail() &&
-            in_array(
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !in_array(
                 OrderCommentedByCustomer::occur($comment->getId(), $order, Email::fromString($user->getEmail()), $message),
                 $comment->recordedMessages()
             )
@@ -96,12 +97,8 @@ final class OrderCommentsContext implements Context
     /**
      * @Then this order should not have empty comment from this customer
      */
-    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer()
+    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
-        try {
-            throw $this->sharedStorage->get('exception');
-        } catch (\DomainException $exception) {
-            return;
-        }
+        Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
     }
 }
