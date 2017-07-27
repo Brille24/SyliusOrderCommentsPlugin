@@ -1,6 +1,6 @@
 <?php
 
-namespace Sylius\OrderCommentsPlugin;
+namespace Sylius\OrderCommentsPlugin\Infrastructure;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

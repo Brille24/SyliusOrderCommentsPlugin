@@ -1,6 +1,6 @@
 <?php
 
-namespace Sylius\OrderCommentsPlugin\DependencyInjection;
+namespace Sylius\OrderCommentsPlugin\Infrastructure\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
