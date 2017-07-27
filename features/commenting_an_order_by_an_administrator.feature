@@ -1,4 +1,4 @@
-@order_comments
+@administrator_order_comments
 Feature: Commenting an order by an administrator
     In order to respond to the customers comment
     As an Administrator
@@ -15,15 +15,15 @@ Feature: Commenting an order by an administrator
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @todo
+    @domain
     Scenario: Administrator commented an order
         When I comment an order "#00000022" with "How can I help you?"
         Then this order should have a comment with "How can I help you?" from this customer
 
-    @todo
+    @domain
     Scenario: Administrator cannot comment an order with an empty message
         When I try to comment an order "#00000022" with an empty message
-        Then this order should not have any comment
+        Then this order should not have empty comment from this customer
 
     @todo
     Scenario: Administrator cannot comment an order which does not exist
