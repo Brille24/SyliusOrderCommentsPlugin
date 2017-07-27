@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Ramsey\Uuid\Uuid;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -46,7 +47,7 @@ final class OrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            Comment::orderByCustomer($order, $user->getEmail(), '');
+            $this->sharedStorage->set('comment', Comment::orderByCustomer($order, $user->getEmail(), ''));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -58,7 +59,7 @@ final class OrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            Comment::orderByCustomer($order, $email, 'Hello');
+            $this->sharedStorage->set('comment', Comment::orderByCustomer($order, $email, 'Hello'));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -100,5 +101,13 @@ final class OrderCommentsContext implements Context
     public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
         Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
+    }
+
+    /**
+     * @Then this order should not have any comments
+     */
+    public function thisOrderShouldNotHaveAnyComments()
+    {
+        Assert::false($this->sharedStorage->has('comment'), 'At least one comment has been saved in shared storage, but none should');
     }
 }

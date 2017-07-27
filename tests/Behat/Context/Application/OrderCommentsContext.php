@@ -115,10 +115,19 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @Then this order should not have empty comment from this customer
+     * @Then I should be notified that comment is invalid
      */
     public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
         Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
+    }
+
+    /**
+     * @Then this order should not have any comments
+     */
+    public function thisOrderShouldNotHaveAnyComments(): void
+    {
+        $comments = $this->orderCommentRepository->findAll();
+        Assert::isEmpty($comments, sprintf('This order should not have any comment, but %d found', count($comments)));
     }
 }
