@@ -95,7 +95,7 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @Then this order should not have empty comment from this customer
+     * @Then I should be notified that comment is invalid
      */
     public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
