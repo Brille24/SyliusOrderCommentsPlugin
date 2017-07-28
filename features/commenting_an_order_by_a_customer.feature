@@ -23,17 +23,20 @@ Feature: Commenting an order by a customer
     @domain @application
     Scenario: Customer cannot comment an order with an empty message
         When I try to comment an order "#00000022" with an empty message
-        Then this order should not have empty comment from this customer
+        Then I should be notified that comment is invalid
+        And this order should not have any comments
 
     @domain @application
     Scenario: Customer with invalid email cannot comment an order
         When a customer with email "notEmail" try to comment an order "#00000022"
-        Then this order should not have empty comment from this customer
+        Then I should be notified that comment is invalid
+        And this order should not have any comments
 
     @application
     Scenario: Customer cannot comment an order which does not exist
         When I try to comment a not existing order with "Hello"
-        Then this order should not have empty comment from this customer
+        Then I should be notified that comment is invalid
+        And this order should not have any comments
 
     @todo
     Scenario: Sending the email notification to the administrator about unread customer's comments
