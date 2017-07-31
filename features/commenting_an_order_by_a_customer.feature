@@ -17,12 +17,12 @@ Feature: Commenting an order by a customer
 
     @domain @application
     Scenario: Customer commented an order
-        When I comment an order "#00000022" with "Hello"
+        When I comment the order "#00000022" with "Hello"
         Then this order should have a comment with "Hello" from this customer
 
     @domain @application
     Scenario: Customer cannot comment an order with an empty message
-        When I try to comment an order "#00000022" with an empty message
+        When I try to comment the order "#00000022" with an empty message
         Then I should be notified that comment is invalid
         And this order should not have any comments
 
