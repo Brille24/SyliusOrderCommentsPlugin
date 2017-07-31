@@ -1,3 +1,5 @@
 imports:
     - suites/domain/customer_order_comments.yml
     - suites/application/customer_order_comments.yml
+
+    - suites/domain/administrator_order_comments.yml

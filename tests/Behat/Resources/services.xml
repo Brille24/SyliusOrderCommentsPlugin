@@ -2,10 +2,16 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="sylius_order_comment_plugin.behat.domain.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain\OrderCommentsContext">
+        <service id="sylius_order_comment_plugin.behat.domain.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain\CustomerOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
             <tag name="fob.context_service" />
         </service>
+
+        <service id="sylius_order_comment_plugin.behat.domain.administrator_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain\AdministratorOrderCommentsContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+
         <service id="sylius_order_comment_plugin.behat.application.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application\OrderCommentsContext">
             <argument type="service" id="__symfony__.command_bus" />
             <argument type="service" id="__symfony__.sylius.repository.order_comment" />
