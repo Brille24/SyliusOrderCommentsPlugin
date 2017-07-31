@@ -1,6 +1,6 @@
 @administrator_order_comments
 Feature: Commenting an order by an administrator
-    In order to respond to the customers comment
+    In order to communicate with the customer that made an order
     As an Administrator
     I want to be able to add a comment to the order
 
@@ -17,20 +17,16 @@ Feature: Commenting an order by an administrator
 
     @domain
     Scenario: Administrator commented an order
-        When I comment an order "#00000022" with "How can I help you?"
-        Then this order should have a comment with "How can I help you?" from this customer
+        When I comment the order "#00000022" with "How can I help you?"
+        Then this order should have a comment with "How can I help you?" from this administrator
 
     @domain
-    Scenario: Administrator cannot comment an order with an empty message
-        When I try to comment an order "#00000022" with an empty message
-        Then this order should not have empty comment from this customer
+    Scenario: Administrator cannot comment the order with an empty message
+        When I try to comment the order "#00000022" with an empty message
+        Then I should be notified that comment is invalid
+        And this order should not have any comments
 
     @todo
-    Scenario: Administrator cannot comment an order which does not exist
-        When I try to comment a not existing order with "How can I help you?"
-        Then this order should not have empty comment from this customer
-
-    @todo
-    Scenario: Sending the email notification to the customer about unread administrator's comments
+    Scenario: Sending an email notification to the customer about unread comments
         Given I have commented the order "#00000022" with "How can I help you?"
-        Then the notification email should be sent to the administrator
+        Then the notification email should be sent to the customer

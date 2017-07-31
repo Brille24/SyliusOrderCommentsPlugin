@@ -14,7 +14,7 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_can_be_created(): void
+    public function customer_can_comment_an_order(): void
     {
         $order = new Order();
 
@@ -27,10 +27,24 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function administrator_can_comment_an_order(): void
+    {
+        $order = new Order();
+
+        $comment = Comment::orderByAdministrator($order, 'test@test.com', 'Hello');
+
+        $this->assertEquals($order, $comment->order());
+        $this->assertEquals('test@test.com', $comment->authorEmail());
+        $this->assertEquals('Hello', $comment->message());
+    }
+
+    /**
+     * @test
      *
      * @expectedException \DomainException
      */
-    public function it_cannot_be_created_with_empty_message(): void
+    public function customer_cannot_create_an_empty_comment(): void
     {
         $order = new Order();
 
@@ -42,7 +56,31 @@ final class CommentTest extends \PHPUnit_Framework_TestCase
      *
      * @expectedException \DomainException
      */
-    public function it_cannot_be_created_with_invalid_author_email(): void
+    public function administrator_cannot_create_an_empty_comment(): void
+    {
+        $order = new Order();
+
+        Comment::orderByAdministrator($order, 'test@test.com', '');
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \DomainException
+     */
+    public function customer_comment_cannot_be_created_with_invalid_mail(): void
+    {
+        $order = new Order();
+
+        Comment::orderByCustomer($order, 'abcd.com', 'Hello');
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \DomainException
+     */
+    public function administrator_comment_cannot_be_created_with_invalid_mail(): void
     {
         $order = new Order();
 
