@@ -1,0 +1,11 @@
+sylius_order_comments_render_comment_order_by_customer:
+    path: /account/orders/{orderNumber}
+    methods: [GET]
+    defaults:
+        _controller: sylius_order_comment_plugin.controller.render_comment_order_by_customer
+
+sylius_order_comments_comment_order_by_customer:
+    path: /account/orders/{orderNumber}
+    methods: [POST]
+    defaults:
+        _controller: sylius_order_comment_plugin.controller.comment_order_by_customer

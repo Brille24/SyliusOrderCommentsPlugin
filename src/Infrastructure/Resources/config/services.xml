@@ -10,5 +10,21 @@
            <argument type="service" id="doctrine.orm.default_entity_manager" />
            <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer" />
        </service>
+
+        <service id="sylius_order_comment_plugin.controller.render_comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Infrastructure\Ui\Action\RenderCommentOrderByCustomerAction">
+            <argument type="service" id="fos_rest.view_handler.default" />
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="sylius_order_comment_plugin.controller.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Infrastructure\Ui\Action\CommentOrderByCustomerAction">
+            <argument type="service" id="simple_bus.command_bus" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="sylius_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusOrderCommentsPlugin/order_comment.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.layout.after_header" method="onBlockEvent" />
+        </service>
     </services>
 </container>

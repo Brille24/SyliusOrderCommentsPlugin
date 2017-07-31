@@ -32,6 +32,11 @@ final class CommentOrderByCustomer
         return new self($orderNumber, $customerEmail, $message);
     }
 
+    public static function createEmpty(): self
+    {
+        return new self('', '', '');
+    }
+
     public function orderNumber(): string
     {
         return $this->orderNumber;
