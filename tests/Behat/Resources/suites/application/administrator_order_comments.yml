@@ -1,0 +1,28 @@
+# Put your Behat suites definitions here
+
+default:
+    suites:
+        application_admistrator_order_comments:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.hook.email_spool
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.order
+                - sylius.behat.context.setup.payment
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.user
+                - sylius.behat.context.setup.admin_security
+
+                - sylius.behat.context.transform.address
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.order
+                - sylius.behat.context.transform.payment
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.shipping_method
+
+                - sylius_order_comment_plugin.behat.application.administrator_order_comments
+            filters:
+                tags: "@administrator_order_comments && @application"

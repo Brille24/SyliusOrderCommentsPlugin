@@ -10,5 +10,10 @@
            <argument type="service" id="doctrine.orm.default_entity_manager" />
            <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer" />
        </service>
+       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_administrator" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderByAdministratorHandler">
+           <argument type="service" id="sylius.repository.order" />
+           <argument type="service" id="doctrine.orm.default_entity_manager" />
+           <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator" />
+       </service>
     </services>
 </container>
