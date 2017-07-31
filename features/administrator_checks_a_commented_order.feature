@@ -1,4 +1,4 @@
-@order_comments
+@administrator_order_comments
 Feature: Reading comments from a customer
     In order to let customers communicate with the administrators and solve problems in their orders
     As an Administrator
