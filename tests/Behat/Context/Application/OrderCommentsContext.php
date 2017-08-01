@@ -123,11 +123,12 @@ final class OrderCommentsContext implements Context
     }
 
     /**
-     * @Then this order should not have any comments
+     * @Then /^(this order) should not have any comments$/
      */
-    public function thisOrderShouldNotHaveAnyComments(): void
+    public function thisOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {
-        $comments = $this->orderCommentRepository->findAll();
+        $comments = $this->orderCommentRepository->findBy(['order' => $order]);
+
         Assert::isEmpty($comments, sprintf('This order should not have any comment, but %d found', count($comments)));
     }
 }
