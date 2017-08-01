@@ -41,7 +41,7 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @When I comment the order :order with :message
      */
-    public function iCommentTheOrderWith(OrderInterface $order, string $message)
+    public function iCommentTheOrderWith(OrderInterface $order, string $message): void
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
@@ -52,7 +52,7 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @Then /^(this order) should have a comment with "([^"]+)" from this administrator$/
      */
-    public function thisOrderShouldHaveACommentWithFromThisAdministrator(OrderInterface $order, string $message)
+    public function thisOrderShouldHaveACommentWithFromThisAdministrator(OrderInterface $order, string $message): void
     {
         /** @var Comment $comment */
         $comment = $this->orderCommentRepository->findOneBy(['order' => $order]);
@@ -74,7 +74,7 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @When I try to comment the order :order with an empty message
      */
-    public function iTryToCommentTheOrderWithAnEmptyMessage(OrderInterface $order)
+    public function iTryToCommentTheOrderWithAnEmptyMessage(OrderInterface $order): void
     {
         try {
             $this->iCommentTheOrderWith($order, '');
@@ -86,7 +86,7 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @Then I should be notified that comment is invalid
      */
-    public function iShouldBeNotifiedThatCommentIsInvalid()
+    public function iShouldBeNotifiedThatCommentIsInvalid(): void
     {
         Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
     }
@@ -94,7 +94,7 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @Then /^(this order) should not have any comments$/
      */
-    public function thisOrderShouldNotHaveAnyComments(OrderInterface $order)
+    public function thisOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {
         $comments = $this->orderCommentRepository->findBy(['order' => $order]);
 
