@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Application\Command;
 
+use PHPUnit\Framework\TestCase;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
 
-final class CommentOrderByAdministratorTest extends \PHPUnit_Framework_TestCase
+final class CommentOrderByAdministratorTest extends TestCase
 {
     /**
      * @test
      */
-    public function it_is_immutable_intention_of_commenting_an_order_by_customer(): void
+    public function it_is_immutable_intention_of_commenting_an_order_by_administrator(): void
     {
         $command = CommentOrderByAdministrator::create('#00002', 'test@test.com', 'Hello');
 

@@ -65,7 +65,7 @@ final class AdministratorOrderCommentsContext implements Context
         {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'There are no order comment with the "%s" message for the "%s" order from the "%s" customer',
+                    'There are no order comment with the "%s" message for the "%s" order from the "%s" administrator',
                     $message, $order->getNumber(), $user->getEmail()
             ));
         }
