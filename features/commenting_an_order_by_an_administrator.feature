@@ -20,7 +20,7 @@ Feature: Commenting an order by an administrator
         When I comment the order "#00000022" with "How can I help you?"
         Then this order should have a comment with "How can I help you?" from this administrator
 
-    @domain
+    @domain @application
     Scenario: Administrator cannot comment the order with an empty message
         When I try to comment the order "#00000022" with an empty message
         Then I should be notified that comment is invalid

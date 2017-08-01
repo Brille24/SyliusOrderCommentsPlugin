@@ -55,7 +55,7 @@ final class AdministratorOrderCommentsContext implements Context
     public function thisOrderShouldHaveACommentWithFromThisAdministrator(OrderInterface $order, string $message)
     {
         /** @var Comment $comment */
-        $comment = $this->orderCommentRepository->findOneBy(['order' => $order->getId()]);
+        $comment = $this->orderCommentRepository->findOneBy(['order' => $order]);
 
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
@@ -69,5 +69,35 @@ final class AdministratorOrderCommentsContext implements Context
                     $message, $order->getNumber(), $user->getEmail()
             ));
         }
+    }
+
+    /**
+     * @When I try to comment the order :order with an empty message
+     */
+    public function iTryToCommentTheOrderWithAnEmptyMessage(OrderInterface $order)
+    {
+        try {
+            $this->iCommentTheOrderWith($order, '');
+        } catch (\DomainException $exception) {
+            $this->sharedStorage->set('exception', $exception);
+        }
+    }
+
+    /**
+     * @Then I should be notified that comment is invalid
+     */
+    public function iShouldBeNotifiedThatCommentIsInvalid()
+    {
+        Assert::isInstanceOf($this->sharedStorage->get('exception'), \DomainException::class);
+    }
+
+    /**
+     * @Then /^(this order) should not have any comments$/
+     */
+    public function thisOrderShouldNotHaveAnyComments(OrderInterface $order)
+    {
+        $comments = $this->orderCommentRepository->findBy(['order' => $order]);
+
+        Assert::isEmpty($comments, sprintf('This order should not have any comment, but %d found', count($comments)));
     }
 }
