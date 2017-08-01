@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
 
+use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Order;
-use Sylius\OrderCommentsPlugin\Domain\Model\Author;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
-final class CommentTest extends \PHPUnit_Framework_TestCase
+final class CommentTest extends TestCase
 {
     /**
      * @test

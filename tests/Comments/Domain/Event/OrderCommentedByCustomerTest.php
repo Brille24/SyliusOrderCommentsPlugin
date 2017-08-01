@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Event;
 
+use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Sylius\Component\Core\Model\Order;
 use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
-final class OrderCommentedByCustomerTest extends \PHPUnit_Framework_TestCase
+final class OrderCommentedByCustomerTest extends TestCase
 {
     /**
      * @test
