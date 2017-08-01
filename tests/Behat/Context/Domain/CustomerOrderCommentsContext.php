@@ -30,9 +30,9 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
-     * @When I comment an order :order with :message
+     * @When I comment the order :order with :message
      */
-    public function aCustomerCommentsAnOrderWith(OrderInterface $order, string $message): void
+    public function aCustomerCommentsTheOrderWith(OrderInterface $order, string $message): void
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
@@ -40,9 +40,9 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
-     * @When I try to comment an order :order with an empty message
+     * @When I try to comment the order :order with an empty message
      */
-    public function aCustomerTryToCommentsAnOrderWithEmptyMessage(OrderInterface $order): void
+    public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
