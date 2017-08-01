@@ -75,15 +75,11 @@ final class CustomerOrderCommentsContext implements Context
         /** @var Comment $comment */
         $comment = $this->sharedStorage->get('comment');
 
-        if (
-            $comment->message() !== $message ||
-            $comment->order() !== $order ||
-            $comment->authorEmail() != $user->getEmail() ||
-            !in_array(
-                OrderCommentedByCustomer::occur($comment->getId(), $order, Email::fromString($user->getEmail()), $message),
-                $comment->recordedMessages()
-            )
-        ) {
+        if (!in_array(
+            OrderCommentedByCustomer::occur($comment->getId(), $order, Email::fromString($user->getEmail()), $message),
+            $comment->recordedMessages(),
+            false
+        )) {
             throw new \RuntimeException(
                 sprintf(
                     'There are no order comment with this message "%s" for this order "%s" from this customer "%s"',
