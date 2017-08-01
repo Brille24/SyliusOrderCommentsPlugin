@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Application\Command;
 
+use PHPUnit\Framework\TestCase;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
 
-final class CommentOrderByCustomerTest extends \PHPUnit_Framework_TestCase
+final class CommentOrderByCustomerTest extends TestCase
 {
     /**
      * @test

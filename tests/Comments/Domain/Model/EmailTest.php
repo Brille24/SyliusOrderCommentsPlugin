@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
 
+use PHPUnit\Framework\TestCase;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
-final class EmailTest extends \PHPUnit_Framework_TestCase
+final class EmailTest extends TestCase
 {
     /**
      * @test
