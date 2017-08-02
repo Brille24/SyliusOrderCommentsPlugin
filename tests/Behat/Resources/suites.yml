@@ -4,3 +4,5 @@ imports:
 
     - suites/domain/administrator_order_comments.yml
     - suites/application/administrator_order_comments.yml
+
+    - suites/ui/administrator_order_comments.yml

@@ -2,7 +2,7 @@ sylius_order_comments_partial_comment_create:
     path: "/admin/_partial/orders/{orderId}/comments"
     methods: ["POST"]
     defaults:
-        _controller: "sylius.order_comments_plugin.infrastructure.controller.comment_form_action"
+        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
 
 sylius_order_comments_partial_comment_index:
     path: "/admin/_partial/orders/{orderId}/comments"
