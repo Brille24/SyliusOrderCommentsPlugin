@@ -6,11 +6,11 @@ namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\CommentType;
+use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RenderCommentFormAction
+final class RenderOrderCommentAction
 {
     /** @var ViewHandlerInterface */
     private $viewHandler;
@@ -26,7 +26,7 @@ final class RenderCommentFormAction
 
     public function __invoke(int $orderId): Response
     {
-        $form = $this->formFactory->create(CommentType::class);
+        $form = $this->formFactory->create(OrderCommentType::class);
 
         $view = View::create(['form' => $form->createView(), 'orderId' => $orderId]);
         $view->setTemplate('@SyliusOrderCommentsPlugin/_form.html.twig');

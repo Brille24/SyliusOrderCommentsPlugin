@@ -21,12 +21,12 @@
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
         </service>
 
-        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderCommentFormAction">
+        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderOrderCommentAction">
             <argument type="service" id="fos_rest.view_handler.default" />
             <argument type="service" id="form.factory" />
         </service>
 
-        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\CommentFormAction">
+        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\OrderCommentAction">
             <argument type="service" id="fos_rest.view_handler.default" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="router" />

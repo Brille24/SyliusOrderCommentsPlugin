@@ -10,8 +10,8 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\CommentType;
-use Sylius\OrderCommentsPlugin\Infrastructure\Model\Comment;
+use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
+use Sylius\OrderCommentsPlugin\Infrastructure\Model\OrderComment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-final class CommentFormAction
+final class OrderCommentAction
 {
     /** @var ViewHandlerInterface */
     private $viewHandler;
@@ -58,14 +58,14 @@ final class CommentFormAction
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->create(CommentType::class);
+        $form = $this->formFactory->create(OrderCommentType::class);
         $form->handleRequest($request);
 
         if (!$form->isValid()) {
             throw new BadRequestHttpException();
         }
 
-        /** @var Comment $comment */
+        /** @var OrderComment $comment */
         $comment = $form->getData();
         /** @var ShopUserInterface $user */
         $user = $this->securityTokenStorage->getToken()->getUser();
