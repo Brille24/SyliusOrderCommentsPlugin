@@ -14,7 +14,7 @@ use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 use Webmozart\Assert\Assert;
 
-final class OrderCommentsContext implements Context
+final class CustomerOrderCommentsContext implements Context
 {
     /** @var MessageBus */
     private $commandBus;

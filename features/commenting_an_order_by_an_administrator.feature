@@ -15,12 +15,12 @@ Feature: Commenting an order by an administrator
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @domain
+    @domain @application
     Scenario: Administrator commented an order
         When I comment the order "#00000022" with "How can I help you?"
         Then this order should have a comment with "How can I help you?" from this administrator
 
-    @domain
+    @domain @application
     Scenario: Administrator cannot comment the order with an empty message
         When I try to comment the order "#00000022" with an empty message
         Then I should be notified that comment is invalid
