@@ -1,0 +1,9 @@
+<div class="ui">
+    {{ form_start(form, {'action': path('sylius_order_comments_partial_comment_create', { 'orderId': orderId}), 'attr': {'class': 'ui reply form', 'novalidate': 'novalidate'}}) }}
+    <div class="field">
+        {{ form_widget(form.message) }}
+    </div>
+    <button type="submit" class="ui labeled icon blue button"><i class="edit icon"></i> {{ 'sylius.ui.comment'|trans }}</button>
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
