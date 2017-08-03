@@ -61,8 +61,19 @@ final class AdministratorOrderCommentsContext implements Context
         $comment = $this->orderCommentsElement->getFirstComment();
         $now = new \DateTimeImmutable();
 
+        Assert::notNull($comment);
         Assert::same($comment->find('css', '.text')->getText(), $message);
         Assert::same($comment->find('css', '.author')->getText(), $user->getEmail());
         Assert::same($comment->find('css', '.date')->getText(), $now->format('H:i:s Y/m/d'));
+    }
+
+    /**
+     * @Then the order :order should not have any comments
+     */
+    public function theOrderShouldNotHaveAnyComments(OrderInterface $order): void
+    {
+        $this->orderPage->open(['id' => $order->getId()]);
+
+        Assert::same($this->orderCommentsElement->countComments(), 0, 'This order should not have any comment, but %s found.');
     }
 }

@@ -98,6 +98,7 @@ final class AdministratorOrderCommentsContext implements Context
 
     /**
      * @Then /^(this order) should not have any comments$/
+     * @Then the order :order should not have any comments
      */
     public function thisOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {

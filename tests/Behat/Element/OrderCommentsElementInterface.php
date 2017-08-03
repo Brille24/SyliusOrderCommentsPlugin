@@ -8,8 +8,7 @@ use Behat\Mink\Element\NodeElement;
 
 interface OrderCommentsElementInterface
 {
-    /**
-     * @return array|NodeElement[]
-     */
-    public function getFirstComment(): NodeElement;
+    public function getFirstComment(): ?NodeElement;
+
+    public function countComments(): int;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Page\Shop\Account\Order\ShowPageInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -60,7 +61,18 @@ final class CustomerOrderCommentsContext implements Context
 
         $comment = $this->orderCommentsElement->getFirstComment();
 
+        Assert::notNull($comment);
         Assert::same($comment->find('css', '.text')->getText(), $message);
         Assert::same($comment->find('css', '.author')->getText(), $user->getEmail());
+    }
+
+    /**
+     * @Then the order :order should not have any comments
+     */
+    public function theOrderShouldNotHaveAnyComments(OrderInterface $order): void
+    {
+        $this->orderPage->open(['number' => $order->getNumber()]);
+
+        Assert::same($this->orderCommentsElement->countComments(), 0, 'This order should not have any comment, but %s found.');
     }
 }

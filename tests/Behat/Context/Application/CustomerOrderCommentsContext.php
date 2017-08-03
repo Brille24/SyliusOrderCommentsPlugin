@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -126,6 +127,7 @@ final class CustomerOrderCommentsContext implements Context
 
     /**
      * @Then /^(this order) should not have any comments$/
+     * @Then the order :order should not have any comments
      */
     public function thisOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {

@@ -12,6 +12,8 @@ sylius_admin_order_comments_partial_comment_index:
         _sylius:
             paginate: false
             limit: false
-            criteria:
-                order: "$orderId"
+            repository:
+                method: findBy
+                arguments:
+                   - order: "expr:notFoundOnNull(service('sylius.repository.order').find($orderId))"
             template: "@SyliusOrderCommentsPlugin/index.html.twig"
