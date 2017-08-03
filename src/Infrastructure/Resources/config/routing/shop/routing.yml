@@ -16,4 +16,5 @@ sylius_shop_order_comments_partial_comment_index:
                 method: findBy
                 arguments:
                    - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
+                   - createdAt: asc
             template: "@SyliusOrderCommentsPlugin/index.html.twig"
