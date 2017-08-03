@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Infrastructure\Form\Type;
 
-use Sylius\OrderCommentsPlugin\Infrastructure\Model\OrderComment;
+use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;

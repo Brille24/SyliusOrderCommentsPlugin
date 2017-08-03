@@ -11,7 +11,7 @@ use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
-use Sylius\OrderCommentsPlugin\Infrastructure\Model\OrderComment;
+use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
