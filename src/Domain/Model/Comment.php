@@ -29,40 +29,52 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     /** @var string */
     private $message;
 
-    private function __construct(UuidInterface $id, Email $authorEmail, OrderInterface $order, string $message)
-    {
-        $this->id = $id;
-        $this->authorEmail = $authorEmail;
-        $this->order = $order;
-        $this->message = $message;
-    }
+    /** @var \DateTimeInterface */
+    private $createdAt;
 
-    public static function orderByCustomer(OrderInterface $order, string $customerEmail, string $message): self
+    private function __construct(OrderInterface $order, string $authorEmail, string $message)
     {
         if (null == $message) {
             throw new \DomainException('OrderComment cannot be created with empty message');
         }
 
-        $id = Uuid::uuid4();
-        $customerEmail = Email::fromString($customerEmail);
-        $comment = new self($id, $customerEmail, $order, $message);
+        $this->id = Uuid::uuid4();
+        $this->authorEmail = Email::fromString($authorEmail);
+        $this->order = $order;
+        $this->message = $message;
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
-        $comment->record(OrderCommentedByCustomer::occur($id, $order, $customerEmail, $message));
+    public static function orderByCustomer(OrderInterface $order, string $customerEmail, string $message): self
+    {
+        $comment = new self($order, $customerEmail, $message);
+
+        $comment->record(
+            OrderCommentedByCustomer::occur(
+                $comment->id,
+                $comment->order,
+                $comment->authorEmail,
+                $comment->message,
+                $comment->createdAt
+            )
+        );
 
         return $comment;
     }
 
     public static function orderByAdministrator(OrderInterface $order, string $administratorEmail, string $message): self
     {
-        if (null == $message) {
-            throw new \DomainException('OrderComment cannot be created with empty message');
-        }
+        $comment = new self($order, $administratorEmail, $message);
 
-        $id = Uuid::uuid4();
-        $administratorEmail = Email::fromString($administratorEmail);
-        $comment = new self($id, $administratorEmail, $order, $message);
-
-        $comment->record(OrderCommentedByAdministrator::occur($id, $order, $administratorEmail, $message));
+        $comment->record(
+            OrderCommentedByAdministrator::occur(
+                $comment->id,
+                $comment->order,
+                $comment->authorEmail,
+                $comment->message,
+                $comment->createdAt
+            )
+        );
 
         return $comment;
     }
@@ -85,5 +97,10 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     public function message(): string
     {
         return $this->message;
+    }
+
+    public function createdAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

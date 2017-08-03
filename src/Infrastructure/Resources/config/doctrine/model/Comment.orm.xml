@@ -16,9 +16,6 @@
         <embedded name="authorEmail" class="Sylius\OrderCommentsPlugin\Domain\Model\Email" />
 
         <field name="message" column="message" type="string" />
+        <field name="createdAt" column="createdAt" type="datetime" />
     </entity>
-
-    <embeddable name="Sylius\OrderCommentsPlugin\Domain\Model\Email">
-        <field name="email" type="string" />
-    </embeddable>
 </doctrine-mapping>

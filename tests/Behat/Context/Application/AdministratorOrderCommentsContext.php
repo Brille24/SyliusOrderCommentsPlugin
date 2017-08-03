@@ -61,9 +61,14 @@ final class AdministratorOrderCommentsContext implements Context
         $user = $this->sharedStorage->get('administrator');
 
         Assert::notNull($comment, 'This order does not have any comments.');
-        if ($comment->message() !== $message || $comment->authorEmail() != $user->getEmail())
-        {
-            throw new \InvalidArgumentException(
+        if (
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !$comment->createdAt() instanceof \DateTimeInterface ||
+            !empty($comment->recordedMessages())
+        ) {
+            throw new \RuntimeException(
                 sprintf(
                     'There are no order comment with the "%s" message for the "%s" order from the "%s" administrator',
                     $message, $order->getNumber(), $user->getEmail()

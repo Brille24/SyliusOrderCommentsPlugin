@@ -59,11 +59,13 @@ final class AdministratorOrderCommentsContext implements Context
         /** @var Comment $comment */
         $comment = $this->sharedStorage->get('comment');
 
-        if (!in_array(
-            OrderCommentedByAdministrator::occur($comment->getId(), $order, Email::fromString($user->getEmail()), $message),
-            $comment->recordedMessages(),
-            false
-        )) {
+        if (
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !$comment->createdAt() instanceof \DateTimeInterface ||
+            empty($comment->recordedMessages())
+        ) {
             throw new \InvalidArgumentException(
             sprintf(
                 'There are no order comment with the "%s" message for the "%s" order from the "%s" customer',

@@ -4,7 +4,7 @@
         <div class="content">
             <a class="author">{{ order_comment.authorEmail }}</a>
             <div class="metadata">
-                <span class="date">Today at 5:42PM</span>
+                <span class="date">{{ order_comment.createdAt|date('H:i:s Y/m/d') }}</span>
             </div>
             <div class="text">
                 {{ order_comment.message }}
