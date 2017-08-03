@@ -10,7 +10,7 @@ use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RenderOrderCommentAction
+final class RenderCommentOrderAction
 {
     /** @var ViewHandlerInterface */
     private $viewHandler;
