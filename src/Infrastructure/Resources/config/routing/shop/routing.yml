@@ -12,10 +12,9 @@ sylius_shop_order_comments_partial_comment_index:
         _sylius:
             paginate: false
             limit: false
-            sorting:
-                createdAt: desc
             repository:
                 method: findBy
                 arguments:
                    - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
+                   - createdAt: asc
             template: "@SyliusOrderCommentsPlugin/index.html.twig"
