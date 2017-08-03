@@ -10,7 +10,7 @@ use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RenderOrderCommentAction
+final class RenderCommentOrderAction
 {
     /** @var ViewHandlerInterface */
     private $viewHandler;
@@ -24,11 +24,11 @@ final class RenderOrderCommentAction
         $this->formFactory = $formFactory;
     }
 
-    public function __invoke(int $orderId, string $submitPath): Response
+    public function __invoke(string $orderNumber, string $submitPath): Response
     {
         $form = $this->formFactory->create(OrderCommentType::class);
 
-        $view = View::create(['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]);
+        $view = View::create(['form' => $form->createView(), 'orderNumber' => $orderNumber, 'submitPath' => $submitPath]);
         $view->setTemplate('@SyliusOrderCommentsPlugin/_form.html.twig');
 
         return $this->viewHandler->handle($view);

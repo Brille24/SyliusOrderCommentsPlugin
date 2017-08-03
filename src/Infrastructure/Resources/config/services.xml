@@ -26,17 +26,23 @@
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
         </service>
 
-        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderOrderCommentAction">
+        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_order_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderCommentOrderAction">
             <argument type="service" id="fos_rest.view_handler.default" />
             <argument type="service" id="form.factory" />
         </service>
 
-        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\OrderCommentAction">
+        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.administrator_comment_order_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\AdministratorCommentOrderAction">
             <argument type="service" id="fos_rest.view_handler.default" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="simple_bus.command_bus" />
-            <argument type="service" id="sylius.repository.order" />
+        </service>
+
+        <service id="sylius.order_comments_plugin.infrastructure.controller.ui.customer_comment_order_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\CustomerCommentOrderAction">
+            <argument type="service" id="fos_rest.view_handler.default" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="simple_bus.command_bus" />
         </service>
 
         <service id="sylius.order_comments_plugin.application.process.send_unread_comment_email_notification" class="Sylius\OrderCommentsPlugin\Application\Process\SendUnreadCommentEmailNotification">

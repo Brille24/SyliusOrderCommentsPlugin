@@ -1,7 +1,7 @@
 <div id="comments" class="ui segment comments" style="max-width: 100%">
-    {{ render(path('sylius_shop_order_comments_partial_comment_index', { 'number': settings.order.number })) }}
-    {{ render(controller('sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action', {
-        'orderId': settings.order.id,
+    {{ render(path('sylius_shop_order_comments_partial_comment_index', { 'orderNumber': settings.order.number })) }}
+    {{ render(controller('sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_order_action', {
+        'orderNumber': settings.order.number,
         'submitPath': 'sylius_shop_order_comments_partial_comment_create'
     })) }}
 </div>

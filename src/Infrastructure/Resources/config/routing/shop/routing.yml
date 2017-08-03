@@ -1,11 +1,11 @@
 sylius_shop_order_comments_partial_comment_create:
-    path: "/{orderId}/comments"
+    path: "/{orderNumber}/comments"
     methods: ["POST"]
     defaults:
-        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
+        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.customer_comment_order_action"
 
 sylius_shop_order_comments_partial_comment_index:
-    path: "/{number}/comments"
+    path: "/{orderNumber}/comments"
     methods: ["GET"]
     defaults:
         _controller: "sylius.controller.order_comment:indexAction"
@@ -15,5 +15,5 @@ sylius_shop_order_comments_partial_comment_index:
             repository:
                 method: findBy
                 arguments:
-                   - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
+                   - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($orderNumber))"
             template: "@SyliusOrderCommentsPlugin/index.html.twig"
