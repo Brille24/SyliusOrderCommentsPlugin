@@ -22,17 +22,31 @@ final class OrderCommentedByAdministrator
     /** @var string */
     private $message;
 
-    private function __construct(UuidInterface $orderCommentId, OrderInterface $order, Email $administratorEmail, string $message)
-    {
+    /** @var \DateTimeInterface */
+    private $createdAt;
+
+    private function __construct(
+        UuidInterface $orderCommentId,
+        OrderInterface $order,
+        Email $administratorEmail,
+        string $message,
+        \DateTimeInterface $createdAt
+    ) {
         $this->orderCommentId = $orderCommentId;
         $this->order = $order;
         $this->administratorEmail = $administratorEmail;
         $this->message = $message;
+        $this->createdAt = $createdAt;
     }
 
-    public static function occur(UuidInterface $orderCommentId, OrderInterface $order, Email $administratorEmail, string $message): self
-    {
-        return new self($orderCommentId, $order, $administratorEmail, $message);
+    public static function occur(
+        UuidInterface $orderCommentId,
+        OrderInterface $order,
+        Email $administratorEmail,
+        string $message,
+        \DateTimeInterface $createdAt
+    ): self {
+        return new self($orderCommentId, $order, $administratorEmail, $message, $createdAt);
     }
 
     public function orderCommentId(): UuidInterface
@@ -53,5 +67,10 @@ final class OrderCommentedByAdministrator
     public function message(): string
     {
         return $this->message;
+    }
+
+    public function createdAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

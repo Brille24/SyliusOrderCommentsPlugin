@@ -92,15 +92,17 @@ final class CustomerOrderCommentsContext implements Context
     public function thisOrderShouldHaveCommentWithFromThisCustomer(OrderInterface $order, string $message): void
     {
         /** @var Comment $comment */
-        $comment = $this->orderCommentRepository->findAll()[0];
+        $comment = $this->orderCommentRepository->findOneBy(['order' => $order]);
 
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
 
+        Assert::notNull($comment, 'This order does not have any comments.');
         if (
             $comment->message() !== $message ||
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
+            !$comment->createdAt() instanceof \DateTimeInterface ||
             !empty($comment->recordedMessages())
         ) {
             throw new \RuntimeException(

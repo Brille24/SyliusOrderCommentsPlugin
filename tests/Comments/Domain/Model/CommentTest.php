@@ -22,6 +22,7 @@ final class CommentTest extends TestCase
         $this->assertEquals($order, $comment->order());
         $this->assertEquals('test@test.com', $comment->authorEmail());
         $this->assertEquals('Hello', $comment->message());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $comment->createdAt());
     }
 
     /**
@@ -36,6 +37,7 @@ final class CommentTest extends TestCase
         $this->assertEquals($order, $comment->order());
         $this->assertEquals('test@test.com', $comment->authorEmail());
         $this->assertEquals('Hello', $comment->message());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $comment->createdAt());
     }
 
     /**

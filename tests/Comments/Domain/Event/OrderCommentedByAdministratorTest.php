@@ -19,11 +19,18 @@ final class OrderCommentedByAdministratorTest extends TestCase
     {
         $commentId = Uuid::uuid4();
         $order = new Order();
-        $event = OrderCommentedByAdministrator::occur($commentId, $order, Email::fromString('test@test.com'), 'Hello');
+        $event = OrderCommentedByAdministrator::occur(
+            $commentId,
+            $order,
+            Email::fromString('test@test.com'),
+            'Hello',
+            new \DateTimeImmutable()
+        );
 
         $this->assertEquals($commentId, $event->orderCommentId());
         $this->assertEquals($order, $event->order());
         $this->assertEquals('test@test.com', $event->administratorEmail());
         $this->assertEquals('Hello', $event->message());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $event->createdAt());
     }
 }
