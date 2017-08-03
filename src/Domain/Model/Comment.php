@@ -40,7 +40,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     public static function orderByCustomer(OrderInterface $order, string $customerEmail, string $message): self
     {
         if (null == $message) {
-            throw new \DomainException('Comment cannot be created with empty message');
+            throw new \DomainException('OrderComment cannot be created with empty message');
         }
 
         $id = Uuid::uuid4();
@@ -55,7 +55,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     public static function orderByAdministrator(OrderInterface $order, string $administratorEmail, string $message): self
     {
         if (null == $message) {
-            throw new \DomainException('Comment cannot be created with empty message');
+            throw new \DomainException('OrderComment cannot be created with empty message');
         }
 
         $id = Uuid::uuid4();
