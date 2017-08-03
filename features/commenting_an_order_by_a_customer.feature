@@ -6,6 +6,7 @@ Feature: Commenting an order by a customer
 
     Background:
         Given the store operates on a single channel in "United States"
+        And this channel has "customer.service@test.com" as a contact email
         And the store has a product "PHP T-Shirt"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
@@ -38,7 +39,7 @@ Feature: Commenting an order by a customer
         Then I should be notified that comment is invalid
         And this order should not have any comments
 
-    @todo
+    @application
     Scenario: Sending the email notification to the administrator about unread customer's comments
-        Given a customer commented the order "#00000022" with "Hello"
+        Given I have commented the order "#00000022" with "Hello"
         Then the notification email should be sent to the administrator about "Hello" comment

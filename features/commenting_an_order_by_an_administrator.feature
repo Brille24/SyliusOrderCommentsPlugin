@@ -26,7 +26,7 @@ Feature: Commenting an order by an administrator
         Then I should be notified that comment is invalid
         And this order should not have any comments
 
-    @todo
+    @application
     Scenario: Sending an email notification to the customer about unread comments
         Given I have commented the order "#00000022" with "How can I help you?"
-        Then the notification email should be sent to the customer
+        Then the notification email should be sent to the customer about "How can I help you?" comment

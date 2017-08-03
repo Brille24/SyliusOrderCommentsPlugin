@@ -19,3 +19,9 @@ sylius_resource:
 doctrine_orm_bridge:
     entity_manager: default
     connection: default
+
+sylius_mailer:
+    emails:
+        unread_comment:
+            subject: sylius.emails.unread_comment.subject
+            template: "SyliusOrderCommentsPlugin:Email:unread_comment.html.twig"

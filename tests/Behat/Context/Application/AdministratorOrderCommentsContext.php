@@ -9,7 +9,10 @@ use Behat\Behat\Context\Context;
 use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\ShopUserInterface;
+use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
 use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator;
@@ -28,17 +31,23 @@ final class AdministratorOrderCommentsContext implements Context
     /** @var SharedStorageInterface */
     private $sharedStorage;
 
+    /** @var EmailCheckerInterface */
+    private $emailChecker;
+
     public function __construct(
         MessageBus $commandBus,
         RepositoryInterface $orderCommentRepository,
-        SharedStorageInterface $sharedStorage
+        SharedStorageInterface $sharedStorage,
+        EmailCheckerInterface $emailChecker
     ) {
         $this->commandBus = $commandBus;
         $this->orderCommentRepository = $orderCommentRepository;
         $this->sharedStorage = $sharedStorage;
+        $this->emailChecker = $emailChecker;
     }
 
     /**
+     * @Given I have commented the order :order with :message
      * @When I comment the order :order with :message
      */
     public function iCommentTheOrderWith(OrderInterface $order, string $message): void
@@ -99,5 +108,15 @@ final class AdministratorOrderCommentsContext implements Context
         $comments = $this->orderCommentRepository->findBy(['order' => $order]);
 
         Assert::isEmpty($comments, sprintf('This order should not have any comment, but %d found', count($comments)));
+    }
+
+    /**
+     * @Then the notification email should be sent to the customer about :message comment
+     */
+    public function theNotificationEmailShouldBeSentToTheAdministratorAboutComment(string $message): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        Assert::true($this->emailChecker->hasMessageTo($message, $user->getEmail()));
     }
 }
