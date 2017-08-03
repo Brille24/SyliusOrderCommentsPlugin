@@ -1,5 +1,5 @@
 <div class="ui">
-    {{ form_start(form, {'action': path(submitPath, { 'orderId': orderId}), 'attr': {'class': 'ui reply form', 'novalidate': 'novalidate'}}) }}
+    {{ form_start(form, {'action': path(submitPath, {'orderNumber': orderNumber}), 'attr': {'class': 'ui reply form', 'novalidate': 'novalidate'}}) }}
     <div class="field">
         {{ form_row(form.message) }}
     </div>

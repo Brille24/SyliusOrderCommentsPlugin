@@ -1,8 +1,8 @@
 sylius_admin_order_comments_partial_comment_create:
-    path: "/{orderId}/comments"
+    path: "/{orderNumber}/comments"
     methods: ["POST"]
     defaults:
-        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
+        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.administrator_comment_order_action"
 
 sylius_admin_order_comments_partial_comment_index:
     path: "/{orderId}/comments"

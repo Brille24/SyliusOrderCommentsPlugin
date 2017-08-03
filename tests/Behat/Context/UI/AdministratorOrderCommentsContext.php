@@ -59,7 +59,6 @@ final class AdministratorOrderCommentsContext implements Context
         $user = $this->sharedStorage->get('administrator');
 
         $comment = $this->orderCommentsElement->getFirstComment();
-        $now = new \DateTimeImmutable();
 
         Assert::notNull($comment);
         Assert::same($comment->find('css', '.text')->getText(), $message);
