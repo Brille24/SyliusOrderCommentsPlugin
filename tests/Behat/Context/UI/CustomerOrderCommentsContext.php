@@ -42,6 +42,7 @@ final class CustomerOrderCommentsContext implements Context
 
     /**
      * @When I comment the order :order with :message
+     * @Given I have commented the order :order with :message
      */
     public function iCommentTheOrderWith(OrderInterface $order, string $message): void
     {
@@ -53,6 +54,7 @@ final class CustomerOrderCommentsContext implements Context
 
     /**
      * @Then this order should have a comment with :message from this customer
+     * @Then the first comment from the top should have the :message message
      */
     public function thisOrderShouldHaveACommentWithFromThisAdministrator(string $message): void
     {

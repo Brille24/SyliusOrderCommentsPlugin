@@ -12,6 +12,8 @@ sylius_shop_order_comments_partial_comment_index:
         _sylius:
             paginate: false
             limit: false
+            sorting:
+                createdAt: desc
             repository:
                 method: findBy
                 arguments:
