@@ -1,5 +1,5 @@
 <div class="ui">
-    {{ form_start(form, {'action': path('sylius_order_comments_partial_comment_create', { 'orderId': orderId}), 'attr': {'class': 'ui reply form', 'novalidate': 'novalidate'}}) }}
+    {{ form_start(form, {'action': path(submitPath, { 'orderId': orderId}), 'attr': {'class': 'ui reply form', 'novalidate': 'novalidate'}}) }}
     <div class="field">
         {{ form_row(form.message) }}
     </div>

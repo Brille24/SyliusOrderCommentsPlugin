@@ -16,9 +16,14 @@
            <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator" />
        </service>
 
-        <service id="sylius_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusOrderCommentsPlugin/injected/order_comments.html.twig</argument>
+        <service id="sylius_admin_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusOrderCommentsPlugin/injected/admin_order_comments.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
+        </service>
+
+        <service id="sylius_shop_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusOrderCommentsPlugin/injected/shop_order_comments.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
         </service>
 
         <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderOrderCommentAction">
@@ -29,7 +34,6 @@
         <service id="sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\OrderCommentAction">
             <argument type="service" id="fos_rest.view_handler.default" />
             <argument type="service" id="form.factory" />
-            <argument type="service" id="router" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="simple_bus.command_bus" />
             <argument type="service" id="sylius.repository.order" />
