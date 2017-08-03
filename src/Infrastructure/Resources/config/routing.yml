@@ -1,17 +1,7 @@
-sylius_order_comments_partial_comment_create:
-    path: "/admin/_partial/orders/{orderId}/comments"
-    methods: ["POST"]
-    defaults:
-        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
+sylius_order_comments_plugin_admin_partial:
+    resource: "@SyliusOrderCommentsPlugin/Resources/config/routing/admin/routing.yml"
+    prefix: "/admin/_partial/orders"
 
-sylius_order_comments_partial_comment_index:
-    path: "/admin/_partial/orders/{orderId}/comments"
-    methods: ["GET"]
-    defaults:
-        _controller: "sylius.controller.order_comment:indexAction"
-        _sylius:
-            paginate: false
-            limit: false
-            criteria:
-                order: "$orderId"
-            template: "@SyliusOrderCommentsPlugin/index.html.twig"
+sylius_order_comments_plugin_shop_partial:
+    resource: "@SyliusOrderCommentsPlugin/Resources/config/routing/shop/routing.yml"
+    prefix: "/shop/_partial/orders"

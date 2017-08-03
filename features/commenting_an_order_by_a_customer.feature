@@ -15,7 +15,7 @@ Feature: Commenting an order by a customer
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as "john.doe@gmail.com"
 
-    @domain @application
+    @domain @application @ui
     Scenario: Customer commented an order
         When I comment the order "#00000022" with "Hello"
         Then this order should have a comment with "Hello" from this customer

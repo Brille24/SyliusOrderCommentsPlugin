@@ -26,6 +26,14 @@
             <tag name="fob.context_service" />
         </service>
 
+        <service id="sylius_order_comment_plugin.behat.ui.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI\CustomerOrderCommentsContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.behat.page.shop.account.order.show" />
+            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comments_element" />
+            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
+            <tag name="fob.context_service" />
+        </service>
+
         <service id="sylius_order_comment_plugin.behat.ui.administrator_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI\AdministratorOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.page.admin.order.show" />

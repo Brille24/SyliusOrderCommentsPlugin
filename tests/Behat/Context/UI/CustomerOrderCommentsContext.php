@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
-use Sylius\Behat\Page\Admin\Order\ShowPageInterface;
+use Sylius\Behat\Page\Shop\Account\Order\ShowPageInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -13,7 +13,7 @@ use Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentsElementInterface
 use Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentFormElementInterface;
 use Webmozart\Assert\Assert;
 
-final class AdministratorOrderCommentsContext implements Context
+final class CustomerOrderCommentsContext implements Context
 {
     /** @var SharedStorageInterface */
     private $sharedStorage;
@@ -44,19 +44,19 @@ final class AdministratorOrderCommentsContext implements Context
      */
     public function iCommentTheOrderWith(OrderInterface $order, string $message): void
     {
-        $this->orderPage->open(['id' => $order->getId()]);
+        $this->orderPage->open(['number' => $order->getNumber()]);
 
         $this->orderCommentFormElement->specifyMessage($message);
         $this->orderCommentFormElement->comment();
     }
 
     /**
-     * @Then this order should have a comment with :message from this administrator
+     * @Then this order should have a comment with :message from this customer
      */
     public function thisOrderShouldHaveACommentWithFromThisAdministrator(string $message): void
     {
         /** @var AdminUserInterface $user */
-        $user = $this->sharedStorage->get('administrator');
+        $user = $this->sharedStorage->get('user');
 
         $comment = $this->orderCommentsElement->getFirstComment();
 

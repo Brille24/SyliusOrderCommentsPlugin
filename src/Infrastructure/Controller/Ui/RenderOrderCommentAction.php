@@ -24,11 +24,11 @@ final class RenderOrderCommentAction
         $this->formFactory = $formFactory;
     }
 
-    public function __invoke(int $orderId): Response
+    public function __invoke(int $orderId, string $submitPath): Response
     {
         $form = $this->formFactory->create(OrderCommentType::class);
 
-        $view = View::create(['form' => $form->createView(), 'orderId' => $orderId]);
+        $view = View::create(['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]);
         $view->setTemplate('@SyliusOrderCommentsPlugin/_form.html.twig');
 
         return $this->viewHandler->handle($view);
