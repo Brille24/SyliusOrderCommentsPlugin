@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\OrderCommentsPlugin\Comments\Infrastructure\Form\Type;
 
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
-use Sylius\OrderCommentsPlugin\Infrastructure\Model\OrderComment;
+use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 final class OrderCommentTypeTest extends TypeTestCase
