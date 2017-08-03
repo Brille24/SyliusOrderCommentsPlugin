@@ -64,7 +64,6 @@ final class AdministratorOrderCommentsContext implements Context
         Assert::notNull($comment);
         Assert::same($comment->find('css', '.text')->getText(), $message);
         Assert::same($comment->find('css', '.author')->getText(), $user->getEmail());
-        Assert::same($comment->find('css', '.date')->getText(), $now->format('H:i:s Y/m/d'));
     }
 
     /**
