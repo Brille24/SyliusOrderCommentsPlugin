@@ -20,6 +20,15 @@ Feature: Commenting an order by a customer
         When I comment the order "#00000022" with "Hello"
         Then this order should have a comment with "Hello" from this customer
 
+    @application @ui
+    Scenario: Customer commented an order
+        Given a customer "john.doe@gmail.com" placed an order "#00000023"
+        And the customer bought a single "PHP T-Shirt"
+        And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
+        When I comment the order "#00000023" with "Hello"
+        Then this order should have a comment with "Hello" from this customer
+        But the order "#00000022" should not have any comments
+
     @domain @application
     Scenario: Customer cannot comment an order with an empty message
         When I try to comment the order "#00000022" with an empty message
