@@ -16,6 +16,7 @@
             <argument type="service" id="__symfony__.command_bus" />
             <argument type="service" id="__symfony__.sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="__symfony__.sylius.behat.email_checker" />
             <tag name="fob.context_service" />
         </service>
 
@@ -23,6 +24,7 @@
             <argument type="service" id="__symfony__.command_bus" />
             <argument type="service" id="__symfony__.sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="__symfony__.sylius.behat.email_checker" />
             <tag name="fob.context_service" />
         </service>
 
@@ -39,6 +41,11 @@
             <argument type="service" id="sylius.behat.page.admin.order.show" />
             <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comments_element" />
             <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="sylius_order_comment_plugin.behat.common.channel" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Common\ChannelContext">
+            <argument type="service" id="__symfony__.doctrine.orm.default_entity_manager" />
             <tag name="fob.context_service" />
         </service>
 

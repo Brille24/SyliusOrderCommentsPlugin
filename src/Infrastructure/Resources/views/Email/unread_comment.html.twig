@@ -1,0 +1,13 @@
+{% block subject %}
+    You have unread comment from {{ authorEmail }}
+{% endblock %}
+
+{% block body %}
+    {% autoescape %}
+        Message from: {{ authorEmail }}
+        <br/>
+        Content:
+        <br/>
+        "{{ message }}"
+    {% endautoescape %}
+{% endblock %}

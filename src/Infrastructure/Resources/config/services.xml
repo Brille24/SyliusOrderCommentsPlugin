@@ -38,5 +38,11 @@
             <argument type="service" id="simple_bus.command_bus" />
             <argument type="service" id="sylius.repository.order" />
         </service>
+
+        <service id="sylius.order_comments_plugin.application.process.send_unread_comment_email_notification" class="Sylius\OrderCommentsPlugin\Application\Process\SendUnreadCommentEmailNotification">
+            <argument type="service" id="sylius.email_sender" />
+            <tag name="event_subscriber" subscribes_to="Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator" method="handleOrderCommentedByAdministrator" />
+            <tag name="event_subscriber" subscribes_to="Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer" method="handleOrderCommentedByCustomer" />
+        </service>
     </services>
 </container>

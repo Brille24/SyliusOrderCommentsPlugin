@@ -23,6 +23,8 @@ default:
                 - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.shipping_method
 
+                - sylius_order_comment_plugin.behat.common.channel
+
                 - sylius_order_comment_plugin.behat.ui.customer_order_comments
             filters:
                 tags: "@customer_order_comments && @ui"
