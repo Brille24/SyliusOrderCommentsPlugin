@@ -6,12 +6,9 @@ namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
 use FOS\RestBundle\View\ViewHandlerInterface;
 use SimpleBus\Message\Bus\MessageBus;
-use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
+use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -19,7 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Webmozart\Assert\Assert;
 
@@ -72,21 +68,11 @@ final class OrderCommentAction
 
         Assert::notNull($user);
 
-        if ($user instanceof AdminUserInterface) {
-            $this->commandBus->handle(CommentOrderByAdministrator::create(
-                $order->getNumber(),
-                $user->getEmail(),
-                $comment->message
-            ));
-        }
-
-        if ($user instanceof ShopUserInterface) {
-            $this->commandBus->handle(CommentOrderByCustomer::create(
-                $order->getNumber(),
-                $user->getEmail(),
-                $comment->message
-            ));
-        }
+        $this->commandBus->handle(CommentOrder::create(
+            $order->getNumber(),
+            $user->getEmail(),
+            $comment->message
+        ));
 
         return RedirectResponse::create($request->headers->get('referer'));
     }

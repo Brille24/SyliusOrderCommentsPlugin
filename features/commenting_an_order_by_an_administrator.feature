@@ -9,8 +9,8 @@ Feature: Commenting an order by an administrator
         And the store has a product "PHP T-Shirt"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
-        And there was account of "john.doe@gmail.com" with password "sylius"
-        And there is a customer "john.doe@gmail.com" that placed an order "#00000022"
+        And there was account of "john.doe@test.com" with password "sylius"
+        And there is a customer "john.doe@test.com" that placed an order "#00000022"
         And the customer bought a single "PHP T-Shirt"
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
@@ -22,7 +22,7 @@ Feature: Commenting an order by an administrator
 
     @application @ui
     Scenario: Administrator see only related comments
-        Given a customer "john.doe@gmail.com" placed an order "#00000023"
+        Given a customer "john.doe@test.com" placed an order "#00000023"
         And the customer bought a single "PHP T-Shirt"
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         When I comment the order "#00000023" with "How can I help you?"

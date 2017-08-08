@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Application\Command;
 
-final class CommentOrderByCustomer
+final class CommentOrder
 {
     /** @var string */
     private $orderNumber;
 
     /** @var string */
-    private $customerEmail;
+    private $authorEmail;
 
     /** @var string */
     private $message;
 
     /**
      * @param string $orderNumber
-     * @param string $customerEmail
+     * @param string $authorEmail
      * @param string $message
      */
-    private function __construct(string $orderNumber, string $customerEmail, string $message)
+    private function __construct(string $orderNumber, string $authorEmail, string $message)
     {
         $this->orderNumber = $orderNumber;
-        $this->customerEmail = $customerEmail;
+        $this->authorEmail = $authorEmail;
         $this->message = $message;
     }
 
-    public static function create(string $orderNumber, string $customerEmail, string $message): self
+    public static function create(string $orderNumber, string $authorEmail, string $message): self
     {
-        return new self($orderNumber, $customerEmail, $message);
+        return new self($orderNumber, $authorEmail, $message);
     }
 
     public function orderNumber(): string
@@ -37,9 +37,9 @@ final class CommentOrderByCustomer
         return $this->orderNumber;
     }
 
-    public function customerEmail(): string
+    public function authorEmail(): string
     {
-        return $this->customerEmail;
+        return $this->authorEmail;
     }
 
     public function message(): string

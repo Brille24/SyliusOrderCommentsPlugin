@@ -5,15 +5,10 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderByCustomerHandler">
+       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderHandler">
            <argument type="service" id="sylius.repository.order" />
            <argument type="service" id="doctrine.orm.default_entity_manager" />
-           <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer" />
-       </service>
-       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_administrator" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderByAdministratorHandler">
-           <argument type="service" id="sylius.repository.order" />
-           <argument type="service" id="doctrine.orm.default_entity_manager" />
-           <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator" />
+           <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrder" />
        </service>
 
         <service id="sylius_admin_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
@@ -41,8 +36,7 @@
 
         <service id="sylius.order_comments_plugin.application.process.send_unread_comment_email_notification" class="Sylius\OrderCommentsPlugin\Application\Process\SendUnreadCommentEmailNotification">
             <argument type="service" id="sylius.email_sender" />
-            <tag name="event_subscriber" subscribes_to="Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator" method="handleOrderCommentedByAdministrator" />
-            <tag name="event_subscriber" subscribes_to="Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer" method="handleOrderCommentedByCustomer" />
+            <tag name="event_subscriber" subscribes_to="Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented" method="handleOrderCommented" />
         </service>
     </services>
 </container>

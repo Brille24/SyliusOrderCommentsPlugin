@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -13,7 +12,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByCustomer;
+use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 use Webmozart\Assert\Assert;
 
@@ -52,7 +51,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
 
-        $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $user->getEmail(), $message));
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message));
     }
 
     /**
@@ -63,7 +62,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $user->getEmail(), ''));
+            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), ''));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -75,7 +74,7 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            $this->commandBus->handle(CommentOrderByCustomer::create($order->getNumber(), $email, 'Hello'));
+            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $email, 'Hello'));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -89,7 +88,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrderByCustomer::create('#0003', $user->getEmail(), $message));
+            $this->commandBus->handle(CommentOrder::create('#0003', $user->getEmail(), $message));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
