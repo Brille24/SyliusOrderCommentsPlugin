@@ -17,5 +17,10 @@ final class SyliusOrderCommentsExtension extends Extension
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(
+            'sylius_order_comment_plugin.comment_file_dir',
+            $container->getParameter('kernel.root_dir').'/../web/media/comment_attachments'
+        );
     }
 }

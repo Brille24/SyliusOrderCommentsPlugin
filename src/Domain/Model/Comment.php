@@ -10,6 +10,7 @@ use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\OrderCommentsPlugin\Domain\Event\FileAttached;
 use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
 
 final class Comment implements ResourceInterface, ContainsRecordedMessages
@@ -31,6 +32,9 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     /** @var \DateTimeInterface */
     private $createdAt;
 
+    /** @var AttachedFile */
+    private $attachedFile;
+
     public function __construct(OrderInterface $order, string $authorEmail, string $message)
     {
         if (null == $message) {
@@ -51,6 +55,15 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
                 $this->message,
                 $this->createdAt
             )
+        );
+    }
+
+    public function attachFile(string $path)
+    {
+        $this->attachedFile = AttachedFile::create($path);
+
+        $this->record(
+            FileAttached::occur($this->attachedFile->path())
         );
     }
 
@@ -77,5 +90,10 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     public function createdAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function attachedFile(): ?AttachedFile
+    {
+        return $this->attachedFile;
     }
 }

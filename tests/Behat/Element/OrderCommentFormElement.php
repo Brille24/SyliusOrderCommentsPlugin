@@ -11,6 +11,11 @@ class OrderCommentFormElement extends Element implements OrderCommentFormElement
         $this->getDocument()->fillField('Message', $message);
     }
 
+    public function attachFile($path): void
+    {
+        $this->getDocument()->find('css', 'input[type="file"]')->attachFile($path);
+    }
+
     public function comment(): void
     {
         $this->getDocument()->pressButton('Comment');

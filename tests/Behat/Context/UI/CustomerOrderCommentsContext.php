@@ -52,6 +52,20 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
+     * @When I comment the order :order with :message and :fileName file
+     */
+    public function iCommentTheOrderWithMessageAndFile(Orderinterface $order, string $message, string $fileName): void
+    {
+        $filePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
+
+        $this->orderPage->open(['number' => $order->getNumber()]);
+
+        $this->orderCommentFormElement->specifyMessage($message);
+        $this->orderCommentFormElement->attachFile($filePath);
+        $this->orderCommentFormElement->comment();
+    }
+
+    /**
      * @Then this order should have a comment with :message from this customer
      * @Then the first comment from the top should have the :message message
      */
@@ -75,5 +89,21 @@ final class CustomerOrderCommentsContext implements Context
         $this->orderPage->open(['number' => $order->getNumber()]);
 
         Assert::same($this->orderCommentsElement->countComments(), 0, 'This order should not have any comment, but %s found.');
+    }
+
+    /**
+     * @Then this order should have a comment with :message and file :fileName from this customer
+     */
+    public function thisOrderShouldHaveACommentWithAndFileFromThisCustomer(string $message, string $fileName): void
+    {
+        /** @var AdminUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+
+        $comment = $this->orderCommentsElement->getFirstComment();
+
+        Assert::notNull($comment);
+        Assert::same($comment->find('css', '.text')->getText(), $message);
+        Assert::same($comment->find('css', '.author')->getText(), $user->getEmail());
+        Assert::true($comment->find('css', '.file')->isValid());
     }
 }

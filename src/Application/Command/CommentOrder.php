@@ -15,21 +15,20 @@ final class CommentOrder
     /** @var string */
     private $message;
 
-    /**
-     * @param string $orderNumber
-     * @param string $authorEmail
-     * @param string $message
-     */
-    private function __construct(string $orderNumber, string $authorEmail, string $message)
+    /** @var \SplFileInfo */
+    private $file;
+
+    private function __construct(string $orderNumber, string $authorEmail, string $message, \SplFileInfo $file = null)
     {
         $this->orderNumber = $orderNumber;
         $this->authorEmail = $authorEmail;
         $this->message = $message;
+        $this->file = $file;
     }
 
-    public static function create(string $orderNumber, string $authorEmail, string $message): self
+    public static function create(string $orderNumber, string $authorEmail, string $message, \SplFileInfo $file = null): self
     {
-        return new self($orderNumber, $authorEmail, $message);
+        return new self($orderNumber, $authorEmail, $message, $file);
     }
 
     public function orderNumber(): string
@@ -45,5 +44,10 @@ final class CommentOrder
     public function message(): string
     {
         return $this->message;
+    }
+
+    public function file(): ?\SplFileInfo
+    {
+        return $this->file;
     }
 }

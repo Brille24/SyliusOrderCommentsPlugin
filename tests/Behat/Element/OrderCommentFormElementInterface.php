@@ -8,5 +8,7 @@ interface OrderCommentFormElementInterface
 {
     public function specifyMessage(string $message): void;
 
+    public function attachFile($path): void;
+
     public function comment(): void;
 }
