@@ -8,7 +8,7 @@ use Ramsey\Uuid\UuidInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
-final class OrderCommentedByCustomer
+final class OrderCommented
 {
     /** @var UuidInterface */
     private $orderCommentId;
@@ -17,7 +17,7 @@ final class OrderCommentedByCustomer
     private $order;
 
     /** @var Email */
-    private $customerEmail;
+    private $authorEmail;
 
     /** @var string */
     private $message;
@@ -28,13 +28,13 @@ final class OrderCommentedByCustomer
     private function __construct(
         UuidInterface $orderCommentId,
         OrderInterface $order,
-        Email $customerEmail,
+        Email $authorEmail,
         string $message,
         \DateTimeInterface $createdAt
     ) {
         $this->orderCommentId = $orderCommentId;
         $this->order = $order;
-        $this->customerEmail = $customerEmail;
+        $this->authorEmail = $authorEmail;
         $this->message = $message;
         $this->createdAt = $createdAt;
     }
@@ -42,11 +42,11 @@ final class OrderCommentedByCustomer
     public static function occur(
         UuidInterface $orderCommentId,
         OrderInterface $order,
-        Email $customerEmail,
+        Email $authorEmail,
         string $message,
         \DateTimeInterface $createdAt
     ): self {
-        return new self($orderCommentId, $order, $customerEmail, $message, $createdAt);
+        return new self($orderCommentId, $order, $authorEmail, $message, $createdAt);
     }
 
     public function orderCommentId(): UuidInterface
@@ -59,9 +59,9 @@ final class OrderCommentedByCustomer
         return $this->order;
     }
 
-    public function customerEmail(): Email
+    public function authorEmail(): Email
     {
-        return $this->customerEmail;
+        return $this->authorEmail;
     }
 
     public function message(): string

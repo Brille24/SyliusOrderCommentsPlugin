@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Ramsey\Uuid\Uuid;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
-use Sylius\OrderCommentsPlugin\Domain\Model\Author;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 use Webmozart\Assert\Assert;
 
 final class CustomerOrderCommentsContext implements Context
@@ -36,7 +31,7 @@ final class CustomerOrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $this->sharedStorage->set('comment', Comment::orderByCustomer($order, $user->getEmail(), $message));
+        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message));
     }
 
     /**
@@ -47,7 +42,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->sharedStorage->set('comment', Comment::orderByCustomer($order, $user->getEmail(), ''));
+            $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), ''));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -59,7 +54,7 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            $this->sharedStorage->set('comment', Comment::orderByCustomer($order, $email, 'Hello'));
+            $this->sharedStorage->set('comment', new Comment($order, $email, 'Hello'));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }

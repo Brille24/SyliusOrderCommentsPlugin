@@ -7,19 +7,19 @@ namespace Tests\Sylius\OrderCommentsPlugin\Comments\Event;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Sylius\Component\Core\Model\Order;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
+use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
-final class OrderCommentedByCustomerTest extends TestCase
+final class OrderCommentedTest extends TestCase
 {
     /**
      * @test
      */
-    public function it_is_immutable_fact_of_order_being_commented_by_customer(): void
+    public function it_is_immutable_fact_of_order_being_commented(): void
     {
         $commentId = Uuid::uuid4();
         $order = new Order();
-        $event = OrderCommentedByCustomer::occur(
+        $event = OrderCommented::occur(
             $commentId,
             $order,
             Email::fromString('test@test.com'),
@@ -29,7 +29,7 @@ final class OrderCommentedByCustomerTest extends TestCase
 
         $this->assertEquals($commentId, $event->orderCommentId());
         $this->assertEquals($order, $event->order());
-        $this->assertEquals('test@test.com', $event->customerEmail());
+        $this->assertEquals('test@test.com', $event->authorEmail());
         $this->assertEquals('Hello', $event->message());
         $this->assertInstanceOf(\DateTimeImmutable::class, $event->createdAt());
     }

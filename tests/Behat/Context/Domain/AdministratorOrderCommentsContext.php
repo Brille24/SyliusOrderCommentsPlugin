@@ -8,10 +8,7 @@ use Behat\Behat\Context\Context;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator;
-use Sylius\OrderCommentsPlugin\Domain\Model\Author;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 use Webmozart\Assert\Assert;
 
 final class AdministratorOrderCommentsContext implements Context
@@ -34,7 +31,7 @@ final class AdministratorOrderCommentsContext implements Context
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', Comment::orderByAdministrator($order, $user->getEmail(), $message));
+        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message));
     }
 
     /**

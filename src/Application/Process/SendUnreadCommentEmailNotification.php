@@ -7,8 +7,7 @@ namespace Sylius\OrderCommentsPlugin\Application\Process;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
+use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
 
 final class SendUnreadCommentEmailNotification
 {
@@ -20,29 +19,19 @@ final class SendUnreadCommentEmailNotification
         $this->emailSender = $emailSender;
     }
 
-    public function handleOrderCommentedByAdministrator(OrderCommentedByAdministrator $event): void
-    {
-        $order = $event->order();
-
-        $this->sendUnreadCommentNotification(
-            [$order->getCustomer()->getEmail()],
-            $order,
-            $event->message(),
-            (string) $event->administratorEmail()
-        );
-    }
-
-    public function handleOrderCommentedByCustomer(OrderCommentedByCustomer $event): void
+    public function handleOrderCommented(OrderCommented $event): void
     {
         $order = $event->order();
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
+        $recipients = [$channel->getContactEmail(), $order->getCustomer()->getEmail()];
+
         $this->sendUnreadCommentNotification(
-            [$channel->getContactEmail()],
+            array_diff(array_filter($recipients), [$event->authorEmail()]),
             $order,
             $event->message(),
-            (string) $event->customerEmail()
+            (string) $event->authorEmail()
         );
     }
 

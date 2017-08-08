@@ -10,8 +10,7 @@ use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByAdministrator;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommentedByCustomer;
+use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
 
 final class Comment implements ResourceInterface, ContainsRecordedMessages
 {
@@ -32,7 +31,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     /** @var \DateTimeInterface */
     private $createdAt;
 
-    private function __construct(OrderInterface $order, string $authorEmail, string $message)
+    public function __construct(OrderInterface $order, string $authorEmail, string $message)
     {
         if (null == $message) {
             throw new \DomainException('OrderComment cannot be created with empty message');
@@ -43,40 +42,16 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
         $this->order = $order;
         $this->message = $message;
         $this->createdAt = new \DateTimeImmutable();
-    }
 
-    public static function orderByCustomer(OrderInterface $order, string $customerEmail, string $message): self
-    {
-        $comment = new self($order, $customerEmail, $message);
-
-        $comment->record(
-            OrderCommentedByCustomer::occur(
-                $comment->id,
-                $comment->order,
-                $comment->authorEmail,
-                $comment->message,
-                $comment->createdAt
+        $this->record(
+            OrderCommented::occur(
+                $this->id,
+                $this->order,
+                $this->authorEmail,
+                $this->message,
+                $this->createdAt
             )
         );
-
-        return $comment;
-    }
-
-    public static function orderByAdministrator(OrderInterface $order, string $administratorEmail, string $message): self
-    {
-        $comment = new self($order, $administratorEmail, $message);
-
-        $comment->record(
-            OrderCommentedByAdministrator::occur(
-                $comment->id,
-                $comment->order,
-                $comment->authorEmail,
-                $comment->message,
-                $comment->createdAt
-            )
-        );
-
-        return $comment;
     }
 
     public function getId(): UuidInterface

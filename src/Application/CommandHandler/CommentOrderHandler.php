@@ -7,10 +7,10 @@ namespace Sylius\OrderCommentsPlugin\Application\CommandHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrderByAdministrator;
+use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
 
-final class CommentOrderByAdministratorHandler
+final class CommentOrderHandler
 {
     /** @var OrderRepositoryInterface */
     private $orderRepository;
@@ -24,7 +24,7 @@ final class CommentOrderByAdministratorHandler
         $this->entityManager = $entityManager;
     }
 
-    public function __invoke(CommentOrderByAdministrator $command): void
+    public function __invoke(CommentOrder $command): void
     {
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $command->orderNumber()]);
@@ -33,7 +33,7 @@ final class CommentOrderByAdministratorHandler
             throw new \DomainException(sprintf('Cannot comment an order "%s" because it does not exist', $command->orderNumber()));
         }
 
-        $comment = Comment::orderByAdministrator($order, $command->administratorEmail(), $command->message());
+        $comment = new Comment($order, $command->authorEmail(), $command->message());
 
         $this->entityManager->persist($comment);
     }
