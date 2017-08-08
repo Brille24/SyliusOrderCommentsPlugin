@@ -35,6 +35,18 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
+     * @When I comment the order :order with :message and :fileName file
+     */
+    public function iCommentTheOrderWithMessageAndFile(Orderinterface $order, string $message, string $fileName): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        $comment = new Comment($order, $user->getEmail(), $message);
+        $comment->attachedFile();
+        $this->sharedStorage->set('comment', $comment);
+    }
+
+    /**
      * @When I try to comment the order :order with an empty message
      */
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void

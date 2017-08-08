@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Sylius\OrderCommentsPlugin\Application\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Gaufrette\FilesystemInterface;
+use Ramsey\Uuid\Uuid;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
@@ -18,8 +20,14 @@ final class CommentOrderHandler
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    public function __construct(OrderRepositoryInterface $orderRepository, EntityManagerInterface $entityManager)
-    {
+    /** @var FilesystemInterface */
+    private $fileSystem;
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepository,
+        EntityManagerInterface $entityManager,
+        FilesystemInterface $filesystem
+    ) {
         $this->orderRepository = $orderRepository;
         $this->entityManager = $entityManager;
     }
@@ -34,6 +42,12 @@ final class CommentOrderHandler
         }
 
         $comment = new Comment($order, $command->authorEmail(), $command->message());
+
+        if (null !== $command->file()) {
+            $path = Uuid::uuid4()->toString() . '.' . $command->file()->getExtension();
+            $this->fileSystem->write($path, file_get_contents($command->file()->getPathname()));
+            $comment->attachFile($path);
+        }
 
         $this->entityManager->persist($comment);
     }

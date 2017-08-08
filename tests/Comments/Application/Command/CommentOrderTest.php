@@ -20,4 +20,15 @@ final class CommentOrderTest extends TestCase
         $this->assertEquals('test@test.com', $command->authorEmail());
         $this->assertEquals('Hello', $command->message());
     }
+
+    /**
+     * @test
+     */
+    public function it_has_option_file_path_and_file_type(): void
+    {
+        $file = new \SplFileInfo('text.txt');
+        $command = CommentOrder::create('#00002', 'test@test.com', 'Hello', $file);
+
+        $this->assertEquals($file, $command->file());
+    }
 }

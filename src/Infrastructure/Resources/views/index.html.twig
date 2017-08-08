@@ -9,6 +9,11 @@
             <div class="text">
                 {{ order_comment.message }}
             </div>
+            {% if order_comment.attachedFile is not null %}
+                <div class="attached-file">
+                    <a href="{{ order_comment.attachedFile.path }}" >File</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endfor %}

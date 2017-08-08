@@ -48,4 +48,17 @@ final class CommentTest extends TestCase
 
         new Comment($order, 'abcd.com', 'Hello');
     }
+
+    /**
+     * @test
+     */
+    public function it_can_have_file_attached(): void
+    {
+        $order = new Order();
+
+        $comment = new Comment($order, 'test@test.com', 'Hello');
+        $comment->attachFile('test/test', 'pdf');
+
+        $this->assertNotNull($comment->attachedFile());
+    }
 }
