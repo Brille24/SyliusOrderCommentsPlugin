@@ -29,7 +29,7 @@ Feature: Commenting an order by an administrator
         Then this order should have a comment with "How can I help you?" from this administrator
         But the order "#00000022" should not have any comments
 
-    @domain @application
+    @domain @application @ui
     Scenario: Administrator cannot comment the order with an empty message
         When I try to comment the order "#00000022" with an empty message
         Then I should be notified that comment is invalid
