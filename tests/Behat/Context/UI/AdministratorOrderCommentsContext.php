@@ -52,6 +52,16 @@ final class AdministratorOrderCommentsContext implements Context
     }
 
     /**
+     * @When I try to comment the order :order with an empty message
+     */
+    public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
+    {
+        $this->orderPage->open(['id' => $order->getId()]);
+        $this->orderCommentFormElement->specifyMessage('');
+        $this->orderCommentFormElement->comment();
+    }
+
+    /**
      * @Then this order should have a comment with :message from this administrator
      * @Then the first comment from the top should have the :message message
      */
@@ -68,7 +78,16 @@ final class AdministratorOrderCommentsContext implements Context
     }
 
     /**
+     * @Then I should be notified that comment is invalid
+     */
+    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
+    {
+        #TODO
+    }
+
+    /**
      * @Then the order :order should not have any comments
+     * @Then /^(this order) should not have any comments$/
      */
     public function theOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {
