@@ -25,3 +25,13 @@ sylius_mailer:
         unread_comment:
             subject: sylius.emails.unread_comment.subject
             template: "SyliusOrderCommentsPlugin:Email:unread_comment.html.twig"
+
+knp_gaufrette:
+    adapters:
+        sylius_comments_attachment:
+            local:
+                directory: "%kernel.root_dir%/../web/media/comment_attachments"
+                create: true
+    filesystems:
+        sylius_comments_attachment:
+            adapter: sylius_comments_attachment

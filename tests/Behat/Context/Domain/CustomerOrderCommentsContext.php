@@ -35,6 +35,18 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
+     * @When I comment the order :order with :message and :fileName file
+     */
+    public function iCommentTheOrderWithMessageAndFile(Orderinterface $order, string $message, string $fileName): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        $comment = new Comment($order, $user->getEmail(), $message);
+        $comment->attachFile($fileName);
+        $this->sharedStorage->set('comment', $comment);
+    }
+
+    /**
      * @When I try to comment the order :order with an empty message
      */
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
@@ -102,5 +114,34 @@ final class CustomerOrderCommentsContext implements Context
     public function thisOrderShouldNotHaveAnyComments()
     {
         Assert::false($this->sharedStorage->has('comment'), 'At least one comment has been saved in shared storage, but none should');
+    }
+
+    /**
+     * @Then /^(this order) should have a comment with "([^"]+)" and file "([^"]+)" from this customer$/
+     */
+    public function thisOrderShouldHaveACommentWithAndFileFromThisCustomer(Orderinterface $order, string $message, string $fileName): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        /** @var Comment $comment */
+        $comment = $this->sharedStorage->get('comment');
+
+        if (
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !$comment->createdAt() instanceof \DateTimeInterface ||
+            $comment->attachedFile()->path() != $fileName ||
+            empty($comment->recordedMessages())
+        ) {
+            throw new \RuntimeException(
+                sprintf(
+                    'There are no order comment with this message "%s" for this order "%s" from this customer "%s"',
+                    $message,
+                    $order->getNumber(),
+                    $user->getEmail()
+                )
+            );
+        }
     }
 }

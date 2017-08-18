@@ -55,6 +55,19 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
+     * @When I comment the order :order with :message and :fileName file
+     */
+    public function iCommentTheOrderWithMessageAndFile(Orderinterface $order, string $message, string $fileName): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        $filePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
+        $file = new \SplFileInfo($filePath);
+
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, $file));
+    }
+
+    /**
      * @When I try to comment the order :order with an empty message
      */
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
@@ -151,5 +164,36 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ChannelInterface $channel */
         $channel = $this->sharedStorage->get('channel');
         Assert::true($this->emailChecker->hasMessageTo($message, $channel->getContactEmail()));
+    }
+
+    /**
+     * @Then /^(this order) should have a comment with "([^"]+)" and file "([^"]+)" from this customer$/
+     */
+    public function thisOrderShouldHaveACommentWithAndFileFromThisCustomer(Orderinterface $order, string $message, string $fileName): void
+    {
+        /** @var Comment $comment */
+        $comment = $this->orderCommentRepository->findOneBy(['order' => $order]);
+
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+
+        Assert::notNull($comment, 'This order does not have any comments.');
+        if (
+            $comment->message() !== $message ||
+            $comment->order() !== $order ||
+            $comment->authorEmail() != $user->getEmail() ||
+            !$comment->createdAt() instanceof \DateTimeInterface ||
+            null === $comment->attachedFile()->path() ||
+            !empty($comment->recordedMessages())
+        ) {
+            throw new \RuntimeException(
+                sprintf(
+                    'There are no order comment with this message "%s" for this order "%s" from this customer "%s"',
+                    $message,
+                    $order->getNumber(),
+                    $user->getEmail()
+                )
+            );
+        }
     }
 }

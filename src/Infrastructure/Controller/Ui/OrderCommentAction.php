@@ -71,7 +71,8 @@ final class OrderCommentAction
         $this->commandBus->handle(CommentOrder::create(
             $order->getNumber(),
             $user->getEmail(),
-            $comment->message
+            $comment->message,
+            $comment->file
         ));
 
         return RedirectResponse::create($request->headers->get('referer'));

@@ -3,6 +3,9 @@
     <div class="field">
         {{ form_row(form.message) }}
     </div>
+    <div class="field">
+        {{ form_row(form.file) }}
+    </div>
     <button type="submit" class="ui labeled icon blue button"><i class="edit icon"></i> {{ 'sylius.ui.comment'|trans }}</button>
     {{ form_row(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
