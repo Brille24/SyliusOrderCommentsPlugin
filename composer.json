@@ -1,8 +1,8 @@
 {
-    "name": "sylius/order-comments",
+    "name": "sylius/order-comments-plugin",
     "type": "sylius-plugin",
     "description": "Order comments feature for Sylius.",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": "^7.1",
 
