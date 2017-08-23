@@ -30,7 +30,7 @@ Feature: Commenting an order by a customer
         Then this order should have a comment with "Hello" from this customer
         But the order "#00000022" should not have any comments
 
-    @domain @application
+    @domain @application @ui
     Scenario: Customer cannot comment an order with an empty message
         When I try to comment the order "#00000022" with an empty message
         Then I should be notified that comment is invalid

@@ -57,7 +57,7 @@ final class OrderCommentAction
         $form->handleRequest($request);
 
         if (!$form->isValid()) {
-            throw new BadRequestHttpException();
+            return RedirectResponse::create($request->headers->get('referer'));
         }
 
         /** @var OrderComment $comment */

@@ -50,7 +50,9 @@ final class CommentOrderHandler
         $comment = new Comment($order, $command->authorEmail(), $command->message());
 
         if (null !== $command->file()) {
-            $path = Uuid::uuid4()->toString() . '.' . $command->file()->getExtension();
+            $extension = '' === $command->file()->getExtension() ? 'pdf' : $command->file()->getExtension();
+
+            $path = Uuid::uuid4()->toString() . '.' . $extension;
             $this->fileSystem->write($path, file_get_contents($command->file()->getPathname()));
             $comment->attachFile($this->fileDir . '/' . $path);
         }

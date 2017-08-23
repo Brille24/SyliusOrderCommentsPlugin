@@ -10,9 +10,9 @@
                 {{ order_comment.message }}
             </div>
 
-            {% if order_comment.attachedFile is not null %}
+            {% if order_comment.attachedFile.path is not null %}
                 <div class="file">
-                    <a href="{{ app.request.httpHost }}/{{ order_comment.attachedFile.path }}" class="ui icon button" >
+                    <a href="//{{ app.request.httpHost }}/{{ order_comment.attachedFile.path }}" class="ui icon button" download>
                         <i class="file icon"></i>
                     </a>
                 </div>

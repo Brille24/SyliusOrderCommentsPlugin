@@ -52,6 +52,16 @@ final class CustomerOrderCommentsContext implements Context
     }
 
     /**
+     * @When I try to comment the order :order with an empty message
+     */
+    public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
+    {
+        $this->orderPage->open(['number' => $order->getNumber()]);
+        $this->orderCommentFormElement->specifyMessage('');
+        $this->orderCommentFormElement->comment();
+    }
+
+    /**
      * @When I comment the order :order with :message and :fileName file
      */
     public function iCommentTheOrderWithMessageAndFile(Orderinterface $order, string $message, string $fileName): void
@@ -83,12 +93,20 @@ final class CustomerOrderCommentsContext implements Context
 
     /**
      * @Then the order :order should not have any comments
+     * @Then /^(this order) should not have any comments$/
      */
     public function theOrderShouldNotHaveAnyComments(OrderInterface $order): void
     {
         $this->orderPage->open(['number' => $order->getNumber()]);
 
         Assert::same($this->orderCommentsElement->countComments(), 0, 'This order should not have any comment, but %s found.');
+    }
+
+    /**
+     * @Then I should be notified that comment is invalid
+     */
+    public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
+    {
     }
 
     /**
