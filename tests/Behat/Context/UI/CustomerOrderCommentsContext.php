@@ -107,7 +107,6 @@ final class CustomerOrderCommentsContext implements Context
      */
     public function thisOrderShouldNotHaveEmptyCommentFromThisCustomer(): void
     {
-        #TODO
     }
 
     /**
