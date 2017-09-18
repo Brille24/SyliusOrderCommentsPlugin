@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.1",
 
-        "sylius/sylius": "^1.0.0@rc",
+        "sylius/sylius": "^1.0.0",
         "simple-bus/symfony-bridge": "^4.1",
         "ramsey/uuid": "^3.6",
         "ramsey/uuid-doctrine": "^1.4",
