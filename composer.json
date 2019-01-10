@@ -7,10 +7,11 @@
         "php": "^7.1",
 
         "sylius/sylius": "^1.0.0",
-        "simple-bus/symfony-bridge": "^4.1",
+        "simple-bus/symfony-bridge": "^5.1",
         "ramsey/uuid": "^3.6",
         "ramsey/uuid-doctrine": "^1.4",
-        "simple-bus/doctrine-orm-bridge": "^4.0"
+        "simple-bus/doctrine-orm-bridge": "^5.0",
+        "friends-of-behat/page-object-extension": "^0.2.1"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.2",
