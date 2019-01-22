@@ -28,7 +28,9 @@ final class CommentOrderTest extends TestCase
      */
     public function it_has_option_file_path_and_file_type(): void
     {
-        $file = new UploadedFile('text.txt', 'not_text.txt');
+        $fileName = 'text.txt';
+
+        $file = new UploadedFile($fileName, $fileName, null, null, true);
         $command = CommentOrder::create('#00002', 'test@test.com', 'Hello', true, $file);
 
         $this->assertEquals($file, $command->file());
