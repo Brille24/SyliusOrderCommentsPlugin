@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Application\Command;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 final class CommentOrder
 {
     /** @var string */
@@ -15,13 +17,13 @@ final class CommentOrder
     /** @var string */
     private $message;
 
-    /** @var \SplFileInfo */
+    /** @var UploadedFile */
     private $file;
 
     /** @var bool */
     private $notifyCustomer;
 
-    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, \SplFileInfo $file = null)
+    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, UploadedFile $file = null)
     {
         $this->orderNumber = $orderNumber;
         $this->authorEmail = $authorEmail;
@@ -30,7 +32,7 @@ final class CommentOrder
         $this->file = $file;
     }
 
-    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, \SplFileInfo $file = null): self
+    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, UploadedFile $file = null): self
     {
         return new self($orderNumber, $authorEmail, $message, $notifyCustomer, $file);
     }
@@ -50,7 +52,7 @@ final class CommentOrder
         return $this->message;
     }
 
-    public function file(): ?\SplFileInfo
+    public function file(): ?UploadedFile
     {
         return $this->file;
     }

@@ -7,13 +7,12 @@
     <services>
         <defaults public="true" />
 
-       <service id="sylius_order_comment_plugin.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderHandler">
-           <argument type="service" id="sylius.repository.order" />
-           <argument type="service" id="doctrine.orm.default_entity_manager" />
-           <argument type="service" id="gaufrette.sylius_comments_attachment_filesystem" />
-           <argument type="string">media/comment_attachments</argument>
-           <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrder" />
-       </service>
+        <service id="sylius_order_comment_plugin.command_handler.comment_order_by_customer" class="Sylius\OrderCommentsPlugin\Application\CommandHandler\CommentOrderHandler">
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="string">media/comment_attachments</argument>
+            <tag name="command_handler" handles="Sylius\OrderCommentsPlugin\Application\Command\CommentOrder" />
+        </service>
 
         <service id="sylius_admin_order_comment_plugin.block_event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>@SyliusOrderCommentsPlugin/injected/admin_order_comments.html.twig</argument>
