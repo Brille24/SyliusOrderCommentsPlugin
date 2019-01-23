@@ -30,7 +30,8 @@ final class CommentOrderTest extends TestCase
     {
         $fileName = 'text.txt';
 
-        $file = new UploadedFile($fileName, $fileName, null, null, true);
+        // Symfony 3.4 style
+        $file = new UploadedFile($fileName, $fileName, null, null, null, true);
         $command = CommentOrder::create('#00002', 'test@test.com', 'Hello', true, $file);
 
         $this->assertEquals($file, $command->file());

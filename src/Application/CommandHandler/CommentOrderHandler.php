@@ -47,8 +47,8 @@ final class CommentOrderHandler
         $file = $command->file();
         if (null !== $file) {
             $extension = $file->guessExtension() ?? 'pdf';
+            $fileName  = Uuid::uuid4()->toString() . '.' . $extension;
 
-            $fileName = Uuid::uuid4()->toString() . '.' . $extension;
             $file->move($this->fileDir, $fileName);
             $comment->attachFile($this->fileDir . '/' . $fileName);
         }

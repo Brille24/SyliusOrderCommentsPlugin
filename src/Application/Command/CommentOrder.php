@@ -17,13 +17,13 @@ final class CommentOrder
     /** @var string */
     private $message;
 
-    /** @var UploadedFile */
+    /** @var UploadedFile|null */
     private $file;
 
     /** @var bool */
     private $notifyCustomer;
 
-    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, UploadedFile $file = null)
+    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null)
     {
         $this->orderNumber = $orderNumber;
         $this->authorEmail = $authorEmail;
@@ -32,7 +32,7 @@ final class CommentOrder
         $this->file = $file;
     }
 
-    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, UploadedFile $file = null): self
+    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null): self
     {
         return new self($orderNumber, $authorEmail, $message, $notifyCustomer, $file);
     }

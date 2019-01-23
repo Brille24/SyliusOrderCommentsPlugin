@@ -62,8 +62,14 @@ final class CustomerOrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $filePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
-        $file = new UploadedFile($filePath, $fileName, null, null, true);
+        $originalFilePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
+
+        // Copy the file, because the handler will move it.
+        $filePath = $originalFilePath.'.bkp';
+        copy($originalFilePath, $filePath);
+
+        // Symfony 3.4 style
+        $file = new UploadedFile($filePath, $filePath, null, null, null, true);
 
         $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
     }
