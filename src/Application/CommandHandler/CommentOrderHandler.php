@@ -20,16 +20,21 @@ final class CommentOrderHandler
     /** @var EntityManagerInterface */
     private $entityManager;
 
+    /** @var FilesystemInterface */
+    private $fileSystem;
+
     /** @var string */
     private $fileDir;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         EntityManagerInterface $entityManager,
+        FilesystemInterface $fileSystem,
         string $fileDir
     ) {
         $this->orderRepository = $orderRepository;
         $this->entityManager = $entityManager;
+        $this->fileSystem = $fileSystem;
         $this->fileDir = $fileDir;
     }
 
@@ -47,10 +52,10 @@ final class CommentOrderHandler
         $file = $command->file();
         if (null !== $file) {
             $extension = $file->guessExtension() ?? 'pdf';
-            $fileName  = Uuid::uuid4()->toString() . '.' . $extension;
+            $path  = Uuid::uuid4()->toString() . '.' . $extension;
 
-            $file->move($this->fileDir, $fileName);
-            $comment->attachFile($this->fileDir . '/' . $fileName);
+            $this->fileSystem->write($path, file_get_contents($command->file()->getPathname()));
+            $comment->attachFile($this->fileDir . '/' . $path);
         }
 
         $this->entityManager->persist($comment);
