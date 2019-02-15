@@ -5,6 +5,7 @@
             <a class="author">{{ order_comment.authorEmail }}</a>
             <div class="metadata">
                 <span class="date">{{ order_comment.createdAt|date('H:i:s Y/m/d') }}</span>
+                <span>{% if order_comment.notifyCustomer %}<i class="check square icon"></i> {{ 'sylius_order_comments.customer_notified'|trans }}{% else %}<i class="x icon icon"></i> {{ 'sylius_order_comments.customer_not_notified'|trans }}{% endif %}</span>
             </div>
             <div class="text">
                 {{ order_comment.message }}

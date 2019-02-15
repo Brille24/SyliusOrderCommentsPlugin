@@ -40,13 +40,27 @@ final class AdministratorOrderCommentsContext implements Context
     }
 
     /**
-     * @When I comment the order :order with :message
-     * @Given I have commented the order :order with :message
+     * @When I comment the order :order with :message with the notify customer checkbox enabled
+     * @Given I have commented the order :order with :message with the notify customer checkbox enabled
      */
-    public function iCommentTheOrderWith(OrderInterface $order, string $message): void
+    public function iCommentTheOrderWithMessageAndCheckboxEnabled(OrderInterface $order, string $message): void
     {
         $this->orderPage->open(['id' => $order->getId()]);
 
+        $this->orderCommentFormElement->enableCustomerNotified();
+        $this->orderCommentFormElement->specifyMessage($message);
+        $this->orderCommentFormElement->comment();
+    }
+
+    /**
+     * @When I comment the order :order with :message with the notify customer checkbox disabled
+     * @Given I have commented the order :order with :message with the notify customer checkbox disabled
+     */
+    public function iCommentTheOrderWithMessageAndCheckboxDisabled(OrderInterface $order, string $message): void
+    {
+        $this->orderPage->open(['id' => $order->getId()]);
+
+        $this->orderCommentFormElement->disableCustomerNotified();
         $this->orderCommentFormElement->specifyMessage($message);
         $this->orderCommentFormElement->comment();
     }
@@ -57,6 +71,7 @@ final class AdministratorOrderCommentsContext implements Context
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
     {
         $this->orderPage->open(['id' => $order->getId()]);
+        $this->orderCommentFormElement->enableCustomerNotified();
         $this->orderCommentFormElement->specifyMessage('');
         $this->orderCommentFormElement->comment();
     }

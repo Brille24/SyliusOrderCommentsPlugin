@@ -43,15 +43,27 @@ final class AdministratorOrderCommentsContext implements Context
     }
 
     /**
-     * @Given I have commented the order :order with :message
-     * @When I comment the order :order with :message
+     * @Given I have commented the order :order with :message with the notify customer checkbox enabled
+     * @When I comment the order :order with :message with the notify customer checkbox enabled
      */
-    public function iCommentTheOrderWith(OrderInterface $order, string $message): void
+    public function iCommentTheOrderWithMessageAndCheckboxEnabled(OrderInterface $order, string $message): void
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
 
-        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message));
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true));
+    }
+
+    /**
+     * @Given I have commented the order :order with :message with the notify customer checkbox disabled
+     * @When I comment the order :order with :message with the notify customer checkbox disabled
+     */
+    public function iCommentTheOrderWithMessageAndCheckboxDisabled(OrderInterface $order, string $message): void
+    {
+        /** @var AdminUserInterface $user */
+        $user = $this->sharedStorage->get('administrator');
+
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, false));
     }
 
     /**
@@ -87,7 +99,7 @@ final class AdministratorOrderCommentsContext implements Context
     public function iTryToCommentTheOrderWithAnEmptyMessage(OrderInterface $order): void
     {
         try {
-            $this->iCommentTheOrderWith($order, '');
+            $this->iCommentTheOrderWithMessageAndCheckboxEnabled($order, '');
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -115,10 +127,20 @@ final class AdministratorOrderCommentsContext implements Context
     /**
      * @Then the notification email should be sent to the customer about :message comment
      */
-    public function theNotificationEmailShouldBeSentToTheAdministratorAboutComment(string $message): void
+    public function theNotificationEmailShouldBeSentToTheCustomerAboutComment(string $message): void
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         Assert::true($this->emailChecker->hasMessageTo($message, $user->getEmail()));
+    }
+
+    /**
+     * @Then the notification email should not be sent to the customer about :message comment
+     */
+    public function theNotificationEmailShouldNotBeSentToTheCustomerAboutComment(string $message): void
+    {
+        /** @var ShopUserInterface $user */
+        $user = $this->sharedStorage->get('user');
+        Assert::false($this->emailChecker->hasMessageTo($message, $user->getEmail()));
     }
 }

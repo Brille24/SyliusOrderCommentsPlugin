@@ -31,7 +31,7 @@ final class CustomerOrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message));
+        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, true));
     }
 
     /**
@@ -41,7 +41,7 @@ final class CustomerOrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $comment = new Comment($order, $user->getEmail(), $message);
+        $comment = new Comment($order, $user->getEmail(), $message, true);
         $comment->attachFile($fileName);
         $this->sharedStorage->set('comment', $comment);
     }
@@ -54,7 +54,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), ''));
+            $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), '', true));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -66,7 +66,7 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            $this->sharedStorage->set('comment', new Comment($order, $email, 'Hello'));
+            $this->sharedStorage->set('comment', new Comment($order, $email, 'Hello', true));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }

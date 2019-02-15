@@ -17,11 +17,12 @@ final class CommentTest extends TestCase
     {
         $order = new Order();
 
-        $comment = new Comment($order, 'test@test.com', 'Hello');
+        $comment = new Comment($order, 'test@test.com', 'Hello', true);
 
         $this->assertEquals($order, $comment->order());
         $this->assertEquals('test@test.com', $comment->authorEmail());
         $this->assertEquals('Hello', $comment->message());
+        $this->assertEquals(true, $comment->notifyCustomer());
         $this->assertInstanceOf(\DateTimeImmutable::class, $comment->createdAt());
     }
 
@@ -34,7 +35,7 @@ final class CommentTest extends TestCase
     {
         $order = new Order();
 
-        new Comment($order, 'test@test.com', '');
+        new Comment($order, 'test@test.com', '', true);
     }
 
     /**
@@ -46,7 +47,7 @@ final class CommentTest extends TestCase
     {
         $order = new Order();
 
-        new Comment($order, 'abcd.com', 'Hello');
+        new Comment($order, 'abcd.com', 'Hello', true);
     }
 
     /**
@@ -56,7 +57,7 @@ final class CommentTest extends TestCase
     {
         $order = new Order();
 
-        $comment = new Comment($order, 'test@test.com', 'Hello');
+        $comment = new Comment($order, 'test@test.com', 'Hello', true);
         $comment->attachFile('test/test', 'pdf');
 
         $this->assertNotNull($comment->attachedFile());

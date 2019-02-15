@@ -18,17 +18,21 @@ final class CommentOrder
     /** @var \SplFileInfo */
     private $file;
 
-    private function __construct(string $orderNumber, string $authorEmail, string $message, \SplFileInfo $file = null)
+    /** @var bool */
+    private $notifyCustomer;
+
+    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, \SplFileInfo $file = null)
     {
         $this->orderNumber = $orderNumber;
         $this->authorEmail = $authorEmail;
         $this->message = $message;
+        $this->notifyCustomer = $notifyCustomer;
         $this->file = $file;
     }
 
-    public static function create(string $orderNumber, string $authorEmail, string $message, \SplFileInfo $file = null): self
+    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, \SplFileInfo $file = null): self
     {
-        return new self($orderNumber, $authorEmail, $message, $file);
+        return new self($orderNumber, $authorEmail, $message, $notifyCustomer, $file);
     }
 
     public function orderNumber(): string
@@ -49,5 +53,10 @@ final class CommentOrder
     public function file(): ?\SplFileInfo
     {
         return $this->file;
+    }
+
+    public function notifyCustomer(): bool
+    {
+        return $this->notifyCustomer;
     }
 }

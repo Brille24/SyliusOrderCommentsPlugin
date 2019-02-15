@@ -72,6 +72,7 @@ final class OrderCommentAction
             $order->getNumber(),
             $user->getEmail(),
             $comment->message,
+            $comment->notifyCustomer,
             $comment->file
         ));
 

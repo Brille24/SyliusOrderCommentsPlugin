@@ -25,13 +25,23 @@ final class AdministratorOrderCommentsContext implements Context
     }
 
     /**
-     * @When I comment the order :order with :message
+     * @When I comment the order :order with :message with the notify customer checkbox enabled
      */
-    public function iCommentTheOrderWith(OrderInterface $order, string $message): void
+    public function iCommentTheOrderWithMessageAndCheckboxEnabled(OrderInterface $order, string $message): void
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message));
+        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, true));
+    }
+
+    /**
+     * @When I comment the order :order with :message with the notify customer checkbox disabled
+     */
+    public function iCommentTheOrderWithMessageAndCheckboxDisabled(OrderInterface $order, string $message): void
+    {
+        /** @var AdminUserInterface $user */
+        $user = $this->sharedStorage->get('administrator');
+        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, false));
     }
 
     /**
@@ -40,7 +50,7 @@ final class AdministratorOrderCommentsContext implements Context
     public function iTryToCommentTheOrderWith(OrderInterface $order): void
     {
         try {
-            $this->iCommentTheOrderWith($order, '');
+            $this->iCommentTheOrderWithMessageAndCheckboxEnabled($order, '');
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }

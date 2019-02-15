@@ -25,6 +25,7 @@
             <argument type="service" id="__symfony__.sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="__symfony__.sylius.behat.email_checker" />
+            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
             <tag name="fob.context_service" />
         </service>
 
