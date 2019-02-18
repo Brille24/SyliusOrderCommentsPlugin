@@ -35,12 +35,12 @@ Feature: Commenting an order by an administrator
         Then I should be notified that comment is invalid
         And this order should not have any comments
 
-    @application @test_pu
+    @application
     Scenario: Sending an email notification to the customer about unread comments
-        Given I have commented the order "#00000022" with "How can I help you?" with the notify customer checkbox enabled
+        When I have commented the order "#00000022" with "How can I help you?" with the notify customer checkbox enabled
         Then the notification email should be sent to the customer about "How can I help you?" comment
 
-    @application @test_pu
+    @application
     Scenario: Sending no email notification to the customer about unread comments
-        Given I have commented the order "#00000022" with "How can I not help you?" with the notify customer checkbox disabled
+        When I have commented the order "#00000022" with "How can I not help you?" with the notify customer checkbox disabled
         Then the notification email should not be sent to the customer about "How can I not help you?" comment

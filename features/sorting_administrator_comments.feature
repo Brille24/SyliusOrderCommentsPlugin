@@ -17,6 +17,6 @@ Feature: Sorting administrator comments
 
     @ui
     Scenario: Administrator commented an order
-        Given I have commented the order "#00000022" with "Hello" with the notify customer checkbox enabled
+        When I have commented the order "#00000022" with "Hello" with the notify customer checkbox enabled
         And I have commented the order "#00000022" with "How can I help you?" with the notify customer checkbox enabled
         Then the first comment from the top should have the "Hello" message
