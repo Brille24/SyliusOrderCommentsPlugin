@@ -51,7 +51,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
 
-        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message));
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true));
     }
 
     /**
@@ -64,7 +64,7 @@ final class CustomerOrderCommentsContext implements Context
         $filePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
         $file = new \SplFileInfo($filePath);
 
-        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, $file));
+        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
     }
 
     /**
@@ -75,7 +75,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), ''));
+            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), '', true));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -87,7 +87,7 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $email, 'Hello'));
+            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $email, 'Hello', true));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }
@@ -101,7 +101,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrder::create('#0003', $user->getEmail(), $message));
+            $this->commandBus->handle(CommentOrder::create('#0003', $user->getEmail(), $message, true));
         } catch (\DomainException $exception) {
             $this->sharedStorage->set('exception', $exception);
         }

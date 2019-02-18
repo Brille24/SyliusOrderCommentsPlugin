@@ -57,6 +57,7 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
     {
         $this->orderPage->open(['number' => $order->getNumber()]);
+        $this->orderCommentFormElement->enableCustomerNotified();
         $this->orderCommentFormElement->specifyMessage('');
         $this->orderCommentFormElement->comment();
     }

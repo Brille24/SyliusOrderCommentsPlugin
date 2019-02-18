@@ -6,6 +6,7 @@ namespace Sylius\OrderCommentsPlugin\Infrastructure\Form\Type;
 
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,11 @@ final class OrderCommentType extends AbstractType
                 'message',
                 TextareaType::class,
                 ['constraints' => [new NotBlank()]]
+            )
+            ->add(
+                'notifyCustomer',
+                CheckboxType::class,
+                ['label' => 'sylius_order_comments.notify_customer']
             )
             ->add('file', FileType::class)
         ;

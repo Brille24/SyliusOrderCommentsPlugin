@@ -47,7 +47,7 @@ final class CommentOrderHandler
             throw new \DomainException(sprintf('Cannot comment an order "%s" because it does not exist', $command->orderNumber()));
         }
 
-        $comment = new Comment($order, $command->authorEmail(), $command->message());
+        $comment = new Comment($order, $command->authorEmail(), $command->message(), $command->notifyCustomer());
 
         if (null !== $command->file()) {
             $extension = '' === $command->file()->getExtension() ? 'pdf' : $command->file()->getExtension();

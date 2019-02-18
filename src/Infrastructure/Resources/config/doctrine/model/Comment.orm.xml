@@ -18,5 +18,6 @@
 
         <field name="message" column="message" type="string" />
         <field name="createdAt" column="createdAt" type="datetime" />
+        <field name="notifyCustomer" column="notifyCustomer" type="boolean" />
     </entity>
 </doctrine-mapping>

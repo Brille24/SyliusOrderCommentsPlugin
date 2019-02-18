@@ -17,7 +17,7 @@ Feature: Commenting an order by an administrator
 
     @domain @application @ui
     Scenario: Administrator commented an order
-        When I comment the order "#00000022" with "How can I help you?"
+        When I comment the order "#00000022" with "How can I help you?" with the notify customer checkbox enabled
         Then this order should have a comment with "How can I help you?" from this administrator
 
     @application @ui
@@ -25,7 +25,7 @@ Feature: Commenting an order by an administrator
         Given a customer "john.doe@test.com" placed an order "#00000023"
         And the customer bought a single "PHP T-Shirt"
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
-        When I comment the order "#00000023" with "How can I help you?"
+        When I comment the order "#00000023" with "How can I help you?" with the notify customer checkbox enabled
         Then this order should have a comment with "How can I help you?" from this administrator
         But the order "#00000022" should not have any comments
 
@@ -37,5 +37,10 @@ Feature: Commenting an order by an administrator
 
     @application
     Scenario: Sending an email notification to the customer about unread comments
-        Given I have commented the order "#00000022" with "How can I help you?"
+        When I have commented the order "#00000022" with "How can I help you?" with the notify customer checkbox enabled
         Then the notification email should be sent to the customer about "How can I help you?" comment
+
+    @application
+    Scenario: Sending no email notification to the customer about unread comments
+        When I have commented the order "#00000022" with "How can I not help you?" with the notify customer checkbox disabled
+        Then the notification email should not be sent to the customer about "How can I not help you?" comment

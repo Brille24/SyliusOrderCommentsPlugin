@@ -24,6 +24,7 @@ final class OrderCommentedTest extends TestCase
             $order,
             Email::fromString('test@test.com'),
             'Hello',
+            true,
             new \DateTimeImmutable()
         );
 
@@ -31,6 +32,7 @@ final class OrderCommentedTest extends TestCase
         $this->assertEquals($order, $event->order());
         $this->assertEquals('test@test.com', $event->authorEmail());
         $this->assertEquals('Hello', $event->message());
+        $this->assertEquals(true, $event->notifyCustomer());
         $this->assertInstanceOf(\DateTimeImmutable::class, $event->createdAt());
     }
 }

@@ -25,17 +25,22 @@ final class OrderCommented
     /** @var \DateTimeInterface */
     private $createdAt;
 
+    /** @var bool */
+    private $notifyCustomer;
+
     private function __construct(
         UuidInterface $orderCommentId,
         OrderInterface $order,
         Email $authorEmail,
         string $message,
+        bool $notifyCustomer,
         \DateTimeInterface $createdAt
     ) {
         $this->orderCommentId = $orderCommentId;
         $this->order = $order;
         $this->authorEmail = $authorEmail;
         $this->message = $message;
+        $this->notifyCustomer = $notifyCustomer;
         $this->createdAt = $createdAt;
     }
 
@@ -44,9 +49,10 @@ final class OrderCommented
         OrderInterface $order,
         Email $authorEmail,
         string $message,
+        bool $notifyCustomer,
         \DateTimeInterface $createdAt
     ): self {
-        return new self($orderCommentId, $order, $authorEmail, $message, $createdAt);
+        return new self($orderCommentId, $order, $authorEmail, $message, $notifyCustomer, $createdAt);
     }
 
     public function orderCommentId(): UuidInterface
@@ -67,6 +73,11 @@ final class OrderCommented
     public function message(): string
     {
         return $this->message;
+    }
+
+    public function notifyCustomer(): bool
+    {
+        return $this->notifyCustomer;
     }
 
     public function createdAt(): \DateTimeInterface

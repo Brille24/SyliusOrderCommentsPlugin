@@ -1,0 +1,4 @@
+sylius_order_comments:
+  notify_customer: "Notify customer about this comment!"
+  customer_notified: "Customer notified!"
+  customer_not_notified: "Customer not notified!"

@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin.svg?token=8ZLRHEY2aPJvQgqmQCxh&branch=master)](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin)
 
+## Installation
+
+1. Move migrations from `test/Application` to your migrations folder and run `php bin/console doctrine:migrations:migrate` to update your database.
+
 ## Testing & Development
 
 In order to run tests, execute following commands:

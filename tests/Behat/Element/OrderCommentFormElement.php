@@ -16,6 +16,16 @@ class OrderCommentFormElement extends Element implements OrderCommentFormElement
         $this->getDocument()->find('css', 'input[type="file"]')->attachFile($path);
     }
 
+    public function enableCustomerNotified(): void
+    {
+        $this->getDocument()->find('css', '#order_comment_notifyCustomer')->check();
+    }
+
+    public function disableCustomerNotified(): void
+    {
+        $this->getDocument()->find('css', '#order_comment_notifyCustomer')->uncheck();
+    }
+
     public function comment(): void
     {
         $this->getDocument()->pressButton('Comment');

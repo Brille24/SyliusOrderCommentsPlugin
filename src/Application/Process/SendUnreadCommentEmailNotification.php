@@ -21,6 +21,10 @@ final class SendUnreadCommentEmailNotification
 
     public function handleOrderCommented(OrderCommented $event): void
     {
+        if (!$event->notifyCustomer()) {
+            return;
+        }
+
         $order = $event->order();
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();

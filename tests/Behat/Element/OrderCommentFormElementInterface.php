@@ -11,4 +11,8 @@ interface OrderCommentFormElementInterface
     public function attachFile($path): void;
 
     public function comment(): void;
+
+    public function enableCustomerNotified(): void;
+
+    public function disableCustomerNotified(): void;
 }

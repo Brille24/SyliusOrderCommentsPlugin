@@ -13,4 +13,7 @@ final class OrderComment
 
     /** @var UploadedFile */
     public $file;
+
+    /** @var bool */
+    public $notifyCustomer;
 }

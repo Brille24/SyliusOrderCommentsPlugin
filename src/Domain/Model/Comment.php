@@ -35,7 +35,10 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     /** @var AttachedFile */
     private $attachedFile;
 
-    public function __construct(OrderInterface $order, string $authorEmail, string $message)
+    /** @var bool */
+    private $notifyCustomer;
+
+    public function __construct(OrderInterface $order, string $authorEmail, string $message, bool $notifyCustomer)
     {
         if (null == $message) {
             throw new \DomainException('OrderComment cannot be created with empty message');
@@ -45,6 +48,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
         $this->authorEmail = Email::fromString($authorEmail);
         $this->order = $order;
         $this->message = $message;
+        $this->notifyCustomer = $notifyCustomer;
         $this->createdAt = new \DateTimeImmutable();
 
         $this->record(
@@ -53,6 +57,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
                 $this->order,
                 $this->authorEmail,
                 $this->message,
+                $this->notifyCustomer,
                 $this->createdAt
             )
         );
@@ -95,5 +100,10 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
     public function attachedFile(): ?AttachedFile
     {
         return $this->attachedFile;
+    }
+
+    public function notifyCustomer(): bool
+    {
+        return $this->notifyCustomer;
     }
 }
