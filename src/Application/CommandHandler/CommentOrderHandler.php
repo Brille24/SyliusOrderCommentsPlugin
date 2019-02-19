@@ -29,12 +29,12 @@ final class CommentOrderHandler
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         EntityManagerInterface $entityManager,
-        FilesystemInterface $filesystem,
+        FilesystemInterface $fileSystem,
         string $fileDir
     ) {
         $this->orderRepository = $orderRepository;
         $this->entityManager = $entityManager;
-        $this->fileSystem = $filesystem;
+        $this->fileSystem = $fileSystem;
         $this->fileDir = $fileDir;
     }
 
@@ -49,10 +49,11 @@ final class CommentOrderHandler
 
         $comment = new Comment($order, $command->authorEmail(), $command->message(), $command->notifyCustomer());
 
-        if (null !== $command->file()) {
-            $extension = '' === $command->file()->getExtension() ? 'pdf' : $command->file()->getExtension();
+        $file = $command->file();
+        if (null !== $file) {
+            $extension = $file->guessExtension() ?? 'pdf';
+            $path  = Uuid::uuid4()->toString() . '.' . $extension;
 
-            $path = Uuid::uuid4()->toString() . '.' . $extension;
             $this->fileSystem->write($path, file_get_contents($command->file()->getPathname()));
             $comment->attachFile($this->fileDir . '/' . $path);
         }
