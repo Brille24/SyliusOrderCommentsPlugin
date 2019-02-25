@@ -31,7 +31,10 @@ final class AdministratorOrderCommentsContext implements Context
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, true));
+        $comment = new Comment($order, $user->getEmail(), $message, true);
+        $comment->sendNewCommentEmail();
+
+        $this->sharedStorage->set('comment', $comment);
     }
 
     /**
@@ -41,7 +44,10 @@ final class AdministratorOrderCommentsContext implements Context
     {
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, false));
+        $comment = new Comment($order, $user->getEmail(), $message, false);
+        $comment->sendNewCommentEmail();
+
+        $this->sharedStorage->set('comment', $comment);
     }
 
     /**

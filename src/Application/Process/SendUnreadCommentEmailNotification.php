@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
+use Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile;
 
 final class SendUnreadCommentEmailNotification
 {
@@ -35,7 +36,8 @@ final class SendUnreadCommentEmailNotification
             array_diff(array_filter($recipients), [$event->authorEmail()]),
             $order,
             $event->message(),
-            (string) $event->authorEmail()
+            (string) $event->authorEmail(),
+            $event->attachedFile()
         );
     }
 
@@ -43,8 +45,11 @@ final class SendUnreadCommentEmailNotification
         array $recipients,
         OrderInterface $order,
         string $message,
-        string $authorEmail
+        string $authorEmail,
+        ?AttachedFile $attachedFile
     ): void {
+        $attachedFile = ($attachedFile === null) ? [] : [$attachedFile->path()];
+
         $this->emailSender->send(
             'unread_comment',
             $recipients,
@@ -52,7 +57,8 @@ final class SendUnreadCommentEmailNotification
                 'order' => $order,
                 'message' => $message,
                 'authorEmail' => $authorEmail,
-            ]
+            ],
+            $attachedFile
         );
     }
 }

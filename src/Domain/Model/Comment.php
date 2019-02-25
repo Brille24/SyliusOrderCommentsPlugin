@@ -50,17 +50,6 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
         $this->message = $message;
         $this->notifyCustomer = $notifyCustomer;
         $this->createdAt = new \DateTimeImmutable();
-
-        $this->record(
-            OrderCommented::occur(
-                $this->id,
-                $this->order,
-                $this->authorEmail,
-                $this->message,
-                $this->notifyCustomer,
-                $this->createdAt
-            )
-        );
     }
 
     public function attachFile(string $path)
@@ -69,6 +58,21 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
 
         $this->record(
             FileAttached::occur($this->attachedFile->path())
+        );
+    }
+
+    public function sendNewCommentEmail(): void
+    {
+        $this->record(
+            OrderCommented::occur(
+                $this->getId(),
+                $this->order(),
+                $this->authorEmail(),
+                $this->message(),
+                $this->notifyCustomer(),
+                $this->createdAt(),
+                $this->attachedFile()
+            )
         );
     }
 
