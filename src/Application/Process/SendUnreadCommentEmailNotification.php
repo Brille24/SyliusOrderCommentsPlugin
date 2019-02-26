@@ -48,7 +48,7 @@ final class SendUnreadCommentEmailNotification
         string $authorEmail,
         ?AttachedFile $attachedFile
     ): void {
-        $attachedFile = ($attachedFile === null) ? [] : [$attachedFile->path()];
+        $attachments = ($attachedFile === null) ? [] : [$attachedFile->path()];
 
         $this->emailSender->send(
             'unread_comment',
@@ -58,7 +58,7 @@ final class SendUnreadCommentEmailNotification
                 'message' => $message,
                 'authorEmail' => $authorEmail,
             ],
-            $attachedFile
+            $attachments
         );
     }
 }
