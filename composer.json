@@ -40,11 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sylius\\OrderCommentsPlugin\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "Sylius\\OrderCommentsPlugin\\": "src/",
             "Tests\\Sylius\\OrderCommentsPlugin\\": "tests/"
         }
     }
