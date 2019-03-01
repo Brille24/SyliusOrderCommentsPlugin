@@ -57,7 +57,7 @@ final class CommentOrderHandler
             $comment->attachFile($this->fileDir . '/' . $path);
         }
 
-        $comment->sendNewCommentEmail();
+        $comment->orderCommented();
 
         $this->entityManager->persist($comment);
     }

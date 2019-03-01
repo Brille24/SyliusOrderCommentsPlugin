@@ -32,7 +32,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         $comment = new Comment($order, $user->getEmail(), $message, true);
-        $comment->sendNewCommentEmail();
+        $comment->orderCommented();
 
         $this->sharedStorage->set('comment', $comment);
     }
@@ -46,7 +46,7 @@ final class CustomerOrderCommentsContext implements Context
         $user = $this->sharedStorage->get('user');
         $comment = new Comment($order, $user->getEmail(), $message, true);
         $comment->attachFile($fileName);
-        $comment->sendNewCommentEmail();
+        $comment->orderCommented();
 
         $this->sharedStorage->set('comment', $comment);
     }
@@ -60,7 +60,7 @@ final class CustomerOrderCommentsContext implements Context
         $user = $this->sharedStorage->get('user');
         try {
             $comment = new Comment($order, $user->getEmail(), '', true);
-            $comment->sendNewCommentEmail();
+            $comment->orderCommented();
 
             $this->sharedStorage->set('comment', $comment);
         } catch (\DomainException $exception) {
@@ -75,7 +75,7 @@ final class CustomerOrderCommentsContext implements Context
     {
         try {
             $comment = new Comment($order, $email, 'Hello', true);
-            $comment->sendNewCommentEmail();
+            $comment->orderCommented();
 
             $this->sharedStorage->set('comment', $comment);
         } catch (\DomainException $exception) {

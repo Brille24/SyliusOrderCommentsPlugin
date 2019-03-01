@@ -61,7 +61,7 @@ final class Comment implements ResourceInterface, ContainsRecordedMessages
         );
     }
 
-    public function sendNewCommentEmail(): void
+    public function orderCommented(): void
     {
         $this->record(
             OrderCommented::occur(
