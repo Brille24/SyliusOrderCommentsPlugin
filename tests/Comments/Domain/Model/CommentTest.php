@@ -58,7 +58,7 @@ final class CommentTest extends TestCase
         $order = new Order();
 
         $comment = new Comment($order, 'test@test.com', 'Hello', true);
-        $comment->attachFile('test/test', 'pdf');
+        $comment->attachFile('test/test.pdf');
 
         $this->assertNotNull($comment->attachedFile());
     }

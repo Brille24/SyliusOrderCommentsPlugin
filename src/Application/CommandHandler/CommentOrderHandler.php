@@ -58,6 +58,8 @@ final class CommentOrderHandler
             $comment->attachFile($this->fileDir . '/' . $path);
         }
 
+        $comment->orderCommented();
+
         $this->entityManager->persist($comment);
     }
 }

@@ -29,9 +29,7 @@ final class AdministratorOrderCommentsContext implements Context
      */
     public function iCommentTheOrderWithMessageAndCheckboxEnabled(OrderInterface $order, string $message): void
     {
-        /** @var AdminUserInterface $user */
-        $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, true));
+        $this->commentOrder($order, $message, true);
     }
 
     /**
@@ -39,9 +37,7 @@ final class AdministratorOrderCommentsContext implements Context
      */
     public function iCommentTheOrderWithMessageAndCheckboxDisabled(OrderInterface $order, string $message): void
     {
-        /** @var AdminUserInterface $user */
-        $user = $this->sharedStorage->get('administrator');
-        $this->sharedStorage->set('comment', new Comment($order, $user->getEmail(), $message, false));
+        $this->commentOrder($order, $message, false);
     }
 
     /**
@@ -79,6 +75,22 @@ final class AdministratorOrderCommentsContext implements Context
                 $message, $order->getNumber(), $user->getEmail()
             ));
         }
+    }
+
+    /**
+     * Creates a new comment and sets it into the shared storage.
+     * @param OrderInterface $order
+     * @param string $message
+     * @param bool $notifyCustomer
+     */
+    private function commentOrder(OrderInterface $order, string $message, bool $notifyCustomer): void
+    {
+        /** @var AdminUserInterface $user */
+        $user = $this->sharedStorage->get('administrator');
+        $comment = new Comment($order, $user->getEmail(), $message, $notifyCustomer);
+        $comment->orderCommented();
+
+        $this->sharedStorage->set('comment', $comment);
     }
 
     /**
