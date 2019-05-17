@@ -40,7 +40,7 @@ final class CommentOrderHandler
 
     public function __invoke(CommentOrder $command): void
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->findOneBy(['number' => $command->orderNumber()]);
 
         if (null === $order) {

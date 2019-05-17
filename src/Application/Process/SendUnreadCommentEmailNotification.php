@@ -26,10 +26,16 @@ final class SendUnreadCommentEmailNotification
         }
 
         $order = $event->order();
+        $customer = $order->getCustomer();
+
+        if (null === $customer) {
+            return;
+        }
+
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        $recipients = [$channel->getContactEmail(), $order->getCustomer()->getEmail()];
+        $recipients = [$channel->getContactEmail(), $customer->getEmail()];
 
         $this->sendUnreadCommentNotification(
             array_diff(array_filter($recipients), [$event->authorEmail()]),
