@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Application\Command;
 
-use SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class CommentOrder
 {
@@ -17,28 +17,14 @@ final class CommentOrder
     /** @var string */
     private $message;
 
-    /** @var SplFileInfo */
+    /** @var UploadedFile|null */
     private $file;
 
     /** @var bool */
     private $notifyCustomer;
 
-    /**
-     * CommentOrder constructor.
-     *
-     * @param string $orderNumber
-     * @param string $authorEmail
-     * @param string $message
-     * @param bool $notifyCustomer
-     * @param SplFileInfo|null $file
-     */
-    private function __construct(
-        string $orderNumber,
-        string $authorEmail,
-        string $message,
-        bool $notifyCustomer,
-        ?SplFileInfo $file
-    ) {
+    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null)
+    {
         $this->orderNumber = $orderNumber;
         $this->authorEmail = $authorEmail;
         $this->message = $message;
@@ -46,7 +32,7 @@ final class CommentOrder
         $this->file = $file;
     }
 
-    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, SplFileInfo $file = null): self
+    public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null): self
     {
         return new self($orderNumber, $authorEmail, $message, $notifyCustomer, $file);
     }
@@ -66,7 +52,7 @@ final class CommentOrder
         return $this->message;
     }
 
-    public function file(): ?SplFileInfo
+    public function file(): ?UploadedFile
     {
         return $this->file;
     }

@@ -1,9 +1,9 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "sylius/order-comments-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
-    "description": "Acme example plugin for Sylius.",
-    "license": "MIT",
+    "description": "Order comments feature for Sylius.",
+    "license": "proprietary",
     "require": {
         "php": "^7.2",
 

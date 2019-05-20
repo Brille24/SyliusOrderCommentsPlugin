@@ -6,6 +6,7 @@ namespace Sylius\OrderCommentsPlugin\Domain\Event;
 
 use Ramsey\Uuid\UuidInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile;
 use Sylius\OrderCommentsPlugin\Domain\Model\Email;
 
 final class OrderCommented
@@ -28,13 +29,17 @@ final class OrderCommented
     /** @var bool */
     private $notifyCustomer;
 
+    /** @var AttachedFile */
+    private $attachedFile;
+
     private function __construct(
         UuidInterface $orderCommentId,
         OrderInterface $order,
         Email $authorEmail,
         string $message,
         bool $notifyCustomer,
-        \DateTimeInterface $createdAt
+        \DateTimeInterface $createdAt,
+        AttachedFile $attachedFile = null
     ) {
         $this->orderCommentId = $orderCommentId;
         $this->order = $order;
@@ -42,6 +47,7 @@ final class OrderCommented
         $this->message = $message;
         $this->notifyCustomer = $notifyCustomer;
         $this->createdAt = $createdAt;
+        $this->attachedFile = $attachedFile;
     }
 
     public static function occur(
@@ -50,9 +56,10 @@ final class OrderCommented
         Email $authorEmail,
         string $message,
         bool $notifyCustomer,
-        \DateTimeInterface $createdAt
+        \DateTimeInterface $createdAt,
+        AttachedFile $attachedFile = null
     ): self {
-        return new self($orderCommentId, $order, $authorEmail, $message, $notifyCustomer, $createdAt);
+        return new self($orderCommentId, $order, $authorEmail, $message, $notifyCustomer, $createdAt, $attachedFile);
     }
 
     public function orderCommentId(): UuidInterface
@@ -83,5 +90,10 @@ final class OrderCommented
     public function createdAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function attachedFile(): ?AttachedFile
+    {
+        return $this->attachedFile;
     }
 }

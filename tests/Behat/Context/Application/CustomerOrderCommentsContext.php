@@ -14,6 +14,7 @@ use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webmozart\Assert\Assert;
 
 final class CustomerOrderCommentsContext implements Context
@@ -61,8 +62,14 @@ final class CustomerOrderCommentsContext implements Context
     {
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
-        $filePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
-        $file = new \SplFileInfo($filePath);
+        $originalFilePath = __DIR__ . '/../../../Comments/Infrastructure/Form/Type/' . $fileName;
+
+        // Copy the file, because the handler will move it.
+        $filePath = $originalFilePath.'.bkp';
+        copy($originalFilePath, $filePath);
+
+        // Symfony 3.4 style
+        $file = new UploadedFile($filePath, $filePath, null, null, null, true);
 
         $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
     }
