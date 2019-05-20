@@ -8,6 +8,7 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\User\Model\UserInterface;
 use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
@@ -21,9 +22,6 @@ use Webmozart\Assert\Assert;
 
 final class OrderCommentAction
 {
-    /** @var ViewHandlerInterface */
-    private $viewHandler;
-
     /** @var FormFactoryInterface */
     private $formFactory;
 
@@ -37,13 +35,11 @@ final class OrderCommentAction
     private $orderRepository;
 
     public function __construct(
-        ViewHandlerInterface $viewHandler,
         FormFactoryInterface $formFactory,
         TokenStorageInterface $securityTokenStorage,
         MessageBus $commandBus,
         OrderRepositoryInterface $orderRepository
     ) {
-        $this->viewHandler = $viewHandler;
         $this->formFactory = $formFactory;
         $this->securityTokenStorage = $securityTokenStorage;
         $this->commandBus = $commandBus;
@@ -55,14 +51,17 @@ final class OrderCommentAction
     {
         $form = $this->formFactory->create(OrderCommentType::class);
         $form->handleRequest($request);
+        $token = $this->securityTokenStorage->getToken();
 
-        if (!$form->isValid()) {
+        if (null === $token || !$form->isValid()) {
             return RedirectResponse::create($request->headers->get('referer'));
         }
 
         /** @var OrderComment $comment */
         $comment = $form->getData();
-        $user = $this->securityTokenStorage->getToken()->getUser();
+
+        /** @var UserInterface|string|null $user */
+        $user = $token->getUser();
         /** @var OrderInterface $order */
         $order = $this->orderRepository->find($request->attributes->get('orderId'));
 

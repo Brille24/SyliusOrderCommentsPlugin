@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\OrderCommentsPlugin\Behat\Element;
 
+use ArrayAccess;
 use Behat\Mink\Driver\DriverInterface;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\NodeElement;
@@ -28,7 +29,7 @@ abstract class Element
      */
     private $document;
 
-    public function __construct(Session $session, array $parameters = [])
+    public function __construct(Session $session, ArrayAccess $parameters)
     {
         $this->session = $session;
         $this->parameters = $parameters;
@@ -36,7 +37,7 @@ abstract class Element
 
     protected function getParameter(string $name): NodeElement
     {
-        return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
+        return $this->parameters[$name] ?? null;
     }
 
     /**

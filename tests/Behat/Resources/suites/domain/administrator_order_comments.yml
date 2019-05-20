@@ -3,7 +3,7 @@
 default:
     suites:
         domain_administrator_order_comments:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool
 
