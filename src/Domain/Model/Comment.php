@@ -13,7 +13,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\OrderCommentsPlugin\Domain\Event\FileAttached;
 use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
 
-final class Comment implements ResourceInterface, ContainsRecordedMessages
+class Comment implements ResourceInterface, ContainsRecordedMessages
 {
     use PrivateMessageRecorderCapabilities;
 
