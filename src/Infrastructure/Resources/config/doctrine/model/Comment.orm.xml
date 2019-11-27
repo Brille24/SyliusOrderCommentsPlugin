@@ -3,7 +3,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <entity name="Sylius\OrderCommentsPlugin\Domain\Model\Comment" table="sylius_order_comment">
+    <mapped-superclass name="Sylius\OrderCommentsPlugin\Domain\Model\Comment" table="sylius_order_comment">
         <id name="id" column="id" type="uuid">
             <generator strategy="CUSTOM" />
             <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator" />
@@ -16,8 +16,8 @@
         <embedded name="authorEmail" class="Sylius\OrderCommentsPlugin\Domain\Model\Email" />
         <embedded name="attachedFile" class="Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile" />
 
-        <field name="message" column="message" type="string" />
+        <field name="message" column="message" type="text" length="65535"/>
         <field name="createdAt" column="createdAt" type="datetime" />
         <field name="notifyCustomer" column="notifyCustomer" type="boolean" />
-    </entity>
+    </mapped-superclass>
 </doctrine-mapping>
