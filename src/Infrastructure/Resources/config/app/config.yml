@@ -30,7 +30,7 @@ knp_gaufrette:
     adapters:
         sylius_comments_attachment:
             local:
-                directory: "%kernel.root_dir%/../public/media/comment_attachments"
+                directory: "%sylius_core.public_dir%/media/comment_attachments"
                 create: true
     filesystems:
         sylius_comments_attachment:
