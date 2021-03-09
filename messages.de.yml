@@ -1,0 +1,4 @@
+sylius_order_comments:
+  notify_customer: "Kunden über den Kommentar benachrichtigen"
+  customer_notified: "Kunde benachrichtig!"
+  customer_not_notified: "Kunde wurde nicht benachrichtigt!"
