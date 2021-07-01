@@ -56,7 +56,7 @@ final class OrderCommentAction
         /** @var string $referer */
         $referer = $request->headers->get('referer');
         if (null === $token || !$form->isValid()) {
-            return RedirectResponse::create($referer);
+            return new RedirectResponse($referer);
         }
 
         /** @var OrderComment $comment */
@@ -82,6 +82,6 @@ final class OrderCommentAction
             $comment->file
         ));
 
-        return RedirectResponse::create($referer);
+        return new RedirectResponse($referer);
     }
 }

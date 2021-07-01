@@ -27,7 +27,7 @@
 
         <service id="sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderOrderCommentAction">
             <argument type="service" id="form.factory" />
-            <call method="setContainer"><argument type="service" id="service_container"/></call>
+            <argument type="service" id="twig" />
         </service>
 
         <service id="sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action" class="Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui\OrderCommentAction">
