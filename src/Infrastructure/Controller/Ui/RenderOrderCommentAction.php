@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-final class RenderOrderCommentAction extends AbstractController
+final class RenderOrderCommentAction
 {
     /** @var FormFactoryInterface */
     private $formFactory;
