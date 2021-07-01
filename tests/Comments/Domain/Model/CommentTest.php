@@ -28,11 +28,11 @@ final class CommentTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \DomainException
      */
     public function order_cannot_be_commented_with_empty_message(): void
     {
+        $this->expectException(\DomainException::class);
+
         $order = new Order();
 
         new Comment($order, 'test@test.com', '', true);
@@ -40,11 +40,11 @@ final class CommentTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \DomainException
      */
     public function order_cannot_be_commented_with_invalid_email(): void
     {
+        $this->expectException(\DomainException::class);
+
         $order = new Order();
 
         new Comment($order, 'abcd.com', 'Hello', true);
