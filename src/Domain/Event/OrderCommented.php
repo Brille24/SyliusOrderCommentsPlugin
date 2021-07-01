@@ -29,7 +29,7 @@ final class OrderCommented
     /** @var bool */
     private $notifyCustomer;
 
-    /** @var AttachedFile */
+    /** @var AttachedFile|null */
     private $attachedFile;
 
     private function __construct(
@@ -39,7 +39,7 @@ final class OrderCommented
         string $message,
         bool $notifyCustomer,
         \DateTimeInterface $createdAt,
-        AttachedFile $attachedFile = null
+        ?AttachedFile $attachedFile = null
     ) {
         $this->orderCommentId = $orderCommentId;
         $this->order = $order;
@@ -57,7 +57,7 @@ final class OrderCommented
         string $message,
         bool $notifyCustomer,
         \DateTimeInterface $createdAt,
-        AttachedFile $attachedFile = null
+        ?AttachedFile $attachedFile = null
     ): self {
         return new self($orderCommentId, $order, $authorEmail, $message, $notifyCustomer, $createdAt, $attachedFile);
     }

@@ -16,7 +16,7 @@ final class Email
 
     public static function fromString(string $email): self
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \DomainException(sprintf('This email "%s" is not valid', $email));
         }
 

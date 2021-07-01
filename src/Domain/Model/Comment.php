@@ -52,12 +52,15 @@ class Comment implements ResourceInterface, ContainsRecordedMessages
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function attachFile(string $path)
+    public function attachFile(string $path): void
     {
         $this->attachedFile = AttachedFile::create($path);
 
+        /** @var string $path */
+        $path = $this->attachedFile->path();
+
         $this->record(
-            FileAttached::occur($this->attachedFile->path())
+            FileAttached::occur($path)
         );
     }
 
