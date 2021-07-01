@@ -32,8 +32,8 @@ class Comment implements ResourceInterface, ContainsRecordedMessages
     /** @var \DateTimeInterface */
     private $createdAt;
 
-    /** @var AttachedFile */
-    private $attachedFile;
+    /** @var AttachedFile|null */
+    private $attachedFile = null;
 
     /** @var bool */
     private $notifyCustomer;

@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandlerInterface;
 use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RenderOrderCommentAction
+final class RenderOrderCommentAction extends AbstractController
 {
-    /** @var ViewHandlerInterface */
-    private $viewHandler;
-
     /** @var FormFactoryInterface */
     private $formFactory;
 
-    public function __construct(ViewHandlerInterface $viewHandler, FormFactoryInterface $formFactory)
+    public function __construct(FormFactoryInterface $formFactory)
     {
-        $this->viewHandler = $viewHandler;
         $this->formFactory = $formFactory;
     }
 
@@ -28,9 +23,9 @@ final class RenderOrderCommentAction
     {
         $form = $this->formFactory->create(OrderCommentType::class);
 
-        $view = View::create(['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]);
-        $view->setTemplate('@SyliusOrderCommentsPlugin/_form.html.twig');
-
-        return $this->viewHandler->handle($view);
+        return $this->render(
+            '@SyliusOrderCommentsPlugin/_form.html.twig',
+            ['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]
+        );
     }
 }

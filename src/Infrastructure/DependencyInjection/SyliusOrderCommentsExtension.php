@@ -12,9 +12,9 @@ final class SyliusOrderCommentsExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $config, ContainerBuilder $container): void
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $configs = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
@@ -24,5 +24,10 @@ final class SyliusOrderCommentsExtension extends Extension
             'sylius_order_comment_plugin.comment_file_dir',
             $projectDir.'/public/media/comment_attachments'
         );
+    }
+
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
+    {
+        return new Configuration();
     }
 }
