@@ -9,14 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-        "sylius/sylius": "~1.9.0",
         "ramsey/uuid": "^3.6",
         "ramsey/uuid-doctrine": "^1.4",
         "simple-bus/doctrine-orm-bridge": "^6.1",
-        "simple-bus/symfony-bridge": "^6.1"
-    },
-    "conflict": {
-        "api-platform/core": "^2.6"
+        "simple-bus/symfony-bridge": "^6.1",
+        "sylius/sylius": "^1.9"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
