@@ -1,3 +1,6 @@
+> :warning: **BEWARE!**
+> This repository has been deprecated and will not be maintained or evolved by the Sylius Team. You can still use it with compatible Sylius versions, but at your own risk, as no bugs will be fixed on it.
+
 # Sylius Order Comments Plugin
 
 [![Build Status](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin.svg?token=8ZLRHEY2aPJvQgqmQCxh&branch=master)](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin)
