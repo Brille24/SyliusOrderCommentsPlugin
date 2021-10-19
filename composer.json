@@ -13,7 +13,8 @@
         "ramsey/uuid-doctrine": "^1.4",
         "simple-bus/doctrine-orm-bridge": "^6.1",
         "simple-bus/symfony-bridge": "^6.1",
-        "sylius/sylius": "^1.9"
+        "sylius/sylius": "^1.10",
+        "sylius/admin-api-bundle":  "^1.10"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
