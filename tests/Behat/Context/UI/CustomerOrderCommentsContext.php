@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI;
+namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Page\Shop\Account\Order\ShowPageInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentsElementInterface;
-use Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentFormElementInterface;
+use Tests\Brille24\OrderCommentsPlugin\Behat\Element\OrderCommentsElementInterface;
+use Tests\Brille24\OrderCommentsPlugin\Behat\Element\OrderCommentFormElementInterface;
 use Webmozart\Assert\Assert;
 
 final class CustomerOrderCommentsContext implements Context

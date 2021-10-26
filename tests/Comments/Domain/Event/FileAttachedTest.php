@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Comments\Event;
+namespace Tests\Brille24\OrderCommentsPlugin\Comments\Event;
 
 use PHPUnit\Framework\TestCase;
-use Sylius\OrderCommentsPlugin\Domain\Event\FileAttached;
+use Brille24\OrderCommentsPlugin\Domain\Event\FileAttached;
 
 final class FileAttachedTest extends TestCase
 {

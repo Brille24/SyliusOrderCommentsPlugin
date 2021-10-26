@@ -3,7 +3,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <mapped-superclass name="Sylius\OrderCommentsPlugin\Domain\Model\Comment" table="sylius_order_comment">
+    <mapped-superclass name="Brille24\OrderCommentsPlugin\Domain\Model\Comment" table="sylius_order_comment">
         <id name="id" column="id" type="uuid">
             <generator strategy="CUSTOM" />
             <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator" />
@@ -13,8 +13,8 @@
             <join-column name="order_id" referenced-column-name="id" nullable="true" />
         </many-to-one>
 
-        <embedded name="authorEmail" class="Sylius\OrderCommentsPlugin\Domain\Model\Email" />
-        <embedded name="attachedFile" class="Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile" />
+        <embedded name="authorEmail" class="Brille24\OrderCommentsPlugin\Domain\Model\Email" />
+        <embedded name="attachedFile" class="Brille24\OrderCommentsPlugin\Domain\Model\AttachedFile" />
 
         <field name="message" column="message" type="text" length="65535"/>
         <field name="createdAt" column="createdAt" type="datetime" />

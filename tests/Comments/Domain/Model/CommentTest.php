@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
+namespace Tests\Brille24\OrderCommentsPlugin\Comments\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Order;
-use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
 
 final class CommentTest extends TestCase
 {

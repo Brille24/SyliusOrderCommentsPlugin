@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Comments\Event;
+namespace Tests\Brille24\OrderCommentsPlugin\Comments\Event;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Sylius\Component\Core\Model\Order;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
+use Brille24\OrderCommentsPlugin\Domain\Model\Email;
 
 final class OrderCommentedTest extends TestCase
 {

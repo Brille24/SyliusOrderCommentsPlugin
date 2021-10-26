@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Common;
+namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Common;
 
 use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;

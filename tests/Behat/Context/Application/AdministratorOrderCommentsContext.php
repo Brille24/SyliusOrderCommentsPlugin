@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application;
+namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application;
 
 use Behat\Behat\Context\Context;
 use SimpleBus\Message\Bus\MessageBus;
@@ -12,8 +12,8 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
-use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
+use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
 use Webmozart\Assert\Assert;
 
 final class AdministratorOrderCommentsContext implements Context

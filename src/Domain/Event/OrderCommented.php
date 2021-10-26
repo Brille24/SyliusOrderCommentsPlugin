@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Domain\Event;
+namespace Brille24\OrderCommentsPlugin\Domain\Event;
 
 use Ramsey\Uuid\UuidInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
+use Brille24\OrderCommentsPlugin\Domain\Model\AttachedFile;
+use Brille24\OrderCommentsPlugin\Domain\Model\Email;
 
 final class OrderCommented
 {

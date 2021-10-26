@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Comments\Domain\Model;
+namespace Tests\Brille24\OrderCommentsPlugin\Comments\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Sylius\OrderCommentsPlugin\Domain\Model\Email;
+use Brille24\OrderCommentsPlugin\Domain\Model\Email;
 
 final class EmailTest extends TestCase
 {

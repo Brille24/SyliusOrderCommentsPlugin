@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Domain\Model;
+namespace Brille24\OrderCommentsPlugin\Domain\Model;
 
 final class AttachedFile
 {

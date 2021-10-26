@@ -1,13 +1,13 @@
 <?php
 
-namespace Sylius\OrderCommentsPlugin\Infrastructure\DependencyInjection;
+namespace Brille24\OrderCommentsPlugin\Infrastructure\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SyliusOrderCommentsExtension extends Extension
+final class Brille24OrderCommentsExtension extends Extension
 {
     /**
      * {@inheritdoc}

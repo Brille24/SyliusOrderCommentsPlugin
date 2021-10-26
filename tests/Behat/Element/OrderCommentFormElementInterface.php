@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Element;
+namespace Tests\Brille24\OrderCommentsPlugin\Behat\Element;
 
 interface OrderCommentFormElementInterface
 {

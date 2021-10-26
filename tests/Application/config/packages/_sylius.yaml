@@ -5,7 +5,7 @@ imports:
     - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
-    - { resource: "@SyliusOrderCommentsPlugin/Resources/config/app/config.yml" }
+    - { resource: "@Brille24OrderCommentsPlugin/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
 

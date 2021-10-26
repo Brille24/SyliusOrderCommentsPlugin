@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain;
+namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
 use Webmozart\Assert\Assert;
 
 final class AdministratorOrderCommentsContext implements Context

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
+namespace Brille24\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
+use Brille24\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -28,7 +28,7 @@ final class RenderOrderCommentAction
         $form = $this->formFactory->create(OrderCommentType::class);
 
         return new Response($this->twig->render(
-            '@SyliusOrderCommentsPlugin/_form.html.twig',
+            '@Brille24OrderCommentsPlugin/_form.html.twig',
             ['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]
         ));
     }

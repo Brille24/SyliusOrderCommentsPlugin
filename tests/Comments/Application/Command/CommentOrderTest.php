@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\OrderCommentsPlugin\Comments\Application\Command;
+namespace Tests\Brille24\OrderCommentsPlugin\Comments\Application\Command;
 
 use PHPUnit\Framework\TestCase;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
+use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class CommentOrderTest extends TestCase

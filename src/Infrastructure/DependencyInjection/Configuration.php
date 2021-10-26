@@ -1,6 +1,6 @@
 <?php
 
-namespace Sylius\OrderCommentsPlugin\Infrastructure\DependencyInjection;
+namespace Brille24\OrderCommentsPlugin\Infrastructure\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

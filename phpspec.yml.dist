@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Sylius\OrderCommentsPlugin
-        psr4_prefix: Sylius\OrderCommentsPlugin
+        namespace: Brille24\OrderCommentsPlugin
+        psr4_prefix: Brille24\OrderCommentsPlugin

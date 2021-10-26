@@ -1,6 +1,6 @@
 <div id="comments" class="ui segment comments" style="max-width: 100%">
     {{ render(path('sylius_admin_order_comments_partial_comment_index', { 'orderId': settings.resource.id })) }}
-    {{ render(controller('sylius.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action', {
+    {{ render(controller('brille24.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action', {
         'orderId': settings.resource.id,
         'submitPath': 'sylius_admin_order_comments_partial_comment_create'
     })) }}

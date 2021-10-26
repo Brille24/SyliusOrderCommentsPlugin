@@ -2,7 +2,7 @@ sylius_shop_order_comments_partial_comment_create:
     path: "/{orderId}/comments"
     methods: ["POST"]
     defaults:
-        _controller: "sylius.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
+        _controller: "brille24.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
 
 sylius_shop_order_comments_partial_comment_index:
     path: "/{number}/comments"
@@ -17,4 +17,4 @@ sylius_shop_order_comments_partial_comment_index:
                 arguments:
                    - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
                    - createdAt: asc
-            template: "@SyliusOrderCommentsPlugin/index.html.twig"
+            template: "@Brille24OrderCommentsPlugin/index.html.twig"
