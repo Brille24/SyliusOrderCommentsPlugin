@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final class OrderComment
 {
     /** @var string */
-    public $message;
+    public $message = '';
 
-    /** @var UploadedFile */
-    public $file;
+    /** @var UploadedFile|null */
+    public $file = null;
 
     /** @var bool */
-    public $notifyCustomer;
+    public $notifyCustomer = false;
 }

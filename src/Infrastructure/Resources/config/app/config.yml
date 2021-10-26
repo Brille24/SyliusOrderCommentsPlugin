@@ -24,7 +24,7 @@ sylius_mailer:
     emails:
         unread_comment:
             subject: sylius.emails.unread_comment.subject
-            template: "SyliusOrderCommentsPlugin:Email:unread_comment.html.twig"
+            template: "@SyliusOrderCommentsPlugin/Email/unread_comment.html.twig"
 
 knp_gaufrette:
     adapters:

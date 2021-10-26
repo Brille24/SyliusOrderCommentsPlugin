@@ -54,7 +54,9 @@ final class CommentOrderHandler
             $extension = $file->guessExtension() ?? 'pdf';
             $path  = Uuid::uuid4()->toString() . '.' . $extension;
 
-            $this->fileSystem->write($path, file_get_contents($command->file()->getPathname()));
+            /** @var string $content */
+            $content = file_get_contents($file->getPathname());
+            $this->fileSystem->write($path, $content);
             $comment->attachFile($this->fileDir . '/' . $path);
         }
 

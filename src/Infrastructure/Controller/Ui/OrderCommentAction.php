@@ -53,8 +53,10 @@ final class OrderCommentAction
         $form->handleRequest($request);
         $token = $this->securityTokenStorage->getToken();
 
+        /** @var string $referer */
+        $referer = $request->headers->get('referer');
         if (null === $token || !$form->isValid()) {
-            return RedirectResponse::create($request->headers->get('referer'));
+            return new RedirectResponse($referer);
         }
 
         /** @var OrderComment $comment */
@@ -65,16 +67,21 @@ final class OrderCommentAction
         /** @var OrderInterface $order */
         $order = $this->orderRepository->find($request->attributes->get('orderId'));
 
-        Assert::notNull($user);
+        Assert::isInstanceOf($user, UserInterface::class);
+
+        $orderNumber = $order->getNumber();
+        $email = $user->getEmail();
+        Assert::string($orderNumber);
+        Assert::string($email);
 
         $this->commandBus->handle(CommentOrder::create(
-            $order->getNumber(),
-            $user->getEmail(),
+            $orderNumber,
+            $email,
             $comment->message,
             $comment->notifyCustomer,
             $comment->file
         ));
 
-        return RedirectResponse::create($request->headers->get('referer'));
+        return new RedirectResponse($referer);
     }
 }

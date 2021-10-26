@@ -21,11 +21,11 @@ final class AttachedFileTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \DomainException
      */
     public function it_cannot_be_created_with_empty_path(): void
     {
+        $this->expectException(\DomainException::class);
+
         AttachedFile::create('');
     }
 }

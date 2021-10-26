@@ -68,8 +68,7 @@ final class CustomerOrderCommentsContext implements Context
         $filePath = $originalFilePath.'.bkp';
         copy($originalFilePath, $filePath);
 
-        // Symfony 3.4 style
-        $file = new UploadedFile($filePath, $filePath, null, null, null, true);
+        $file = new UploadedFile($filePath, $filePath, null, null, true);
 
         $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
     }

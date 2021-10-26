@@ -21,11 +21,11 @@ final class EmailTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \DomainException
      */
     public function it_cannot_be_created_from_invalid_string(): void
     {
+        $this->expectException(\DomainException::class);
+
         Email::fromString('abcd.com');
     }
 }
