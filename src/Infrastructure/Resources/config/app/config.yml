@@ -1,7 +1,7 @@
 doctrine:
     orm:
         mappings:
-            Brille24OrderCommentsPlugin:
+            Brille24SyliusOrderCommentsPlugin:
                 type: xml
                 dir: Resources/config/doctrine/model
                 prefix: 'Brille24\OrderCommentsPlugin\Domain\Model'
@@ -24,7 +24,7 @@ sylius_mailer:
     emails:
         unread_comment:
             subject: sylius.emails.unread_comment.subject
-            template: "@Brille24OrderCommentsPlugin/Email/unread_comment.html.twig"
+            template: "@Brille24SyliusOrderCommentsPlugin/Email/unread_comment.html.twig"
 
 knp_gaufrette:
     adapters:

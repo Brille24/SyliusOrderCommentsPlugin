@@ -22,7 +22,7 @@
             id="brille24.order_comments_plugin.ui_bundle.block.admin_block_event_listener"
             class="Sylius\Bundle\UiBundle\Block\BlockEventListener"
         >
-            <argument>@Brille24OrderCommentsPlugin/injected/admin_order_comments.html.twig</argument>
+            <argument>@Brille24SyliusOrderCommentsPlugin/injected/admin_order_comments.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
         </service>
 
@@ -30,7 +30,7 @@
             id="brille24.order_comments_plugin.ui_bundle.block.shop_block_event_listener"
             class="Sylius\Bundle\UiBundle\Block\BlockEventListener"
         >
-            <argument>@Brille24OrderCommentsPlugin/injected/shop_order_comments.html.twig</argument>
+            <argument>@Brille24SyliusOrderCommentsPlugin/injected/shop_order_comments.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
         </service>
 
@@ -63,9 +63,8 @@
         <service
             id="brille24.order_comments_plugin.application.process.sender.channeled_email"
             class="Brille24\OrderCommentsPlugin\Application\Process\Sender\ChanneledEmailSender"
-            decorates="sylius.email_sender"
         >
-            <argument type="service" id=".inner" />
+            <argument type="service" id="sylius.email_sender" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.context.channel" />
         </service>

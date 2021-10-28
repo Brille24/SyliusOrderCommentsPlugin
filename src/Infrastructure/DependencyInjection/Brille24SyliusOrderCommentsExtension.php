@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class Brille24OrderCommentsExtension extends Extension
+final class Brille24SyliusOrderCommentsExtension extends Extension
 {
     /**
      * {@inheritdoc}

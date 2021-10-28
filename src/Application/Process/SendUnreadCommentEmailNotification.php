@@ -11,7 +11,7 @@ use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Brille24\OrderCommentsPlugin\Domain\Model\AttachedFile;
 use Webmozart\Assert\Assert;
 
-final class SendUnreadCommentEmailNotification
+final class SendUnreadCommentEmailNotification implements SendUnreadCommentEmailNotificationInterface
 {
     private ChanneledEmailSenderInterface $emailSender;
 

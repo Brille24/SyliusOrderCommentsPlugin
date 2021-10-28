@@ -51,6 +51,15 @@ final class CustomerOrderCommentsContext implements Context
         $this->orderCommentFormElement->comment();
     }
 
+
+    /**
+     * @Given I wait :seconds seconds
+     */
+    public function andIWaitSeconds(int $seconds): void
+    {
+        sleep($seconds);
+    }
+
     /**
      * @When I try to comment the order :order with an empty message
      */

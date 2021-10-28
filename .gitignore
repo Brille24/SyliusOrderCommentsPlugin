@@ -6,6 +6,7 @@
 !/etc/build/.gitignore
 
 /tests/Application/yarn.lock
+/tests/Comments/Infrastructure/Form/Type/file.pdf.bkp
 
 /.phpunit.result.cache
 /behat.yml

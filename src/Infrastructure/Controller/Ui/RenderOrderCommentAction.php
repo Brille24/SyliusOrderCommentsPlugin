@@ -28,7 +28,7 @@ final class RenderOrderCommentAction
         $form = $this->formFactory->create(OrderCommentType::class);
 
         return new Response($this->twig->render(
-            '@Brille24OrderCommentsPlugin/_form.html.twig',
+            '@Brille24SyliusOrderCommentsPlugin/_form.html.twig',
             ['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]
         ));
     }

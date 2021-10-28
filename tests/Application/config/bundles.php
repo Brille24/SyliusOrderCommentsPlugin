@@ -47,7 +47,7 @@ return [
     Sylius\Bundle\ShopBundle\SyliusShopBundle::class => ['all' => true],
     FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true],
     Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle::class => ['all' => true],
-    Brille24\OrderCommentsPlugin\Infrastructure\Brille24OrderCommentsPlugin::class => ['all' => true],
+    Brille24\OrderCommentsPlugin\Infrastructure\Brille24SyliusOrderCommentsPlugin::class => ['all' => true],
     SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle::class => ['all' => true],
     SimpleBus\SymfonyBridge\SimpleBusEventBusBundle::class => ['all' => true],
     SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle::class => ['all' => true],

@@ -17,4 +17,4 @@ sylius_shop_order_comments_partial_comment_index:
                 arguments:
                    - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
                    - createdAt: asc
-            template: "@Brille24OrderCommentsPlugin/index.html.twig"
+            template: "@Brille24SyliusOrderCommentsPlugin/index.html.twig"
