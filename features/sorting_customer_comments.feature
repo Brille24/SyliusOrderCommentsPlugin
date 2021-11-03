@@ -19,5 +19,6 @@ Feature: Sorting customer comments
     @ui
     Scenario: Sorting customer comments
         Given I have commented the order "#00000022" with "Hello"
+        And I wait 1 seconds
         And I have commented the order "#00000022" with "Is it me you are looking for?"
         Then the first comment from the top should have the "Hello" message

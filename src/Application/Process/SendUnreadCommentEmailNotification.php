@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Application\Process;
+namespace Brille24\OrderCommentsPlugin\Application\Process;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Mailer\Sender\SenderInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
-use Sylius\OrderCommentsPlugin\Domain\Model\AttachedFile;
+use Brille24\OrderCommentsPlugin\Application\Process\Sender\ChanneledEmailSenderInterface;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
+use Brille24\OrderCommentsPlugin\Domain\Model\AttachedFile;
+use Webmozart\Assert\Assert;
 
-final class SendUnreadCommentEmailNotification
+final class SendUnreadCommentEmailNotification implements SendUnreadCommentEmailNotificationInterface
 {
-    /** @var SenderInterface */
-    private $emailSender;
+    private ChanneledEmailSenderInterface $emailSender;
 
-    public function __construct(SenderInterface $emailSender)
+    public function __construct(ChanneledEmailSenderInterface $emailSender)
     {
         $this->emailSender = $emailSender;
     }
@@ -47,6 +47,9 @@ final class SendUnreadCommentEmailNotification
         );
     }
 
+    /**
+     * @param array<array-key, string> $recipients
+     */
     private function sendUnreadCommentNotification(
         array $recipients,
         OrderInterface $order,
@@ -56,8 +59,15 @@ final class SendUnreadCommentEmailNotification
     ): void {
         $attachments = ($attachedFile === null) ? [] : [$attachedFile->path()];
 
-        $this->emailSender->send(
+        $orderChannel = $order->getChannel();
+        Assert::isInstanceOf($orderChannel, ChannelInterface::class);
+
+        $orderChannelCode = $orderChannel->getCode();
+        Assert::notNull($orderChannelCode);
+
+        $this->emailSender->sendWithChannelTemplate(
             'unread_comment',
+            $orderChannelCode,
             $recipients,
             [
                 'order' => $order,

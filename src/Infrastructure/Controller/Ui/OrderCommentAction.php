@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Infrastructure\Controller\Ui;
+namespace Brille24\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
 use FOS\RestBundle\View\ViewHandlerInterface;
 use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\User\Model\UserInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
+use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
+use Brille24\OrderCommentsPlugin\Infrastructure\Form\Type\OrderCommentType;
+use Brille24\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

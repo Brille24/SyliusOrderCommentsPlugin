@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Domain\Event;
+namespace Brille24\OrderCommentsPlugin\Domain\Event;
 
 final class FileAttached
 {

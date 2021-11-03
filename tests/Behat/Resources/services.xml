@@ -3,54 +3,54 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults public="true"/>
-        <service id="sylius_order_comment_plugin.behat.domain.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain\CustomerOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.domain.customer_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain\CustomerOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.domain.administrator_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Domain\AdministratorOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.domain.administrator_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain\AdministratorOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.application.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application\CustomerOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.application.customer_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application\CustomerOrderCommentsContext">
             <argument type="service" id="command_bus" />
             <argument type="service" id="sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.email_checker" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.application.administrator_order_comments"
-                 class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Application\AdministratorOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.application.administrator_order_comments"
+                 class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application\AdministratorOrderCommentsContext">
             <argument type="service" id="command_bus" />
             <argument type="service" id="sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.email_checker" />
-            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
+            <argument type="service" id="brille24.order_comments_plugin.behat.element.order_comment_form_element" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.ui.customer_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI\CustomerOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.ui.customer_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\UI\CustomerOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.page.shop.account.order.show" />
-            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comments_element" />
-            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
+            <argument type="service" id="brille24.order_comments_plugin.behat.element.order_comments_element" />
+            <argument type="service" id="brille24.order_comments_plugin.behat.element.order_comment_form_element" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.ui.administrator_order_comments" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\UI\AdministratorOrderCommentsContext">
+        <service id="brille24.order_comments_plugin.behat.ui.administrator_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\UI\AdministratorOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.page.admin.order.show" />
-            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comments_element" />
-            <argument type="service" id="sylius_order_comment_plugin.behat.element.order_comment_form_element" />
+            <argument type="service" id="brille24.order_comments_plugin.behat.element.order_comments_element" />
+            <argument type="service" id="brille24.order_comments_plugin.behat.element.order_comment_form_element" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.common.channel" class="Tests\Sylius\OrderCommentsPlugin\Behat\Context\Common\ChannelContext">
+        <service id="brille24.order_comments_plugin.behat.common.channel" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Common\ChannelContext">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.element.element" class="Tests\Sylius\OrderCommentsPlugin\Behat\Element\Element" abstract="true" public="false">
+        <service id="brille24.order_comments_plugin.behat.element.element" class="Tests\Brille24\OrderCommentsPlugin\Behat\Element\Element" abstract="true" public="false">
             <argument type="service" id="behat.mink.default_session" />
             <argument type="service" id="behat.mink.parameters" />
         </service>
 
-        <service id="sylius_order_comment_plugin.behat.element.order_comments_element" class="Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentsElement" parent="sylius_order_comment_plugin.behat.element.element" public="false" />
-        <service id="sylius_order_comment_plugin.behat.element.order_comment_form_element" class="Tests\Sylius\OrderCommentsPlugin\Behat\Element\OrderCommentFormElement" parent="sylius_order_comment_plugin.behat.element.element" public="false" />
+        <service id="brille24.order_comments_plugin.behat.element.order_comments_element" class="Tests\Brille24\OrderCommentsPlugin\Behat\Element\OrderCommentsElement" parent="brille24.order_comments_plugin.behat.element.element" public="false" />
+        <service id="brille24.order_comments_plugin.behat.element.order_comment_form_element" class="Tests\Brille24\OrderCommentsPlugin\Behat\Element\OrderCommentFormElement" parent="brille24.order_comments_plugin.behat.element.element" public="false" />
     </services>
 </container>

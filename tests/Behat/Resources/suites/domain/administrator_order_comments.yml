@@ -23,6 +23,6 @@ default:
                 - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.shipping_method
 
-                - sylius_order_comment_plugin.behat.domain.administrator_order_comments
+                - brille24.order_comments_plugin.behat.domain.administrator_order_comments
             filters:
                 tags: "@administrator_order_comments && @domain"

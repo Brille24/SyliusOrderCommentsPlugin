@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Domain\Model;
+namespace Brille24\OrderCommentsPlugin\Domain\Model;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -10,8 +10,8 @@ use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\OrderCommentsPlugin\Domain\Event\FileAttached;
-use Sylius\OrderCommentsPlugin\Domain\Event\OrderCommented;
+use Brille24\OrderCommentsPlugin\Domain\Event\FileAttached;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 
 class Comment implements ResourceInterface, ContainsRecordedMessages
 {

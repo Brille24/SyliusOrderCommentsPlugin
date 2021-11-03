@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Infrastructure\Form\Type;
+namespace Brille24\OrderCommentsPlugin\Infrastructure\Form\Type;
 
-use Sylius\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
+use Brille24\OrderCommentsPlugin\Infrastructure\Form\DTO\OrderComment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;

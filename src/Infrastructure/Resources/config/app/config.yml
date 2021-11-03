@@ -1,10 +1,10 @@
 doctrine:
     orm:
         mappings:
-            SyliusOrderCommentsPlugin:
+            Brille24SyliusOrderCommentsPlugin:
                 type: xml
                 dir: Resources/config/doctrine/model
-                prefix: 'Sylius\OrderCommentsPlugin\Domain\Model'
+                prefix: 'Brille24\OrderCommentsPlugin\Domain\Model'
     dbal:
         types:
             uuid: Ramsey\Uuid\Doctrine\UuidType
@@ -14,7 +14,7 @@ sylius_resource:
         sylius.order_comment:
             driver: doctrine/orm
             classes:
-                model: Sylius\OrderCommentsPlugin\Domain\Model\Comment
+                model: Brille24\OrderCommentsPlugin\Domain\Model\Comment
 
 doctrine_orm_bridge:
     entity_manager: default
@@ -24,7 +24,7 @@ sylius_mailer:
     emails:
         unread_comment:
             subject: sylius.emails.unread_comment.subject
-            template: "@SyliusOrderCommentsPlugin/Email/unread_comment.html.twig"
+            template: "@Brille24SyliusOrderCommentsPlugin/Email/unread_comment.html.twig"
 
 knp_gaufrette:
     adapters:

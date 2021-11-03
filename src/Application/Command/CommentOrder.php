@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Application\Command;
+namespace Brille24\OrderCommentsPlugin\Application\Command;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

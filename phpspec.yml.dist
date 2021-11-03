@@ -1,4 +1,0 @@
-suites:
-    main:
-        namespace: Sylius\OrderCommentsPlugin
-        psr4_prefix: Sylius\OrderCommentsPlugin

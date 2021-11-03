@@ -2,29 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Sylius\OrderCommentsPlugin\Application\CommandHandler;
+namespace Brille24\OrderCommentsPlugin\Application\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Gaufrette\FilesystemInterface;
 use Ramsey\Uuid\Uuid;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\OrderCommentsPlugin\Application\Command\CommentOrder;
-use Sylius\OrderCommentsPlugin\Domain\Model\Comment;
+use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
+use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
 
 final class CommentOrderHandler
 {
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var FilesystemInterface */
-    private $fileSystem;
+    private FilesystemInterface $fileSystem;
 
-    /** @var string */
-    private $fileDir;
+    private string $fileDir;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
