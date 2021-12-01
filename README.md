@@ -1,31 +1,16 @@
-# Sylius Order Comments Plugin
-![example workflow](https://github.com/Brille24/SyliusOrderCommentsPlugin/actions/workflows/build.yml/badge.svg)
+<h1 align="center">Plugin Skeleton</h1>
+
+<p align="center">Skeleton for starting Sylius plugins.</p>
+
+![Workflow](https://github.com/Brille24/SyliusOrderCommentsPlugin/actions/workflows/build.yml/badge.svg)
 
 ## Installation
-
-1. Move migrations from `test/Application` to your migrations folder and run `php bin/console doctrine:migrations:migrate` to update your database.
+1. Run `composer require brille24/sylius-order-comments-plugin`
+2. Updating the database with migrations
+```bash
+bin/console doctrine:mig:diff
+bin/console doctrine:mig:mig
+```
 
 ## Testing & Development
-
-In order to run tests, execute following commands:
-
-```bash
-$ composer install
-$ cd tests/Application
-$ bin/console doctrine:schema:create --env test
-$ vendor/bin/behat
-$ vendor/bin/phpunit
-$ vendor/bin/phpspec
-```
-
-In order to open test app in your browser, do the following:
-
-```bash
-$ composer install
-$ cd tests/Application
-$ yarn install
-$ yarn run gulp
-$ bin/console doctrine:schema:create --env test
-$ bin/console server:start --env test
-$ open http://127.0.0.1:8000/
-```
+For information on how to develop to test this plugin please refer to the official Sylius documentation under https://github.com/Sylius/PluginSkeleton/ .
