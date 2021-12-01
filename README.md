@@ -1,9 +1,5 @@
-> :warning: **BEWARE!**
-> This repository has been deprecated and will not be maintained or evolved by the Sylius Team. You can still use it with compatible Sylius versions, but at your own risk, as no bugs will be fixed on it.
-
 # Sylius Order Comments Plugin
-
-[![Build Status](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin.svg?token=8ZLRHEY2aPJvQgqmQCxh&branch=master)](https://travis-ci.com/Sylius/SyliusOrderCommentsPlugin)
+![example workflow](https://github.com/Brille24/SyliusOrderCommentsPlugin/actions/workflows/build.yml/badge.svg)
 
 ## Installation
 
@@ -33,4 +29,3 @@ $ bin/console doctrine:schema:create --env test
 $ bin/console server:start --env test
 $ open http://127.0.0.1:8000/
 ```
-
