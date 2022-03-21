@@ -24,7 +24,7 @@ jobs:
                 php: [7.4,8.0]
                 symfony: [^4.4, ^5.2]
                 sylius: [~1.10.0]
-                node: [10.x]
+                node: [12.x]
                 mysql: [5.7]
 
         env:
@@ -147,7 +147,7 @@ jobs:
 
             -
                 name: Validate composer.json
-                run: composer validate --ansi --strict
+                run: composer validate --ansi
 
             -
                 name: Validate database schema
