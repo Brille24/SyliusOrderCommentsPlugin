@@ -1,2 +1,7 @@
-sylius_order_comments:
-    resource: "../../../src/Infrastructure/Resources/config/routing.yml"
+brille24_sylius_order_comments_plugin_admin:
+    resource: "@Brille24SyliusOrderCommentsPlugin/config/admin_routing.yaml"
+    prefix: /admin
+    
+brille24_sylius_order_comments_plugin_shop:
+    resource: "@Brille24SyliusOrderCommentsPlugin/config/shop_routing.yaml"
+    prefix: /admin
