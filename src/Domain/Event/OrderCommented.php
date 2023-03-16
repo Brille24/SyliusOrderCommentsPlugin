@@ -11,43 +11,15 @@ use Brille24\OrderCommentsPlugin\Domain\Model\Email;
 
 final class OrderCommented
 {
-    /** @var UuidInterface */
-    private $orderCommentId;
-
-    /** @var OrderInterface */
-    private $order;
-
-    /** @var Email */
-    private $authorEmail;
-
-    /** @var string */
-    private $message;
-
-    /** @var \DateTimeInterface */
-    private $createdAt;
-
-    /** @var bool */
-    private $notifyCustomer;
-
-    /** @var AttachedFile|null */
-    private $attachedFile;
-
     private function __construct(
-        UuidInterface $orderCommentId,
-        OrderInterface $order,
-        Email $authorEmail,
-        string $message,
-        bool $notifyCustomer,
-        \DateTimeInterface $createdAt,
-        ?AttachedFile $attachedFile = null
+        private UuidInterface $orderCommentId,
+        private OrderInterface $order,
+        private Email $authorEmail,
+        private string $message,
+        private bool $notifyCustomer,
+        private \DateTimeInterface $createdAt,
+        private ?AttachedFile $attachedFile = null
     ) {
-        $this->orderCommentId = $orderCommentId;
-        $this->order = $order;
-        $this->authorEmail = $authorEmail;
-        $this->message = $message;
-        $this->notifyCustomer = $notifyCustomer;
-        $this->createdAt = $createdAt;
-        $this->attachedFile = $attachedFile;
     }
 
     public static function occur(

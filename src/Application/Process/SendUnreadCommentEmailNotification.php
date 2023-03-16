@@ -9,15 +9,20 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Brille24\OrderCommentsPlugin\Application\Process\Sender\ChanneledEmailSenderInterface;
 use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Brille24\OrderCommentsPlugin\Domain\Model\AttachedFile;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Webmozart\Assert\Assert;
 
-final class SendUnreadCommentEmailNotification implements SendUnreadCommentEmailNotificationInterface
+final class SendUnreadCommentEmailNotification implements SendUnreadCommentEmailNotificationInterface, EventSubscriberInterface
 {
-    private ChanneledEmailSenderInterface $emailSender;
-
-    public function __construct(ChanneledEmailSenderInterface $emailSender)
+    public function __construct(private ChanneledEmailSenderInterface $emailSender)
     {
-        $this->emailSender = $emailSender;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            OrderCommented::class => 'handleOrderCommented',
+        ];
     }
 
     public function handleOrderCommented(OrderCommented $event): void
@@ -57,7 +62,7 @@ final class SendUnreadCommentEmailNotification implements SendUnreadCommentEmail
         string $authorEmail,
         ?AttachedFile $attachedFile
     ): void {
-        $attachments = ($attachedFile === null) ? [] : [$attachedFile->path()];
+        $attachments = ($attachedFile === null) ? [] : [$attachedFile->path() ?? ''];
 
         $orderChannel = $order->getChannel();
         Assert::isInstanceOf($orderChannel, ChannelInterface::class);

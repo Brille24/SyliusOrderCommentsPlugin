@@ -6,77 +6,43 @@ namespace Brille24\OrderCommentsPlugin\Domain\Model;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use SimpleBus\Message\Recorder\ContainsRecordedMessages;
-use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Brille24\OrderCommentsPlugin\Domain\Event\FileAttached;
-use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
+use Webmozart\Assert\Assert;
 
-class Comment implements ResourceInterface, ContainsRecordedMessages
+class Comment implements ResourceInterface
 {
-    use PrivateMessageRecorderCapabilities;
+    private UuidInterface $id;
 
-    /** @var UuidInterface */
-    private $id;
+    private Email $authorEmail;
 
-    /** @var OrderInterface */
-    private $order;
+    private \DateTimeInterface $createdAt;
 
-    /** @var Email */
-    private $authorEmail;
+    private ?AttachedFile $attachedFile = null;
 
-    /** @var string */
-    private $message;
-
-    /** @var \DateTimeInterface */
-    private $createdAt;
-
-    /** @var AttachedFile|null */
-    private $attachedFile = null;
-
-    /** @var bool */
-    private $notifyCustomer;
-
-    public function __construct(OrderInterface $order, string $authorEmail, string $message, bool $notifyCustomer)
-    {
-        if (null == $message) {
+    public function __construct(
+        private OrderInterface $order,
+        string $authorEmail,
+        private string $message,
+        private bool $notifyCustomer
+    ) {
+        if (null == $this->message) {
             throw new \DomainException('OrderComment cannot be created with empty message');
         }
 
         $this->id = Uuid::uuid4();
         $this->authorEmail = Email::fromString($authorEmail);
-        $this->order = $order;
-        $this->message = $message;
-        $this->notifyCustomer = $notifyCustomer;
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function attachFile(string $path): void
+    public function attachFile(string $path): string
     {
         $this->attachedFile = AttachedFile::create($path);
 
-        /** @var string $path */
         $path = $this->attachedFile->path();
+        Assert::string($path);
 
-        $this->record(
-            FileAttached::occur($path)
-        );
-    }
-
-    public function orderCommented(): void
-    {
-        $this->record(
-            OrderCommented::occur(
-                $this->getId(),
-                $this->order(),
-                $this->authorEmail(),
-                $this->message(),
-                $this->notifyCustomer(),
-                $this->createdAt(),
-                $this->attachedFile()
-            )
-        );
+        return $path;
     }
 
     public function getId(): UuidInterface

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Brille24\OrderCommentsPlugin\Infrastructure\Controller\Ui;
 
-use FOS\RestBundle\View\ViewHandlerInterface;
-use SimpleBus\Message\Bus\MessageBus;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\User\Model\UserInterface;
@@ -16,35 +14,18 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderCommentAction
 {
-    /** @var FormFactoryInterface */
-    private $formFactory;
-
-    /** @var TokenStorageInterface */
-    private $securityTokenStorage;
-
-    /** @var MessageBus */
-    private $commandBus;
-
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
     public function __construct(
-        FormFactoryInterface $formFactory,
-        TokenStorageInterface $securityTokenStorage,
-        MessageBus $commandBus,
-        OrderRepositoryInterface $orderRepository
+        private FormFactoryInterface $formFactory,
+        private TokenStorageInterface $securityTokenStorage,
+        private MessageBusInterface $commandBus,
+        private OrderRepositoryInterface $orderRepository
     ) {
-        $this->formFactory = $formFactory;
-        $this->securityTokenStorage = $securityTokenStorage;
-        $this->commandBus = $commandBus;
-
-        $this->orderRepository = $orderRepository;
     }
 
     public function __invoke(Request $request): Response
@@ -74,7 +55,7 @@ final class OrderCommentAction
         Assert::string($orderNumber);
         Assert::string($email);
 
-        $this->commandBus->handle(CommentOrder::create(
+        $this->commandBus->dispatch(CommentOrder::create(
             $orderNumber,
             $email,
             $comment->message,

@@ -10,12 +10,12 @@ class OrderCommentsElement extends Element implements OrderCommentsElementInterf
 {
     public function getFirstComment(): ?NodeElement
     {
-        return $this->getElement('comments')->find('css','.comment');
+        return $this->getDocument()->find('css', '#comments .comment');
     }
 
     public function countComments(): int
     {
-        return count($this->getElement('comments')->findAll('css','.comment'));
+        return count($this->getDocument()->findAll('css', '#comments .comment'));
     }
 
     protected function getDefinedElements(): array

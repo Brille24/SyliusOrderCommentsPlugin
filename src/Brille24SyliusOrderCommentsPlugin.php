@@ -1,6 +1,6 @@
 <?php
 
-namespace Brille24\OrderCommentsPlugin\Infrastructure;
+namespace Brille24\OrderCommentsPlugin;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

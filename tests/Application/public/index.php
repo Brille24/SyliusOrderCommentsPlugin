@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Tests\Brille24\SyliusLdapPlugin\Application\Kernel;
+use Tests\Brille24\SyliusOrderCommentsPlugin\Application\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

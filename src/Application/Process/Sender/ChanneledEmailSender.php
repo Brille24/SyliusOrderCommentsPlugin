@@ -13,37 +13,40 @@ use Webmozart\Assert\Assert;
 
 class ChanneledEmailSender implements ChanneledEmailSenderInterface
 {
-    private SenderInterface $baseSender;
-
-    private ChannelContextInterface $channelContext;
-
-    private ChannelRepositoryInterface $channelRepository;
-
     public function __construct(
-        SenderInterface $sender,
-        ChannelRepositoryInterface $channelRepository,
-        ChannelContextInterface $channelContext
+        private SenderInterface $baseSender,
+        private ChannelRepositoryInterface $channelRepository,
+        private ChannelContextInterface $channelContext
     ) {
-        $this->baseSender = $sender;
-        $this->channelContext = $channelContext;
-        $this->channelRepository = $channelRepository;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function sendWithChannelTemplate(
         string $code,
         string $channelCode,
         array $recipients,
         array $data = [],
         array $attachments = [],
-        array $replyTo = []
+        array $replyTo = [],
+        array $ccRecipients = [],
+        array $bccRecipients = [],
     ): void {
         $enrichedData = array_merge($data, ['channel' => $this->channelRepository->findOneByCode($channelCode)]);
 
         try {
-            $this->baseSender->send("{$code}_{$channelCode}", $recipients, $enrichedData, $attachments, $replyTo);
-        } catch (InvalidArgumentException $exception) {
-            $this->baseSender->send($code, $recipients, $enrichedData, $attachments, $replyTo);
+            /**
+             * @psalm-suppress DeprecatedMethod
+             * @psalm-suppress TooManyArguments
+             */
+            $this->baseSender->send("{$code}_{$channelCode}", $recipients, $enrichedData, $attachments, $replyTo, $ccRecipients, $bccRecipients);
+        } catch (InvalidArgumentException) {
+            /**
+             * @psalm-suppress DeprecatedMethod
+             * @psalm-suppress TooManyArguments
+             */
+            $this->baseSender->send($code, $recipients, $enrichedData, $attachments, $replyTo, $ccRecipients, $bccRecipients);
         }
     }
 

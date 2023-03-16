@@ -10,12 +10,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "friendsofsymfony/oauth-server-bundle": ">2.0.0-alpha.0 ^2.0@dev",
-        "ramsey/uuid": "^3.6",
-        "ramsey/uuid-doctrine": "^1.4",
-        "simple-bus/doctrine-orm-bridge": "^6.1",
-        "simple-bus/symfony-bridge": "^6.1",
-        "sylius/admin-api-bundle": "^1.12",
+        "ramsey/uuid": "^3.9 || ^4.7",
+        "ramsey/uuid-doctrine": "^1.4 || ^2.0.0",
         "sylius/mailer-bundle": "^1.8 || ^2.0@beta",
         "sylius/sylius": "^1.11",
         "symfony/webpack-encore-bundle": "^1.15"

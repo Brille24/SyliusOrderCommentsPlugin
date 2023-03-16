@@ -1,7 +1,8 @@
 <div id="comments" class="ui segment comments" style="max-width: 100%">
-    {{ render(path('sylius_shop_order_comments_partial_comment_index', { 'number': settings.order.number })) }}
+    {{ render(path('sylius_shop_order_comments_partial_comment_index', { 'number': order.number })) }}
     {{ render(controller('brille24.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action', {
-        'orderId': settings.order.id,
-        'submitPath': 'sylius_shop_order_comments_partial_comment_create'
+        'orderId': order.id,
+        'submitPath': 'sylius_shop_order_comments_partial_comment_create',
+        'isAdmin': false
     })) }}
 </div>

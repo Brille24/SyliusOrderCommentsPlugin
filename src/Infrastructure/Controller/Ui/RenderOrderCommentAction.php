@@ -11,25 +11,17 @@ use Twig\Environment;
 
 final class RenderOrderCommentAction
 {
-    /** @var FormFactoryInterface */
-    private $formFactory;
-
-    /** @var Environment */
-    private $twig;
-
-    public function __construct(FormFactoryInterface $formFactory, Environment $twig)
+    public function __construct(private FormFactoryInterface $formFactory, private Environment $twig)
     {
-        $this->formFactory = $formFactory;
-        $this->twig = $twig;
     }
 
-    public function __invoke(int $orderId, string $submitPath): Response
+    public function __invoke(int $orderId, string $submitPath, bool $isAdmin): Response
     {
         $form = $this->formFactory->create(OrderCommentType::class);
 
         return new Response($this->twig->render(
             '@Brille24SyliusOrderCommentsPlugin/_form.html.twig',
-            ['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath]
+            ['form' => $form->createView(), 'orderId' => $orderId, 'submitPath' => $submitPath, 'isAdmin' => $isAdmin]
         ));
     }
 }

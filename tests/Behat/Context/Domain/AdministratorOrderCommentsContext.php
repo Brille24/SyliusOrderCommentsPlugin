@@ -5,23 +5,21 @@ declare(strict_types=1);
 namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Webmozart\Assert\Assert;
 
 final class AdministratorOrderCommentsContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     */
-    public function __construct(SharedStorageInterface $sharedStorage)
-    {
-        $this->sharedStorage = $sharedStorage;
+    public function __construct(
+        private SharedStorageInterface $sharedStorage,
+        private EventDispatcherInterface $eventDispatcher,
+    ) {
     }
 
     /**
@@ -66,8 +64,7 @@ final class AdministratorOrderCommentsContext implements Context
             $comment->message() !== $message ||
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
-            !$comment->createdAt() instanceof \DateTimeInterface ||
-            empty($comment->recordedMessages())
+            !$comment->createdAt() instanceof \DateTimeInterface
         ) {
             throw new \InvalidArgumentException(
             sprintf(
@@ -88,7 +85,16 @@ final class AdministratorOrderCommentsContext implements Context
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('administrator');
         $comment = new Comment($order, $user->getEmail(), $message, $notifyCustomer);
-        $comment->orderCommented();
+
+        $this->eventDispatcher->dispatch(OrderCommented::occur(
+            $comment->getId(),
+            $comment->order(),
+            $comment->authorEmail(),
+            $comment->message(),
+            $comment->notifyCustomer(),
+            $comment->createdAt(),
+            $comment->attachedFile()
+        ));
 
         $this->sharedStorage->set('comment', $comment);
     }

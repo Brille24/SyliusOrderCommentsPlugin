@@ -8,7 +8,7 @@ sylius_shop_order_comments_partial_comment_index:
     path: "/{number}/comments"
     methods: ["GET"]
     defaults:
-        _controller: "sylius.controller.order_comment:indexAction"
+        _controller: "sylius.controller.order_comment::indexAction"
         _sylius:
             paginate: false
             limit: false
@@ -18,3 +18,4 @@ sylius_shop_order_comments_partial_comment_index:
                    - order: "expr:notFoundOnNull(service('sylius.repository.order').findOneByNumber($number))"
                    - createdAt: asc
             template: "@Brille24SyliusOrderCommentsPlugin/index.html.twig"
+            isAdmin: false

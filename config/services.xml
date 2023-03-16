@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults public="true" />
+        <defaults public="true" autoconfigure="true" />
 
         <service
             id="brille24.order_comments_plugin.application.command_handler.comment_order_by_customer"
@@ -13,25 +13,8 @@
         >
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="gaufrette.sylius_comments_attachment_filesystem" />
             <argument type="string">media/comment_attachments</argument>
-            <tag name="command_handler" handles="Brille24\OrderCommentsPlugin\Application\Command\CommentOrder" />
-        </service>
-
-        <service
-            id="brille24.order_comments_plugin.ui_bundle.block.admin_block_event_listener"
-            class="Sylius\Bundle\UiBundle\Block\BlockEventListener"
-        >
-            <argument>@Brille24SyliusOrderCommentsPlugin/injected/admin_order_comments.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
-        </service>
-
-        <service
-            id="brille24.order_comments_plugin.ui_bundle.block.shop_block_event_listener"
-            class="Sylius\Bundle\UiBundle\Block\BlockEventListener"
-        >
-            <argument>@Brille24SyliusOrderCommentsPlugin/injected/shop_order_comments.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service
@@ -48,7 +31,7 @@
         >
             <argument type="service" id="form.factory" />
             <argument type="service" id="security.token_storage" />
-            <argument type="service" id="simple_bus.command_bus" />
+            <argument type="service" id="messenger.default_bus" />
             <argument type="service" id="sylius.repository.order" />
         </service>
 
@@ -57,7 +40,7 @@
             class="Brille24\OrderCommentsPlugin\Application\Process\SendUnreadCommentEmailNotification"
         >
             <argument type="service" id="brille24.order_comments_plugin.application.process.sender.channeled_email" />
-            <tag name="event_subscriber" subscribes_to="Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented" method="handleOrderCommented" />
+            <tag name="kernel.event_subscriber" />
         </service>
 
         <service

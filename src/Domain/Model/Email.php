@@ -6,12 +6,8 @@ namespace Brille24\OrderCommentsPlugin\Domain\Model;
 
 final class Email
 {
-    /** @var string */
-    private $email;
-
-    private function __construct(string $email)
+    private function __construct(private string $email)
     {
-        $this->email = $email;
     }
 
     public static function fromString(string $email): self
