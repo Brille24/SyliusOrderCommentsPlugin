@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="true" autoconfigure="true" />
+
+        <service
+            id="brille24.order_comments_plugin.application.command_handler.comment_order_by_customer"
+            class="Brille24\OrderCommentsPlugin\Application\CommandHandler\CommentOrderHandler"
+        >
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="string">media/comment_attachments</argument>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service
+            id="brille24.order_comments_plugin.infrastructure.controller.ui.render_comment_form_action"
+            class="Brille24\OrderCommentsPlugin\Infrastructure\Controller\Ui\RenderOrderCommentAction"
+        >
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="twig" />
+        </service>
+
+        <service
+            id="brille24.order_comments_plugin.infrastructure.controller.ui.comment_form_action"
+            class="Brille24\OrderCommentsPlugin\Infrastructure\Controller\Ui\OrderCommentAction"
+        >
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="messenger.default_bus" />
+            <argument type="service" id="sylius.repository.order" />
+        </service>
+
+        <service
+            id="brille24.order_comments_plugin.application.process.send_unread_comment_email_notification"
+            class="Brille24\OrderCommentsPlugin\Application\Process\SendUnreadCommentEmailNotification"
+        >
+            <argument type="service" id="brille24.order_comments_plugin.application.process.sender.channeled_email" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service
+            id="brille24.order_comments_plugin.application.process.sender.channeled_email"
+            class="Brille24\OrderCommentsPlugin\Application\Process\Sender\ChanneledEmailSender"
+        >
+            <argument type="service" id="sylius.email_sender" />
+            <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="sylius.context.channel" />
+        </service>
+    </services>
+</container>

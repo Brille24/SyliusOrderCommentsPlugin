@@ -21,7 +21,11 @@ final class OrderCommentType extends AbstractType
             ->add(
                 'message',
                 TextareaType::class,
-                ['constraints' => [new NotBlank()]]
+                [
+                    'constraints' => [new NotBlank()],
+                    'required' => true,
+                    'empty_data' => '',
+                ]
             )
             ->add(
                 'notifyCustomer',

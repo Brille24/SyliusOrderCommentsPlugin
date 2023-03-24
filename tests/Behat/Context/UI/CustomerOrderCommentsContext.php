@@ -49,6 +49,8 @@ final class CustomerOrderCommentsContext implements Context
 
         $this->orderCommentFormElement->specifyMessage($message);
         $this->orderCommentFormElement->comment();
+
+        $this->sharedStorage->set('order', $order);
     }
 
 
@@ -66,9 +68,10 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerTryToCommentsTheOrderWithEmptyMessage(OrderInterface $order): void
     {
         $this->orderPage->open(['number' => $order->getNumber()]);
-        $this->orderCommentFormElement->enableCustomerNotified();
         $this->orderCommentFormElement->specifyMessage('');
         $this->orderCommentFormElement->comment();
+
+        $this->sharedStorage->set('order', $order);
     }
 
     /**
@@ -83,6 +86,8 @@ final class CustomerOrderCommentsContext implements Context
         $this->orderCommentFormElement->specifyMessage($message);
         $this->orderCommentFormElement->attachFile($filePath);
         $this->orderCommentFormElement->comment();
+
+        $this->sharedStorage->set('order', $order);
     }
 
     /**
@@ -91,6 +96,9 @@ final class CustomerOrderCommentsContext implements Context
      */
     public function thisOrderShouldHaveACommentWithFromThisAdministrator(string $message): void
     {
+        $order = $this->sharedStorage->get('order');
+        $this->orderPage->open(['number' => $order->getNumber()]);
+
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('user');
 
@@ -110,6 +118,8 @@ final class CustomerOrderCommentsContext implements Context
         $this->orderPage->open(['number' => $order->getNumber()]);
 
         Assert::same($this->orderCommentsElement->countComments(), 0, 'This order should not have any comment, but %s found.');
+
+        $this->sharedStorage->set('order', $order);
     }
 
     /**
@@ -124,6 +134,9 @@ final class CustomerOrderCommentsContext implements Context
      */
     public function thisOrderShouldHaveACommentWithAndFileFromThisCustomer(string $message, string $fileName): void
     {
+        $order = $this->sharedStorage->get('order');
+        $this->orderPage->open(['number' => $order->getNumber()]);
+
         /** @var AdminUserInterface $user */
         $user = $this->sharedStorage->get('user');
 

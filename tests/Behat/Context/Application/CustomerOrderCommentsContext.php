@@ -5,42 +5,27 @@ declare(strict_types=1);
 namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application;
 
 use Behat\Behat\Context\Context;
-use SimpleBus\Message\Bus\MessageBus;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Webmozart\Assert\Assert;
 
 final class CustomerOrderCommentsContext implements Context
 {
-    /** @var MessageBus */
-    private $commandBus;
-
-    /** @var RepositoryInterface */
-    private $orderCommentRepository;
-
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var EmailCheckerInterface */
-    private $emailChecker;
-
     public function __construct(
-        MessageBus $commandBus,
-        RepositoryInterface $orderCommentRepository,
-        SharedStorageInterface $sharedStorage,
-        EmailCheckerInterface $emailChecker
+        private MessageBusInterface $commandBus,
+        private RepositoryInterface $orderCommentRepository,
+        private SharedStorageInterface $sharedStorage,
+        private EmailCheckerInterface $emailChecker
     ) {
-        $this->commandBus = $commandBus;
-        $this->orderCommentRepository = $orderCommentRepository;
-        $this->sharedStorage = $sharedStorage;
-        $this->emailChecker = $emailChecker;
     }
 
     /**
@@ -52,7 +37,7 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
 
-        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true));
+        $this->commandBus->dispatch(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true));
     }
 
     /**
@@ -70,7 +55,7 @@ final class CustomerOrderCommentsContext implements Context
 
         $file = new UploadedFile($filePath, $filePath, null, null, true);
 
-        $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
+        $this->commandBus->dispatch(CommentOrder::create($order->getNumber(), $user->getEmail(), $message, true, $file));
     }
 
     /**
@@ -81,9 +66,14 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $user->getEmail(), '', true));
-        } catch (\DomainException $exception) {
-            $this->sharedStorage->set('exception', $exception);
+            $this->commandBus->dispatch(CommentOrder::create($order->getNumber(), $user->getEmail(), '', true));
+        } catch (HandlerFailedException $exception) {
+            $innerException = $exception->getPrevious();
+            if (!($innerException instanceof \DomainException)) {
+                throw $exception;
+            }
+
+            $this->sharedStorage->set('exception', $innerException);
         }
     }
 
@@ -93,9 +83,14 @@ final class CustomerOrderCommentsContext implements Context
     public function aCustomerWithEmailTryToCommentAnOrder(string $email, OrderInterface $order): void
     {
         try {
-            $this->commandBus->handle(CommentOrder::create($order->getNumber(), $email, 'Hello', true));
-        } catch (\DomainException $exception) {
-            $this->sharedStorage->set('exception', $exception);
+            $this->commandBus->dispatch(CommentOrder::create($order->getNumber(), $email, 'Hello', true));
+        } catch (HandlerFailedException $exception) {
+            $innerException = $exception->getPrevious();
+            if (!($innerException instanceof \DomainException)) {
+                throw $exception;
+            }
+
+            $this->sharedStorage->set('exception', $innerException);
         }
     }
 
@@ -107,9 +102,14 @@ final class CustomerOrderCommentsContext implements Context
         /** @var ShopUserInterface $user */
         $user = $this->sharedStorage->get('user');
         try {
-            $this->commandBus->handle(CommentOrder::create('#0003', $user->getEmail(), $message, true));
-        } catch (\DomainException $exception) {
-            $this->sharedStorage->set('exception', $exception);
+            $this->commandBus->dispatch(CommentOrder::create('#0003', $user->getEmail(), $message, true));
+        } catch (HandlerFailedException $exception) {
+            $innerException = $exception->getPrevious();
+            if (!($innerException instanceof \DomainException)) {
+                throw $exception;
+            }
+
+            $this->sharedStorage->set('exception', $innerException);
         }
     }
 
@@ -129,8 +129,7 @@ final class CustomerOrderCommentsContext implements Context
             $comment->message() !== $message ||
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
-            !$comment->createdAt() instanceof \DateTimeInterface ||
-            !empty($comment->recordedMessages())
+            !$comment->createdAt() instanceof \DateTimeInterface
         ) {
             throw new \RuntimeException(
                 sprintf(
@@ -188,9 +187,7 @@ final class CustomerOrderCommentsContext implements Context
             $comment->message() !== $message ||
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
-            !$comment->createdAt() instanceof \DateTimeInterface ||
-            null === $comment->attachedFile()->path() ||
-            !empty($comment->recordedMessages())
+            !$comment->createdAt() instanceof \DateTimeInterface
         ) {
             throw new \RuntimeException(
                 sprintf(

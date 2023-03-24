@@ -6,16 +6,11 @@ namespace Brille24\OrderCommentsPlugin\Domain\Model;
 
 final class AttachedFile
 {
-    /** @var string */
-    private $path;
-
-    private function __construct(string $path)
+    private function __construct(private ?string $path)
     {
         if (null == $path) {
             throw new \DomainException('Uploaded file path cannot be empty.');
         }
-
-        $this->path = $path;
     }
 
     public static function create(string $path): self

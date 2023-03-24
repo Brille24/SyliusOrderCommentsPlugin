@@ -50,6 +50,8 @@ final class AdministratorOrderCommentsContext implements Context
         $this->orderCommentFormElement->enableCustomerNotified();
         $this->orderCommentFormElement->specifyMessage($message);
         $this->orderCommentFormElement->comment();
+
+        sleep(1);
     }
 
     /**

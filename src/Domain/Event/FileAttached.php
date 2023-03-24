@@ -6,12 +6,8 @@ namespace Brille24\OrderCommentsPlugin\Domain\Event;
 
 final class FileAttached
 {
-    /** @var string */
-    private $filePath;
-
-    private function __construct(string $filePath)
+    private function __construct(private string $filePath)
     {
-        $this->filePath = $filePath;
     }
 
     public static function occur(string $filePath): self

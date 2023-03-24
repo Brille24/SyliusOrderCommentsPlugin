@@ -10,6 +10,13 @@
         <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="src/Infrastructure/Migrations" />
+            <file name="src/DependencyInjection/Configuration.php" />
+            <file name="src/DependencyInjection/Brille24SyliusOrderCommentsExtension.php"/>
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="info" />
+    </issueHandlers>
 </psalm>

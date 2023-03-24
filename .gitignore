@@ -6,9 +6,12 @@
 !/etc/build/.gitignore
 
 /tests/Application/yarn.lock
-/tests/Comments/Infrastructure/Form/Type/file.pdf.bkp
 
 /.phpunit.result.cache
 /behat.yml
 /phpspec.yml
 /phpunit.xml
+
+# Symfony CLI https://symfony.com/doc/current/setup/symfony_server.html#different-php-settings-per-project
+/.php-version
+/php.ini

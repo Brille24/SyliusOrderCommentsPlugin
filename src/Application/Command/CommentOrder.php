@@ -8,28 +8,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class CommentOrder
 {
-    /** @var string */
-    private $orderNumber;
-
-    /** @var string */
-    private $authorEmail;
-
-    /** @var string */
-    private $message;
-
-    /** @var UploadedFile|null */
-    private $file;
-
-    /** @var bool */
-    private $notifyCustomer;
-
-    private function __construct(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null)
-    {
-        $this->orderNumber = $orderNumber;
-        $this->authorEmail = $authorEmail;
-        $this->message = $message;
-        $this->notifyCustomer = $notifyCustomer;
-        $this->file = $file;
+    private function __construct(
+        private string $orderNumber,
+        private string $authorEmail,
+        private string $message,
+        private bool $notifyCustomer,
+        private ?UploadedFile $file = null
+    ) {
     }
 
     public static function create(string $orderNumber, string $authorEmail, string $message, bool $notifyCustomer, ?UploadedFile $file = null): self

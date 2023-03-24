@@ -5,14 +5,16 @@
         <defaults public="true"/>
         <service id="brille24.order_comments_plugin.behat.domain.customer_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain\CustomerOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="event_dispatcher" />
         </service>
 
         <service id="brille24.order_comments_plugin.behat.domain.administrator_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain\AdministratorOrderCommentsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="event_dispatcher" />
         </service>
 
         <service id="brille24.order_comments_plugin.behat.application.customer_order_comments" class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application\CustomerOrderCommentsContext">
-            <argument type="service" id="command_bus" />
+            <argument type="service" id="messenger.default_bus" />
             <argument type="service" id="sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.email_checker" />
@@ -20,7 +22,7 @@
 
         <service id="brille24.order_comments_plugin.behat.application.administrator_order_comments"
                  class="Tests\Brille24\OrderCommentsPlugin\Behat\Context\Application\AdministratorOrderCommentsContext">
-            <argument type="service" id="command_bus" />
+            <argument type="service" id="messenger.default_bus" />
             <argument type="service" id="sylius.repository.order_comment" />
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.behat.email_checker" />

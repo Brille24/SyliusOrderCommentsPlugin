@@ -1,0 +1,3 @@
+sylius_order_comments_plugin_admin_partial:
+    resource: "@Brille24SyliusOrderCommentsPlugin/config/routing/admin/order_comments.yaml"
+    prefix: "/admin/orders"

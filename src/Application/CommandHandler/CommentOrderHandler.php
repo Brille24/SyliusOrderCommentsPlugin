@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Brille24\OrderCommentsPlugin\Application\CommandHandler;
 
+use Brille24\OrderCommentsPlugin\Domain\Event\FileAttached;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Doctrine\ORM\EntityManagerInterface;
 use Gaufrette\FilesystemInterface;
 use Ramsey\Uuid\Uuid;
@@ -11,27 +13,18 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Brille24\OrderCommentsPlugin\Application\Command\CommentOrder;
 use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+#[AsMessageHandler]
 final class CommentOrderHandler
 {
-    private OrderRepositoryInterface $orderRepository;
-
-    private EntityManagerInterface $entityManager;
-
-    private FilesystemInterface $fileSystem;
-
-    private string $fileDir;
-
     public function __construct(
-        OrderRepositoryInterface $orderRepository,
-        EntityManagerInterface $entityManager,
-        FilesystemInterface $fileSystem,
-        string $fileDir
+        private OrderRepositoryInterface $orderRepository,
+        private EntityManagerInterface $entityManager,
+        private string $fileDir,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->orderRepository = $orderRepository;
-        $this->entityManager = $entityManager;
-        $this->fileSystem = $fileSystem;
-        $this->fileDir = $fileDir;
     }
 
     public function __invoke(CommentOrder $command): void
@@ -48,15 +41,22 @@ final class CommentOrderHandler
         $file = $command->file();
         if (null !== $file) {
             $extension = $file->guessExtension() ?? 'pdf';
-            $path  = Uuid::uuid4()->toString() . '.' . $extension;
+            $newFileName = Uuid::uuid4()->toString().'.'.$extension;
+            $file->move($this->fileDir, $newFileName);
 
-            /** @var string $content */
-            $content = file_get_contents($file->getPathname());
-            $this->fileSystem->write($path, $content);
-            $comment->attachFile($this->fileDir . '/' . $path);
+            $filePath = $comment->attachFile($this->fileDir.'/'.$newFileName);
+            $this->eventDispatcher->dispatch(FileAttached::occur($filePath));
         }
 
-        $comment->orderCommented();
+        $this->eventDispatcher->dispatch(OrderCommented::occur(
+            $comment->getId(),
+            $comment->order(),
+            $comment->authorEmail(),
+            $comment->message(),
+            $comment->notifyCustomer(),
+            $comment->createdAt(),
+            $comment->attachedFile()
+        ));
 
         $this->entityManager->persist($comment);
     }

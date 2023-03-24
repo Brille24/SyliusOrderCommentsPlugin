@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace Tests\Brille24\OrderCommentsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Brille24\OrderCommentsPlugin\Domain\Event\FileAttached;
+use Brille24\OrderCommentsPlugin\Domain\Event\OrderCommented;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Brille24\OrderCommentsPlugin\Domain\Model\Comment;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Webmozart\Assert\Assert;
 
 final class CustomerOrderCommentsContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     */
-    public function __construct(SharedStorageInterface $sharedStorage)
-    {
-        $this->sharedStorage = $sharedStorage;
+    public function __construct(
+        private SharedStorageInterface $sharedStorage,
+        private EventDispatcherInterface $eventDispatcher,
+    ) {
     }
 
     /**
@@ -78,8 +77,7 @@ final class CustomerOrderCommentsContext implements Context
             $comment->message() !== $message ||
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
-            !$comment->createdAt() instanceof \DateTimeInterface ||
-            empty($comment->recordedMessages())
+            !$comment->createdAt() instanceof \DateTimeInterface
         ) {
             throw new \RuntimeException(
                 sprintf(
@@ -109,10 +107,20 @@ final class CustomerOrderCommentsContext implements Context
         }
 
         $comment = new Comment($order, $email, $message, $notifyCustomer);
-        $comment->orderCommented();
+
+        $this->eventDispatcher->dispatch(OrderCommented::occur(
+            $comment->getId(),
+            $comment->order(),
+            $comment->authorEmail(),
+            $comment->message(),
+            $comment->notifyCustomer(),
+            $comment->createdAt(),
+            $comment->attachedFile()
+        ));
 
         if (null !== $fileName) {
-            $comment->attachFile($fileName);
+            $filePath = $comment->attachFile($fileName);
+            $this->eventDispatcher->dispatch(FileAttached::occur($filePath));
         }
 
         $this->sharedStorage->set('comment', $comment);
@@ -149,8 +157,7 @@ final class CustomerOrderCommentsContext implements Context
             $comment->order() !== $order ||
             $comment->authorEmail() != $user->getEmail() ||
             !$comment->createdAt() instanceof \DateTimeInterface ||
-            $comment->attachedFile()->path() != $fileName ||
-            empty($comment->recordedMessages())
+            $comment->attachedFile()->path() != $fileName
         ) {
             throw new \RuntimeException(
                 sprintf(

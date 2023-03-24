@@ -1,0 +1,29 @@
+doctrine:
+    dbal:
+        types:
+            uuid: 'Ramsey\Uuid\Doctrine\UuidType'
+
+sylius_mailer:
+    emails:
+        unread_comment:
+            subject: 'sylius.emails.unread_comment.subject'
+            template: '@Brille24SyliusOrderCommentsPlugin/Email/unread_comment.html.twig'
+
+knp_gaufrette:
+    adapters:
+        sylius_comments_attachment:
+            local:
+                directory: '%sylius_core.public_dir%/media/comment_attachments'
+                create: true
+    filesystems:
+        sylius_comments_attachment:
+            adapter: 'sylius_comments_attachment'
+
+sylius_ui:
+    events:
+        sylius.admin.order.show.summary:
+            blocks:
+                order_comments: '@Brille24SyliusOrderCommentsPlugin/injected/admin_order_comments.html.twig'
+        sylius.shop.account.order.show.subcontent:
+            blocks:
+                order_comments: '@Brille24SyliusOrderCommentsPlugin/injected/shop_order_comments.html.twig'

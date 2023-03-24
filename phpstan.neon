@@ -1,6 +1,10 @@
 parameters:
+    level: max
     reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
+    paths:
+        - src
+        - tests/Behat
 
     excludes_analyse:
         # Makes PHPStan crash
@@ -12,3 +16,4 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
+        - '/Method Sylius\\Component\\Mailer\\Sender\\SenderInterface\:\:send\(\) invoked with 7 parameters\, 2\-5 required\./'
